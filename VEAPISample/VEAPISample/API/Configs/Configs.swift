@@ -2,7 +2,7 @@
 //  Configs.swift
 //  VEAPISample
 //
-//  Created by Gleb Markin on 10.03.22.
+//  Created by Banuba on 10.03.22.
 //
 
 import Foundation

@@ -1,20 +1,20 @@
 source 'https://github.com/Banuba/specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '11.0'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'VEAPISample' do
   pod 'YPImagePicker'
-  pod 'VEPlaybackSDK', '1.24.0'
-  pod 'VEEffectsSDK', '1.24.0'
-  pod 'VideoEditor', '1.24.0'
-  pod 'BanubaLicenseServicingSDK', '1.24.0'
-  pod 'BanubaEffectPlayer', '1.23.0'
-  pod 'BanubaSDK', '1.24.0'
-  pod 'BanubaSDKServicing', '1.24.0'
-  pod 'BanubaUtilities', '1.24.0'
-  pod 'VEExportSDK', '1.24.0'
+  pod 'VEPlaybackSDK', '1.25.0'
+  pod 'VEEffectsSDK', '1.25.0'
+  pod 'VideoEditor', '1.25.0'
+  pod 'BanubaLicenseServicingSDK', '1.25.0'
+  pod 'BanubaEffectPlayer', '1.25.0'
+  pod 'BanubaSDK', '1.25.0'
+  pod 'BanubaSDKServicing', '1.25.0'
+  pod 'BanubaUtilities', '1.25.0'
+  pod 'VEExportSDK', '1.25.0'
 
   pod 'BNBLicenseUtils', '1.24.0'
 end

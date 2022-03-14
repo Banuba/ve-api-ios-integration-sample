@@ -2,7 +2,7 @@
 //  EditorViewController.swift
 //  VEAPISample
 //
-//  Created by Gleb Markin on 10.03.22.
+//  Created by Banuba on 10.03.22.
 //
 
 import Foundation
@@ -101,6 +101,7 @@ extension EditorViewController {
 // MARK: - Export helpers
 extension EditorViewController {
   private func exportVideo() {
+    playableView?.videoEditorPlayer?.stopPlay()
     // Setup result video url
     let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("video.mp4")
     if FileManager.default.fileExists(atPath: fileURL.path) {
@@ -139,20 +140,23 @@ extension EditorViewController {
     exportSDK?.exportVideo(
       to: fileURL,
       using: exportInfo,
-      watermarkFilterModel: watermarkModel
-    ) { [weak self] isSuccess, error in
-      // Return to main thread
-      DispatchQueue.main.async {
-        // Stop activity indicator
-        self?.activityIndicator.stopAnimating()
-      }
-      if let error = error {
-        // Proccess error
-        print(error.localizedDescription)
-      } else {
-        self?.saveVideoToGallery(fileURL: fileURL.relativePath)
-      }
-    }
+      watermarkFilterModel: watermarkModel,
+      exportProgress: { progress in
+        print("export video progress: \(progress)")
+      }, completion: { [weak self] isSuccess, error in
+        // Return to main thread
+        DispatchQueue.main.async {
+          self?.playableView?.videoEditorPlayer?.startPlay(loop: true, fixedSpeed: false)
+          // Stop activity indicator
+          self?.activityIndicator.stopAnimating()
+        }
+        if let error = error {
+          // Proccess error
+          print(error.localizedDescription)
+        } else {
+          self?.saveVideoToGallery(fileURL: fileURL.relativePath)
+        }
+      })
   }
   
   private func saveVideoToGallery(fileURL: String) {

@@ -2,7 +2,7 @@
 //  VideoAspectRatio.swift
 //  VEAPISample
 //
-//  Created by Gleb Markin on 11.03.22.
+//  Created by Banuba on 11.03.22.
 //
 
 import Foundation
