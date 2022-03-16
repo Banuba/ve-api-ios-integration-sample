@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BanubaVideoEditorEffectsSDK
+import VEEffectsSDK
 
 class EffectsAPI {
   // MARK: - Singleton

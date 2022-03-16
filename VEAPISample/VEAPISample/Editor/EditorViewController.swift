@@ -11,7 +11,8 @@ import UIKit
 
 import VEPlaybackSDK
 import VideoEditor
-import BanubaVideoEditorEffectsSDK
+import VEEffectsSDK
+import VEExportSDK
 import BanubaUtilities
 
 class EditorViewController: UIViewController {
@@ -125,7 +126,9 @@ extension EditorViewController {
     activityIndicator.startAnimating()
     
     // Export video with set of params
-    CoreAPI.shared.coreAPI.exportVideo(
+    let exportSDK = VEExport(videoEditorService: CoreAPI.shared.coreAPI)
+    
+    exportSDK.exportVideo(
       to: fileURL,
       using: exportInfo,
       watermarkFilterModel: watermarkModel
@@ -196,7 +199,17 @@ extension EditorViewController {
   // Apply text  or gif effect
   func applyOverlayEffect(withType type: OverlayEffectApplicatorType) {
     // Ouput image should be created from cgImage reference
-    let image = type == .gif ? createGifImage() : createTextImage()
+    var image: UIImage?
+    
+    switch type {
+      case .gif:
+        image = createGifImage()
+      case .text:
+        image = createTextImage()
+      default: break
+    }
+    
+    
     guard let outputImage = image else {
       return
     }
@@ -460,7 +473,15 @@ extension EditorViewController {
   ) -> VideoEditorEffectInfo {
     
     // Relevant screen points
-    let points = type == .gif ? gifImagePoints : textImagePoints
+    var points: ImagePoints?
+    
+    switch type {
+      case .gif:
+        points = gifImagePoints
+      case .text:
+        points = textImagePoints
+      default: break
+    }
     
     // Result effect info
     let effectInfo = VideoEditorEffectInfo(

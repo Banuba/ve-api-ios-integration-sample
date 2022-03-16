@@ -107,7 +107,8 @@ extension GalleryViewController {
         thumbnail: nil,
         fillAspectRatioRange: VideoAspectRatio.fillAspectRatioRange,
         videoResolutionConfiguration: Configs.resolutionConfig,
-        isGalleryAsset: false
+        isGalleryAsset: false,
+        isSlideShow: false
       )
     }
     
