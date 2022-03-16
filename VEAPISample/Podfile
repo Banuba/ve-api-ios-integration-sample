@@ -6,13 +6,14 @@ use_frameworks!
 
 target 'VEAPISample' do
   pod 'YPImagePicker'
-  pod 'VEPlaybackSDK', '1.21.0'
-  pod 'BanubaVideoEditorEffectsSDK', '1.21.0'
-  pod 'VideoEditor', '1.21.0'
-  pod 'BanubaLicenseServicingSDK', '1.21.0'
-  pod 'BNBLicenseUtils', '1.21.0'
-  pod 'BanubaEffectPlayer', '1.21.0'
-  pod 'BanubaSDK', '1.21.0'
-  pod 'BanubaSDKServicing', '1.21.0'
-  pod 'BanubaUtilities', '1.21.0'
+  pod 'VEPlaybackSDK', '1.22.0'
+  pod 'VEEffectsSDK', '1.22.0'
+  pod 'VideoEditor', '1.22.0'
+  pod 'BanubaLicenseServicingSDK', '1.22.0'
+  pod 'BNBLicenseUtils', '1.22.0'
+  pod 'BanubaEffectPlayer', '1.22.0'
+  pod 'BanubaSDK', '1.22.0'
+  pod 'BanubaSDKServicing', '1.22.0'
+  pod 'BanubaUtilities', '1.22.0'
+  pod 'VEExportSDK', '1.22.0'
 end
