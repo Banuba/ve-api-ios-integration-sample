@@ -180,6 +180,7 @@ extension CameraViewController {
       // Start video capturing
       sdkManager.output?.startVideoCapturing(
         fileURL: fileURL,
+        externalAudioConfiguration: nil,
         progress: { [weak self] time in
           DispatchQueue.main.async {
             // Change remaning time label with relevant progress
@@ -230,7 +231,9 @@ extension CameraViewController {
               // URL
               at: fileURL,
               // Recording speed
-              speed: speed
+              speed: speed,
+              // is slideshow
+              isSlideShow: false
             )
             // Minimun duration condition to avoid small videos passing to editor screen. Depends on your business logic
             let isMinimumDuration = (self?.videoSequence?.totalDuration() ?? .zero) < Defaults.minimumDuration

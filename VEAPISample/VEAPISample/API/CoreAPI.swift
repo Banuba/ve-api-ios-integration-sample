@@ -8,7 +8,7 @@
 import Foundation
 
 import VideoEditor
-import BanubaVideoEditorEffectsSDK
+import VEEffectsSDK
 
 class CoreAPI {
   // MARK: - Singleton
