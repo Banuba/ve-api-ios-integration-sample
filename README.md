@@ -87,7 +87,7 @@ Please, refer to the example of [Podfile](https://github.com/Banuba/ve-api-ios-i
    pod init
    ```
 3. Install the Video Editor SDK for the provided Xcode workspace with:
-```sh
-pod install
-```
+    ```sh
+    pod install
+    ```
 4. Open Example.xcworkspace with Xcode and run the project.  
