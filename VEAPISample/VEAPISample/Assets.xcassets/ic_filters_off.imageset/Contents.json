@@ -1,16 +1,15 @@
 {
   "images" : [
     {
+      "filename" : "ic_filters.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Ellipse 3@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Ellipse 3@3x-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
