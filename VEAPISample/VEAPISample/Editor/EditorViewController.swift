@@ -64,9 +64,8 @@ extension EditorViewController {
   }
   
   private func setupNavigationButtons() {
-    // Setup title to avoiding wrong state
-    nextButton.setTitle("Next", for: .normal)
-    nextButton.setTitle("Next", for: .selected)
+    // Corner radius
+    nextButton.layer.cornerRadius = 10.0
   }
 }
 

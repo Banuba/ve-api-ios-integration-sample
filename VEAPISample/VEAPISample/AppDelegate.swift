@@ -16,8 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
     
+    // Initialize BanubaSdkManager
     let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
     let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
     BanubaSdkManager.initialize(

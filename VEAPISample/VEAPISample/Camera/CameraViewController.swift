@@ -77,8 +77,6 @@ class CameraViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Setup titles for navigation buttons
-    setupNavigationButtons()
     // Setup effect player view with container frame
     setupEffectPlayerView()
     // Setup EffectPlayer with config instance
@@ -98,10 +96,20 @@ class CameraViewController: UIViewController {
     sdkManager.input.startCamera()
     // Start Effect Player to render mask effects
     sdkManager.startEffectPlayer()
+    // Setup buttons style
+    setupButtons()
   }
   
   deinit {
     sdkManager.destroyEffectPlayer()
+  }
+}
+
+// MARK: - UI Helpers
+extension CameraViewController {
+  private func setupButtons() {
+    // Corner radius
+    nextButton.layer.cornerRadius = 10.0
   }
 }
 
@@ -123,18 +131,6 @@ extension CameraViewController {
     let preview = EffectPlayerView(frame: effectView.frame)
     effectView.addSubview(preview)
     effectPlayerView = preview
-  }
-  
-  private func setupNavigationButtons() {
-    // Setup title to avoiding wrong state
-    recordButton.setTitle(.init(), for: .normal)
-    recordButton.setTitle(.init(), for: .selected)
-    
-    removeButton.setTitle(.init(), for: .normal)
-    removeButton.setTitle(.init(), for: .selected)
-    
-    nextButton.setTitle("Next", for: .normal)
-    nextButton.setTitle("Next", for: .selected)
   }
   
   private func setUpRenderSize() {
@@ -345,9 +341,10 @@ extension CameraViewController {
     // Remove video urls
     recordedVideos.removeAll()
     // Remove videos from sequence file manager folder
-    videoSequence?.remove()
-    // Setup default sequence
-    videoSequence = VideoSequence(folderURL: Defaults.videosDirectory)
+    videoSequence?.videos.forEach { video in
+      // Completely delete video
+      videoSequence?.deleteVideo(video)
+    }
   }
   
   @IBAction func recordButtonTouchDown(_ sender: UIButton) {
