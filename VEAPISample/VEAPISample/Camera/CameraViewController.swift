@@ -229,7 +229,9 @@ extension CameraViewController {
               // Recording speed
               speed: speed,
               // is slideshow
-              isSlideShow: false
+              isSlideShow: false,
+              // transition
+              transition: .normal
             )
             // Minimun duration condition to avoid small videos passing to editor screen. Depends on your business logic
             let isMinimumDuration = (self?.videoSequence?.totalDuration() ?? .zero) < Defaults.minimumDuration

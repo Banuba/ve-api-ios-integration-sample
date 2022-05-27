@@ -108,7 +108,8 @@ extension GalleryViewController {
         fillAspectRatioRange: VideoAspectRatio.fillAspectRatioRange,
         videoResolutionConfiguration: Configs.resolutionConfig,
         isGalleryAsset: false,
-        isSlideShow: false
+        isSlideShow: false,
+        transitionEffectType: .normal
       )
     }
     
