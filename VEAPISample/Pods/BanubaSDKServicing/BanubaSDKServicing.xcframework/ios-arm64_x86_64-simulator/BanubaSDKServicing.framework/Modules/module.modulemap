@@ -1,0 +1,11 @@
+framework module BanubaSDKServicing {
+  umbrella header "BanubaSDKServicing.h"
+
+  export *
+  module * { export * }
+}
+
+module BanubaSDKServicing.Swift {
+    header "BanubaSDKServicing-Swift.h"
+    requires objc
+}

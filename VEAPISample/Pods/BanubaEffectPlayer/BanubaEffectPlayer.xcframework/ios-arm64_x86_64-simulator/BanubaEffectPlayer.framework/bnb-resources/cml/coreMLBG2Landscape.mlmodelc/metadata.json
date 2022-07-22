@@ -1,0 +1,65 @@
+[
+  {
+    "shortDescription" : "",
+    "metadataOutputVersion" : "3.0",
+    "outputSchema" : [
+      {
+        "hasShapeFlexibility" : "0",
+        "isOptional" : "0",
+        "dataType" : "Float32",
+        "formattedType" : "MultiArray (Float32 1 × 144 × 256)",
+        "shortDescription" : "",
+        "shape" : "[1, 144, 256]",
+        "name" : "output1",
+        "type" : "MultiArray"
+      }
+    ],
+    "version" : "",
+    "modelParameters" : [
+
+    ],
+    "author" : "",
+    "specificationVersion" : 2,
+    "license" : "",
+    "isUpdatable" : "0",
+    "availability" : {
+      "macOS" : "10.13.2",
+      "tvOS" : "11.2",
+      "watchOS" : "4.2",
+      "iOS" : "11.2",
+      "macCatalyst" : "11.2"
+    },
+    "modelType" : {
+      "name" : "MLModelType_neuralNetwork"
+    },
+    "inputSchema" : [
+      {
+        "hasShapeFlexibility" : "0",
+        "isOptional" : "0",
+        "dataType" : "Float32",
+        "formattedType" : "MultiArray (Float32 4 × 144 × 256)",
+        "shortDescription" : "",
+        "shape" : "[4, 144, 256]",
+        "name" : "input1",
+        "type" : "MultiArray"
+      }
+    ],
+    "userDefinedMetadata" : {
+      "coremltoolsVersion" : "3.4"
+    },
+    "generatedClassName" : "coreMLBGSelfieLandscape",
+    "neuralNetworkLayerTypeHistogram" : {
+      "Concat" : 3,
+      "Multiply" : 2,
+      "ActivationReLU" : 37,
+      "ResizeBilinear" : 3,
+      "Add" : 14,
+      "PoolingAverage" : 2,
+      "Deconvolution" : 2,
+      "BatchNorm" : 51,
+      "Convolution" : 58,
+      "ActivationSigmoid" : 3
+    },
+    "method" : "predict"
+  }
+]

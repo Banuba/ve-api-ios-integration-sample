@@ -1,0 +1,11 @@
+framework module BanubaUtilities {
+  umbrella header "BanubaUtilities.h"
+
+  export *
+  module * { export * }
+}
+
+module BanubaUtilities.Swift {
+    header "BanubaUtilities-Swift.h"
+    requires objc
+}

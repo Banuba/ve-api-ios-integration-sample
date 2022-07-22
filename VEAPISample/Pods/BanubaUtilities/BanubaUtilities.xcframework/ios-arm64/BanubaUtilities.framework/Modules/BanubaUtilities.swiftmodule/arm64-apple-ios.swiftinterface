@@ -1,0 +1,1389 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name BanubaUtilities
+import AVFoundation
+import AVKit
+@_exported import BanubaUtilities
+import CloudKit
+import Foundation
+import Photos
+import Swift
+import SystemConfiguration
+import UIKit
+import _Concurrency
+import os.log
+import os
+public protocol ImageButtonConfigurationProtocol {
+  var imageConfiguration: BanubaUtilities.ImageConfigurationProtocol { get set }
+  var selectedImageConfiguration: BanubaUtilities.ImageConfigurationProtocol? { get set }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class AlertViewController : UIKit.UIViewController, BanubaUtilities.NibLoadable {
+  public enum AlertType {
+    case info
+    case selection(_: Swift.String?, _: Swift.String?)
+    case reset(_: Swift.String?, _: Swift.String?, _: Swift.String?)
+    case missedPermission
+    case discard
+    case later
+  }
+  public enum ButtonType {
+    case agreeButton
+    case refuseButton
+    case additionalButton
+    public static func == (a: BanubaUtilities.AlertViewController.ButtonType, b: BanubaUtilities.AlertViewController.ButtonType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @_Concurrency.MainActor(unsafe) public var titleText: Swift.String? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var messageText: Swift.String? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var alertType: BanubaUtilities.AlertViewController.AlertType? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var configuration: BanubaUtilities.AlertViewConfiguration?
+  @_Concurrency.MainActor(unsafe) public var actionHandler: ((Swift.Bool, BanubaUtilities.AlertViewController.ButtonType) -> Swift.Void)?
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc public class TextButtonConfiguration : ObjectiveC.NSObject {
+  public var style: BanubaUtilities.TextConfiguration
+  public var text: Swift.String?
+  public init(style: BanubaUtilities.TextConfiguration, text: Swift.String? = nil)
+  @objc deinit
+}
+public enum AspectRatio : Swift.UInt8, Swift.Codable {
+  case original
+  case aspect16x9
+  case aspect9x16
+  case aspect4x3
+  case aspect4x5
+  public func getVideoAspectRatio(withVideoSize videoSize: CoreGraphics.CGSize? = nil) -> CoreGraphics.CGFloat
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+extension CoreGraphics.CGRect {
+  public func getCenter() -> CoreGraphics.CGPoint
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class SlideInPresentationManager : ObjectiveC.NSObject, UIKit.UIViewControllerTransitioningDelegate {
+  @_Concurrency.MainActor(unsafe) public var dimInteractionHandler: (() -> Swift.Void)? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public init(coverPercentage: CoreGraphics.CGFloat, panToDismiss: Swift.Bool, isDimViewEnabled: Swift.Bool, dismissOnTapByDimView: Swift.Bool = false)
+  @_Concurrency.MainActor(unsafe) public init(coverHeight: CoreGraphics.CGFloat, panToDismiss: Swift.Bool, isDimViewEnabled: Swift.Bool, dismissOnTapByDimView: Swift.Bool)
+  @objc convenience override dynamic public init()
+  @_Concurrency.MainActor(unsafe) @objc public func presentationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController?, source: UIKit.UIViewController) -> UIKit.UIPresentationController?
+  @_Concurrency.MainActor(unsafe) @objc public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @_Concurrency.MainActor(unsafe) @objc public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @_Concurrency.MainActor(unsafe) @objc public func interactionControllerForPresentation(using animator: UIKit.UIViewControllerAnimatedTransitioning) -> UIKit.UIViewControllerInteractiveTransitioning?
+  @_Concurrency.MainActor(unsafe) @objc public func interactionControllerForDismissal(using animator: UIKit.UIViewControllerAnimatedTransitioning) -> UIKit.UIViewControllerInteractiveTransitioning?
+  @objc deinit
+}
+public enum Connection : Swift.CustomStringConvertible {
+  case none, wifi, cellular
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: BanubaUtilities.Connection, b: BanubaUtilities.Connection) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol AlertViewControllerFactory : AnyObject {
+  func getAlertViewController() -> BanubaUtilities.AlertViewController?
+  func getPopoverAlertViewController() -> BanubaUtilities.PopoverAlertViewController?
+}
+extension BanubaUtilities.AlertViewControllerFactory where Self : UIKit.UIViewController {
+  public func getPopoverAlertViewController() -> BanubaUtilities.PopoverAlertViewController?
+}
+public protocol AlertPresentable : BanubaUtilities.AlertViewControllerFactory {
+  func presentAlertViewController(alertType: BanubaUtilities.AlertViewController.AlertType, title: Swift.String, message: Swift.String?, animated: Swift.Bool, completion: ((Swift.Bool, BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void)?)
+  func presentSelectionAlert(title: Swift.String, message: Swift.String?, animated: Swift.Bool, completion: ((Swift.Bool, BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void)?)
+  func presentSelectionAlert(withTitle title: Swift.String, message: Swift.String?, agreeButtonTitle: Swift.String?, disagreeButtonTitle: Swift.String?, animated: Swift.Bool, completion: @escaping ((_ success: Swift.Bool, _ buttonType: BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void))
+  func presentPopoverAlert(position: BanubaUtilities.OverlayPopoverActionsPosition, actions: [BanubaUtilities.PopoverAlertViewController.ActionType], animated: Swift.Bool, completion: @escaping ((BanubaUtilities.PopoverAlertViewController.ActionType) -> Swift.Void))
+}
+extension BanubaUtilities.AlertPresentable where Self : UIKit.UIViewController {
+  public func presentAlertViewController(alertType: BanubaUtilities.AlertViewController.AlertType, title: Swift.String, message: Swift.String?, animated: Swift.Bool, completion: ((Swift.Bool, BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void)?)
+  public func presentSelectionAlert(title: Swift.String, message: Swift.String?, animated: Swift.Bool, completion: ((Swift.Bool, BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void)?)
+  public func presentAlert(alertType: BanubaUtilities.AlertViewController.AlertType, title: Swift.String, message: Swift.String?, animated: Swift.Bool = false, completion: ((Swift.Bool, BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void)?)
+  public func presentSelectionAlert(withTitle title: Swift.String, message: Swift.String?, agreeButtonTitle: Swift.String? = nil, disagreeButtonTitle: Swift.String? = nil, animated: Swift.Bool = false, completion: @escaping ((_ success: Swift.Bool, _ buttonType: BanubaUtilities.AlertViewController.ButtonType?) -> Swift.Void))
+  public func presentPopoverAlert(position: BanubaUtilities.OverlayPopoverActionsPosition, actions: [BanubaUtilities.PopoverAlertViewController.ActionType], animated: Swift.Bool, completion: @escaping ((BanubaUtilities.PopoverAlertViewController.ActionType) -> Swift.Void))
+}
+public enum SharedLocalizedStrings {
+  public enum Common {
+    public static let ok: Swift.String
+    public static let yes: Swift.String
+    public static let no: Swift.String
+  }
+  public enum Alert {
+    public static let settings: Swift.String
+    public static let refuseSettings: Swift.String
+    public static let later: Swift.String
+    public static let discard: Swift.String
+  }
+}
+@_hasMissingDesignatedInitializers public class VideoDurationFormatter {
+  public static func format(_ timeInterval: Foundation.TimeInterval) -> Swift.String
+  @objc deinit
+}
+extension UIKit.UIButton {
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.ImageButtonConfigurationProtocol)
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.BackButtonConfiguration)
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.RoundedButtonConfiguration)
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.RoundedButtonConfiguration, with title: Swift.String)
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.SaveButtonConfiguration)
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.TextButtonConfiguration, with title: Swift.String)
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.TextConfiguration, with title: Swift.String)
+}
+@objc public class BackgroundConfiguration : ObjectiveC.NSObject {
+  public var cornerRadius: CoreGraphics.CGFloat
+  public var color: UIKit.UIColor
+  public init(cornerRadius: CoreGraphics.CGFloat, color: UIKit.UIColor)
+  @objc deinit
+}
+public struct CameraSessionMetadata : Swift.Codable {
+  public var isFrontCamera: Swift.Bool
+  public var draftsHintShown: Swift.Bool
+  public init(isFrontCamera: Swift.Bool, draftsHintShown: Swift.Bool)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct VideoEditorTrimMetadata : Swift.Codable {
+  public var sequenceItemsMetadata: [BanubaUtilities.VideoSequenceItemMetadata]
+  public init(sequenceItemsMetadata: [BanubaUtilities.VideoSequenceItemMetadata])
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct VideoSequenceItemMetadata : Swift.Codable {
+  public var videoName: Swift.String
+  public var order: Swift.Int
+  public var imageData: Foundation.Data?
+  public var trimTimeRange: BanubaUtilities.TrimTimeRangeMetadata
+  public let isGalleryAsset: Swift.Bool
+  public let isSlideShow: Swift.Bool
+  public var transition: BanubaUtilities.TransitionEffectMetadata
+  public init(videoName: Swift.String, order: Swift.Int, imageData: Foundation.Data? = nil, trimTimeRange: BanubaUtilities.TrimTimeRangeMetadata, isGalleryAsset: Swift.Bool, isSlideShow: Swift.Bool, transition: BanubaUtilities.TransitionEffectMetadata)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TransitionEffectMetadata : Swift.Codable {
+  public struct Defaults {
+    public static let transitionDuration: Swift.Double
+    public static let timescale: CoreMedia.CMTimeScale
+  }
+  public let type: BanubaUtilities.TransitionType
+  public let start: BanubaUtilities.TimeMetadata
+  public init(type: BanubaUtilities.TransitionType, start: CoreMedia.CMTime)
+  public static func startTime(fromTime: CoreMedia.CMTime) -> CoreMedia.CMTime
+  public func getStartTime() -> CoreMedia.CMTime
+  public func getEndTime() -> CoreMedia.CMTime
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TrimTimeRangeMetadata : Swift.Codable {
+  public let start: BanubaUtilities.TimeMetadata
+  public let duration: BanubaUtilities.TimeMetadata
+  public func getCMTimeRange() -> CoreMedia.CMTimeRange
+  public init(start: BanubaUtilities.TimeMetadata, duration: BanubaUtilities.TimeMetadata)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct MusicEditorMetadata : Swift.Codable {
+  public var tracks: [BanubaUtilities.MusicEditorTrack]
+  public var videoVolume: Swift.Float
+  public init(tracks: [BanubaUtilities.MusicEditorTrack], videoVolume: Swift.Float)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct MusicEditorTrack : Swift.Codable {
+  public var url: Foundation.URL
+  public var originalURL: Foundation.URL
+  public var title: Swift.String
+  public var additionalTitle: Swift.String?
+  public var id: Swift.Int32
+  public var volume: Swift.Float
+  public var position: Swift.Int
+  public var timeScale: Foundation.TimeInterval
+  public var compositionStart: Foundation.TimeInterval
+  public var timeRangeStart: Foundation.TimeInterval
+  public var timeRangeEnd: Foundation.TimeInterval
+  public var isAudioRecord: Swift.Bool
+  public var isEditable: Swift.Bool
+  public var applyedFilterId: Swift.Int?
+  public var isCameraTrack: Swift.Bool
+  public init(url: Foundation.URL, originalURL: Foundation.URL, title: Swift.String, additionalTitle: Swift.String?, id: Swift.Int32, volume: Swift.Float, position: Swift.Int, timeScale: Foundation.TimeInterval, compositionStart: Foundation.TimeInterval, timeRangeStart: Foundation.TimeInterval, timeRangeEnd: Foundation.TimeInterval, isAudioRecord: Swift.Bool, isEditable: Swift.Bool, applyedFilterId: Swift.Int? = nil, isCameraTrack: Swift.Bool)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct VideoEditorMetadata : Swift.Codable {
+  public var effectsOnVideoMetadata: [BanubaUtilities.EffectOnVideoMetadata]?
+  public var colorOnVideoMetadata: BanubaUtilities.ColorOnVideoMetadata?
+  public var textOnVideoMetadata: [BanubaUtilities.TextOnVideoMetadata]?
+  public var gifOnVideoMetadata: [BanubaUtilities.GIFOnVideoMetadata]?
+  public var pixelateOnVideoMetadata: [BanubaUtilities.PixelateOnVideoMetadata]?
+  public var videoInteractiveMetadata: BanubaUtilities.VideoInteractiveMetadata?
+  public var analyticsMetadataJSON: Swift.String?
+  public init(effectsOnVideoMetadata: [BanubaUtilities.EffectOnVideoMetadata]? = nil, colorOnVideoMetadata: BanubaUtilities.ColorOnVideoMetadata? = nil, textOnVideoMetadata: [BanubaUtilities.TextOnVideoMetadata]? = nil, gifOnVideoMetadata: [BanubaUtilities.GIFOnVideoMetadata]? = nil, pixelateOnVideoMetadata: [BanubaUtilities.PixelateOnVideoMetadata]? = nil, videoInteractiveMetadata: BanubaUtilities.VideoInteractiveMetadata? = nil, analyticsMetadataJSON: Swift.String? = nil)
+  public func adjustPixelateEffectMetadata() -> BanubaUtilities.PixelateList?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ColorOnVideoMetadata : Swift.Codable {
+  public let title: Swift.String
+  public init(title: Swift.String)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct EffectOnVideoMetadata : Swift.Codable {
+  public let startTime: BanubaUtilities.TimeMetadata
+  public let endTime: BanubaUtilities.TimeMetadata
+  public let effectId: Swift.UInt
+  public let tokenId: Swift.String
+  public init(startTime: BanubaUtilities.TimeMetadata, endTime: BanubaUtilities.TimeMetadata, effectId: Swift.UInt, tokenId: Swift.String)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TextOnVideoMetadata : Swift.Codable {
+  public let imageData: Foundation.Data?
+  public let textParams: BanubaUtilities.TextParams
+  public let startTime: BanubaUtilities.TimeMetadata
+  public let endTime: BanubaUtilities.TimeMetadata
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let order: Swift.Int
+  public init(imageData: Foundation.Data?, textParams: BanubaUtilities.TextParams, startTime: BanubaUtilities.TimeMetadata, endTime: BanubaUtilities.TimeMetadata, coordinatesParams: BanubaUtilities.CoordinatesParams, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum VideoSequenceEditingStep : Swift.Int, Swift.Codable {
+  case camera
+  case trimmer
+  case editor
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct VideoMetadata : Swift.Codable {
+  public var name: Swift.String
+  public var isDrafted: Swift.Bool
+  public var aspect: BanubaUtilities.AspectRatio
+  public var modificationDate: Foundation.Date?
+  public var totalDuration: Foundation.TimeInterval?
+  public let isSlideShow: Swift.Bool
+  public var parentSequenceId: Swift.String?
+  public var musicTrack: BanubaUtilities.MediaTrack?
+  public var editingStep: BanubaUtilities.VideoSequenceEditingStep
+  public init(isSlideShow: Swift.Bool = false, isDrafted: Swift.Bool = false, name: Swift.String, sequenceParentName: Swift.String? = nil, editingStep: BanubaUtilities.VideoSequenceEditingStep = .camera, musicTrack: BanubaUtilities.MediaTrack? = nil, aspect: BanubaUtilities.AspectRatio, modificationDate: Foundation.Date? = nil, totalDuration: Foundation.TimeInterval? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PixelateOnVideoMetadata : Swift.Codable {
+  public let effectId: Swift.UInt
+  public let id: Swift.String
+  public let startTime: BanubaUtilities.TimeMetadata
+  public let endTime: BanubaUtilities.TimeMetadata
+  public let pixelateCoordinateParams: BanubaUtilities.PixelateCoordinateParams
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let pixelateFigure: BanubaUtilities.DrawableFigure
+  public let order: Swift.Int
+  public init(id: Swift.String, effectId: Swift.UInt, startTime: BanubaUtilities.TimeMetadata, endTime: BanubaUtilities.TimeMetadata, pixelateCoordinateParams: BanubaUtilities.PixelateCoordinateParams, coordinatesParams: BanubaUtilities.CoordinatesParams, pixelateFigure: BanubaUtilities.DrawableFigure, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct GIFOnVideoMetadata : Swift.Codable {
+  public let id: Swift.String
+  public let imageData: Foundation.Data?
+  public let startTime: BanubaUtilities.TimeMetadata
+  public let endTime: BanubaUtilities.TimeMetadata
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let order: Swift.Int
+  public init(id: Swift.String, imageData: Foundation.Data?, startTime: BanubaUtilities.TimeMetadata, endTime: BanubaUtilities.TimeMetadata, coordinatesParams: BanubaUtilities.CoordinatesParams, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PixelateCoordinateParams : Swift.Codable {
+  public var center: CoreGraphics.CGPoint
+  public var width: CoreGraphics.CGFloat
+  public var height: CoreGraphics.CGFloat
+  public var radius: CoreGraphics.CGFloat
+  public var absoluteCenter: CoreGraphics.CGPoint
+  public var absoluteRadius: CoreGraphics.CGFloat
+  public static var zero: BanubaUtilities.PixelateCoordinateParams {
+    get
+  }
+  public init(center: CoreGraphics.CGPoint, width: CoreGraphics.CGFloat, height: CoreGraphics.CGFloat, radius: CoreGraphics.CGFloat)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct CoordinatesParams : Swift.Codable {
+  public let transform: CoreGraphics.CGAffineTransform
+  public let frame: CoreGraphics.CGRect
+  public init(transform: CoreGraphics.CGAffineTransform, frame: CoreGraphics.CGRect)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ColorParams : Swift.Codable {
+  public let red: CoreGraphics.CGFloat?
+  public let green: CoreGraphics.CGFloat?
+  public let blue: CoreGraphics.CGFloat?
+  public let alpha: CoreGraphics.CGFloat?
+  public init(red: CoreGraphics.CGFloat?, green: CoreGraphics.CGFloat?, blue: CoreGraphics.CGFloat?, alpha: CoreGraphics.CGFloat?)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TextParams : Swift.Codable {
+  public init(text: Swift.String?, textFont: Swift.String?, fontName: Swift.String?, fontSize: CoreGraphics.CGFloat?, textAligment: Swift.Int?, textColor: BanubaUtilities.ColorParams?, backgroundColor: BanubaUtilities.ColorParams?)
+  public let text: Swift.String?
+  public let textFont: Swift.String?
+  public let fontName: Swift.String?
+  public let fontSize: CoreGraphics.CGFloat?
+  public let textAligment: Swift.Int?
+  public let textColor: BanubaUtilities.ColorParams?
+  public let backgroundColor: BanubaUtilities.ColorParams?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct VideoCoverMetadata : Swift.Codable {
+  public var image: UIKit.UIImage? {
+    get
+  }
+  public let imageData: Foundation.Data?
+  public let coverIndents: [BanubaUtilities.TimeMetadata]
+  public init(imageData: Foundation.Data?, coverIndents: [BanubaUtilities.TimeMetadata])
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TimeMetadata : Swift.Codable {
+  public let seconds: Swift.Double
+  public let timescale: CoreMedia.CMTimeScale
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+extension BanubaUtilities.TimeMetadata {
+  public init(cmTime: CoreMedia.CMTime)
+  public func getCMTime() -> CoreMedia.CMTime
+}
+public class AudioTrack : BanubaUtilities.AudioTrackAdoptable {
+  public var isAudioRecord: Swift.Bool
+  public var dbArray: [Swift.Float]?
+  public var compositionTrack: AVFoundation.AVMutableCompositionTrack?
+  public var avAssetTrack: AVFoundation.AVAssetTrack?
+  public var avURLAsset: AVFoundation.AVURLAsset
+  public var timeRange: CoreMedia.CMTimeRange
+  public var compositionStart: CoreMedia.CMTime
+  public var url: Foundation.URL
+  public var originalURL: Foundation.URL
+  public var title: Swift.String?
+  public var additionalTitle: Swift.String?
+  public var id: Swift.Int32
+  public var isEditable: Swift.Bool
+  public var position: BanubaUtilities.AudioTrackLinePosition
+  public var applyedFilterId: Swift.Int?
+  final public let isCameraTrack: Swift.Bool
+  required public init(url: Foundation.URL, originalURL: Foundation.URL, id: Swift.Int32, timeRange: CoreMedia.CMTimeRange, compositionStart: CoreMedia.CMTime, avURLAsset: AVFoundation.AVURLAsset, isAudioRecord: Swift.Bool, isEditable: Swift.Bool, isCameraTrack: Swift.Bool, title: Swift.String?, additionalTitle: Swift.String?, applyedFilterId: Swift.Int?)
+  @objc deinit
+}
+public struct VideoInteractiveMetadata : Swift.Codable {
+  public var interactiveQuestionMetadata: [BanubaUtilities.InteractiveQuestionMetadata]
+  public var interactivePollMetadata: [BanubaUtilities.InteractivePollMetadata]
+  public var interactiveInterestMetadata: [BanubaUtilities.InteractiveInterestMetadata]
+  public var interactiveTestMetadata: [BanubaUtilities.InteractiveTestMetadata]
+  public init(interactiveQuestionMetadata: [BanubaUtilities.InteractiveQuestionMetadata] = [InteractiveQuestionMetadata](), interactivePollMetadata: [BanubaUtilities.InteractivePollMetadata] = [InteractivePollMetadata](), interactiveInterestMetadata: [BanubaUtilities.InteractiveInterestMetadata] = [InteractiveInterestMetadata](), interactiveTestMetadata: [BanubaUtilities.InteractiveTestMetadata] = [InteractiveTestMetadata]())
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InteractiveQuestionMetadata : Swift.Codable {
+  public let imageData: Foundation.Data?
+  public let text: Swift.String
+  public let gradientColors: [BanubaUtilities.ColorParams]?
+  public let textColor: BanubaUtilities.ColorParams?
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let order: Swift.Int
+  public init(imageData: Foundation.Data?, text: Swift.String, gradientColors: [BanubaUtilities.ColorParams]?, textColor: BanubaUtilities.ColorParams?, coordinatesParams: BanubaUtilities.CoordinatesParams, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InteractivePollMetadata : Swift.Codable {
+  public let imageData: Foundation.Data?
+  public let titleText: Swift.String
+  public let leftCardText: Swift.String
+  public let rightCardText: Swift.String
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let order: Swift.Int
+  public init(imageData: Foundation.Data?, titleText: Swift.String, leftCardText: Swift.String, rightCardText: Swift.String, coordinatesParams: BanubaUtilities.CoordinatesParams, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InteractiveInterestMetadata : Swift.Codable {
+  public let imageData: Foundation.Data?
+  public let title: Swift.String
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let order: Swift.Int
+  public init(imageData: Foundation.Data?, title: Swift.String, coordinatesParams: BanubaUtilities.CoordinatesParams, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InteractiveTestMetadata : Swift.Codable {
+  public let imageData: Foundation.Data?
+  public let gradientColors: [BanubaUtilities.ColorParams]?
+  public let textColor: BanubaUtilities.ColorParams?
+  public let title: Swift.String
+  public let fields: [BanubaUtilities.InteractiveTestFieldMetaData]
+  public let coordinatesParams: BanubaUtilities.CoordinatesParams
+  public let order: Swift.Int
+  public init(imageData: Foundation.Data?, gradientColors: [BanubaUtilities.ColorParams]?, textColor: BanubaUtilities.ColorParams?, title: Swift.String, fields: [BanubaUtilities.InteractiveTestFieldMetaData], coordinatesParams: BanubaUtilities.CoordinatesParams, order: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InteractiveTestFieldMetaData : Swift.Codable {
+  public let answer: Swift.String
+  public let isAnswer: Swift.Bool
+  public init(answer: Swift.String, isAnswer: Swift.Bool)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PixelateList : Swift.Codable {
+  public let pixelMask: [BanubaUtilities.PixelMask]
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PixelMask : Swift.Codable {
+  public let id: Swift.String
+  public let type: Swift.String
+  public let startTime: Swift.Int, endTime: Swift.Int
+  public let params: BanubaUtilities.Params
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Params : Swift.Codable {
+  public let x: Swift.Float
+  public let y: Swift.Float
+  public let radius: Swift.Float
+  public let width: Swift.Float
+  public let height: Swift.Float
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+extension Swift.Double {
+  public func formatted(isMiliSecondsEnabled: Swift.Bool = true) -> Swift.String
+  public func stringFromTimeInterval() -> Swift.String
+}
+@objc public class GalleryConfiguration : ObjectiveC.NSObject {
+  public var videoResolution: BanubaUtilities.VideoResolution
+  public var galleryItemConfiguration: BanubaUtilities.GalleryItemConfiguration
+  public var closeButtonConfiguration: BanubaUtilities.ImageButtonConfigurationProtocol
+  public var albumButtonConfiguration: BanubaUtilities.TextButtonConfiguration
+  public var collectionInfoHeaderConfiguration: BanubaUtilities.CollectionInfoHeaderConfiguration
+  public var galleryItemPreviewViewConfiguration: BanubaUtilities.GalleryItemPreviewViewConfiguration
+  public var nextButtonConfiguration: BanubaUtilities.SaveButtonConfiguration
+  public var draftsButtonConfiguration: BanubaUtilities.SaveButtonConfiguration
+  public var noItemsLabelConfiguration: BanubaUtilities.TextConfiguration
+  public var layoutConfiguration: BanubaUtilities.GalleryLayoutConfiguration
+  public var topBarBlurColor: UIKit.UIColor
+  public var clearSelectionButtonConfiguration: BanubaUtilities.ImageButtonConfigurationProtocol
+  public var galleryTypeButton: BanubaUtilities.TextButtonConfiguration
+  public var galleryTypeUnderlineColor: UIKit.UIColor
+  public var isPhotoSequenceAnimationEnabled: Swift.Bool
+  public var importItemsLabelConfiguration: BanubaUtilities.TextConfiguration
+  public var bottomViewConfiguration: BanubaUtilities.BackgroundConfiguration
+  public var isDraftsHidden: Swift.Bool
+  public var visibleTabsInGallery: [BanubaUtilities.GalleryMediaType]
+  public var isCloseButtonHidden: Swift.Bool
+  public var backgroundColor: UIKit.UIColor
+  public var maximumSelectedCountFromGallery: Swift.Int
+  public init(videoResolution: BanubaUtilities.VideoResolution, galleryItemConfiguration: BanubaUtilities.GalleryItemConfiguration, closeButtonConfiguration: BanubaUtilities.ImageButtonConfigurationProtocol, albumButtonConfiguration: BanubaUtilities.TextButtonConfiguration, collectionInfoHeaderConfiguration: BanubaUtilities.CollectionInfoHeaderConfiguration, galleryItemPreviewViewConfiguration: BanubaUtilities.GalleryItemPreviewViewConfiguration, nextButtonConfiguration: BanubaUtilities.SaveButtonConfiguration, draftsButtonConfiguration: BanubaUtilities.SaveButtonConfiguration, noItemsLabelConfiguration: BanubaUtilities.TextConfiguration, layoutConfiguration: BanubaUtilities.GalleryLayoutConfiguration, topBarBlurColor: UIKit.UIColor, clearSelectionButtonConfiguration: BanubaUtilities.ImageButtonConfigurationProtocol, galleryTypeButton: BanubaUtilities.TextButtonConfiguration, galleryTypeUnderlineColor: UIKit.UIColor, isPhotoSequenceAnimationEnabled: Swift.Bool, importItemsLabelConfiguration: BanubaUtilities.TextConfiguration, bottomViewConfiguration: BanubaUtilities.BackgroundConfiguration, isDraftsHidden: Swift.Bool, isCloseButtonHidden: Swift.Bool, visibleTabsInGallery: [BanubaUtilities.GalleryMediaType] = [.video, .photo], backgroundColor: UIKit.UIColor, maximumSelectedCountFromGallery: Swift.Int)
+  @objc deinit
+}
+@objc public protocol TimeLineDataSourceDelegate {
+  @objc func timelineDataSource(_ timelineDataSource: BanubaUtilities.TimeLineDataSource, didLoadImage image: UIKit.UIImage, at index: Swift.Int)
+  @objc func timelineDataSourceDidFinishThumbnailFetch(_ timelineDataSource: BanubaUtilities.TimeLineDataSource)
+}
+@objc public protocol TimeLineDataSource {
+  @objc var delegate: BanubaUtilities.TimeLineDataSourceDelegate? { get set }
+  @objc var duration: CoreMedia.CMTime { get }
+  @objc var thumbnails: [UIKit.UIImage] { get }
+  @objc var isAllThumbnailsFetched: Swift.Bool { get }
+  @objc var thumbnailsCount: Swift.Int { get }
+  @objc var thumbnailHeight: CoreGraphics.CGFloat { get }
+  @objc func loadPreview(completion: @escaping (UIKit.UIImage?) -> Swift.Void, at second: Swift.Double)
+  @objc func getImage(at index: Swift.Int) -> UIKit.UIImage?
+  @objc func loadTimelineThumbs(completion: (() -> Swift.Void)?)
+}
+@objc public protocol AlbumModel {
+  @objc var name: Swift.String? { get set }
+  @objc var preview: UIKit.UIImage? { get set }
+  @objc var assetCollection: Photos.PHAssetCollection { get }
+}
+@objc public class AlbumViewModel : ObjectiveC.NSObject, BanubaUtilities.AlbumModel {
+  final public let model: BanubaUtilities.ItemCollectionModel
+  @objc final public let assetCollection: Photos.PHAssetCollection
+  @objc public var name: Swift.String?
+  @objc public var preview: UIKit.UIImage?
+  public var itemsCount: Swift.Int
+  public init(collection: BanubaUtilities.ItemCollectionModel)
+  public func requestPreview(handler: @escaping (UIKit.UIImage?) -> Swift.Void)
+  @objc deinit
+}
+public struct SaveButtonConfiguration {
+  public var textConfiguration: BanubaUtilities.TextConfiguration
+  public var inactiveTextConfiguration: BanubaUtilities.TextConfiguration
+  public var text: Swift.String
+  public var width: CoreGraphics.CGFloat
+  public var height: CoreGraphics.CGFloat
+  public var cornerRadius: CoreGraphics.CGFloat
+  public var backgroundColor: UIKit.UIColor
+  public var inactiveBackgroundColor: UIKit.UIColor
+  public init(textConfiguration: BanubaUtilities.TextConfiguration, inactiveTextConfiguration: BanubaUtilities.TextConfiguration, text: Swift.String, width: CoreGraphics.CGFloat, height: CoreGraphics.CGFloat, cornerRadius: CoreGraphics.CGFloat, backgroundColor: UIKit.UIColor, inactiveBackgroundColor: UIKit.UIColor)
+}
+extension Swift.Encodable {
+  public func toDictionary(_ encoder: Foundation.JSONEncoder = JSONEncoder()) throws -> [Swift.String : Any]
+  public func toString() throws -> Swift.String
+}
+extension UIKit.UILabel {
+  @_Concurrency.MainActor(unsafe) public func applyConfiguration(_ configuration: BanubaUtilities.TextConfiguration, with text: Swift.String)
+}
+extension CoreGraphics.CGPoint {
+  public mutating func transformToGradientSpace()
+  public func oppositePoint() -> CoreGraphics.CGPoint
+  public static func gradientPointForAngle(_ angle: CoreGraphics.CGFloat) -> CoreGraphics.CGPoint
+}
+extension Swift.String {
+  public func lookUpForImage(in bundle: Foundation.Bundle) -> UIKit.UIImage?
+}
+@objc public class VideoTimeLineCollectionViewHandler : ObjectiveC.NSObject {
+  final public let collectionView: UIKit.UICollectionView
+  final public let timeLineDataSource: BanubaUtilities.TimeLineDataSource
+  final public let cornerRadius: CoreGraphics.CGFloat
+  public var collectionViewDidTap: (() -> Swift.Void)?
+  public init(collectionView: UIKit.UICollectionView, timeLineDataSource: BanubaUtilities.TimeLineDataSource, cornerRadius: CoreGraphics.CGFloat)
+  @objc deinit
+}
+extension BanubaUtilities.VideoTimeLineCollectionViewHandler {
+  public func applyContentInset(appliedWidth: CoreGraphics.CGFloat)
+  public func cellSize() -> CoreGraphics.CGSize
+}
+extension BanubaUtilities.VideoTimeLineCollectionViewHandler : BanubaUtilities.TimeLineDataSourceDelegate {
+  @objc dynamic public func timelineDataSource(_ timelineDataSource: BanubaUtilities.TimeLineDataSource, didLoadImage image: UIKit.UIImage, at index: Swift.Int)
+  @objc dynamic public func timelineDataSourceDidFinishThumbnailFetch(_ timelineDataSource: BanubaUtilities.TimeLineDataSource)
+}
+extension BanubaUtilities.VideoTimeLineCollectionViewHandler : UIKit.UICollectionViewDataSource, UIKit.UICollectionViewDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, numberOfItemsInSection section: Swift.Int) -> Swift.Int
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, cellForItemAt indexPath: Foundation.IndexPath) -> UIKit.UICollectionViewCell
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, willDisplay cell: UIKit.UICollectionViewCell, forItemAt indexPath: Foundation.IndexPath)
+}
+extension BanubaUtilities.VideoTimeLineCollectionViewHandler : UIKit.UICollectionViewDelegateFlowLayout {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, sizeForItemAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGSize
+}
+@_hasMissingDesignatedInitializers public class ConnectionListener {
+  final public let onConnectionChanged: ((BanubaUtilities.Connection) -> ())
+  @objc deinit
+}
+public protocol ReachabilityServicing {
+  var currentConnection: BanubaUtilities.Connection { get }
+  var isInternetAvailable: Swift.Bool { get }
+  func listenConnection(onConnectionChanged: @escaping ((BanubaUtilities.Connection) -> ())) -> BanubaUtilities.ConnectionListener
+  func stopListenConnection(for connectionListener: BanubaUtilities.ConnectionListener)
+}
+public struct ReachabilityServiceBuilder {
+  public static func build() -> BanubaUtilities.ReachabilityServicing?
+}
+public struct MediaTrackTimeRange : Swift.Codable {
+  public let startTime: CoreMedia.CMTime
+  public let playingTimeRange: CoreMedia.CMTimeRange
+  public init(startTime: CoreMedia.CMTime, playingTimeRange: CoreMedia.CMTimeRange)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class MediaTrack : Swift.Codable {
+  public static let unknownId: CoreMedia.CMPersistentTrackID
+  public var id: CoreMedia.CMPersistentTrackID
+  final public let url: Foundation.URL
+  public var timeRange: BanubaUtilities.MediaTrackTimeRange
+  final public let title: Swift.String?
+  final public let additionalTitle: Swift.String?
+  final public let isEditable: Swift.Bool
+  public init(id: CoreMedia.CMPersistentTrackID, url: Foundation.URL, timeRange: BanubaUtilities.MediaTrackTimeRange, isEditable: Swift.Bool, title: Swift.String? = nil, additionalTitle: Swift.String? = nil)
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+public enum TransitionType : Swift.String, Swift.Codable, Swift.CaseIterable {
+  case normal
+  case whipDown
+  case whipUp
+  case whipRight
+  case whipLeft
+  case scrollDown
+  case scrollUp
+  case scrollRight
+  case scrollLeft
+  case spinRight
+  case fade
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [BanubaUtilities.TransitionType]
+  public typealias RawValue = Swift.String
+  public static var allCases: [BanubaUtilities.TransitionType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension Dispatch.DispatchQueue {
+  public static func checkAndPerformOnMainThreadAsync(_ block: @escaping () -> Swift.Void)
+}
+extension Swift.Double {
+  public func rounded(toPlaces places: Swift.Int, rule: Swift.FloatingPointRoundingRule? = nil) -> Swift.Double
+}
+@objc public class AlbumsConfiguration : ObjectiveC.NSObject {
+  public var textButton: BanubaUtilities.TextButtonConfiguration
+  public var backButton: BanubaUtilities.BackButtonConfiguration
+  public init(textButton: BanubaUtilities.TextButtonConfiguration, backButton: BanubaUtilities.BackButtonConfiguration)
+  @objc deinit
+}
+public struct PlayerControlConfiguration {
+  public var playButtonImageName: Swift.String
+  public var pauseButtonImageName: Swift.String
+  public init(playButtonImageName: Swift.String, pauseButtonImageName: Swift.String)
+}
+@_hasMissingDesignatedInitializers open class Logger {
+  open class func logError(_ message: Swift.String, subsystem: Swift.String = "com.banuba", category: Swift.String = "")
+  open class func logDegug(_ message: Swift.String, subsystem: Swift.String = "com.banuba", category: Swift.String = "")
+  open class func logInfo(_ message: Swift.String, subsystem: Swift.String = "com.banuba", category: Swift.String = "")
+  open class func logFault(_ message: Swift.String, subsystem: Swift.String = "com.banuba", category: Swift.String = "")
+  open class func logDefault(_ message: Swift.String, subsystem: Swift.String = "com.banuba", category: Swift.String = "")
+  @objc deinit
+}
+public protocol AudioEditorServiceAdoptable : AnyObject {
+  func play()
+  func pause()
+  func seek(to: Foundation.TimeInterval)
+  func load(track: BanubaUtilities.AudioTrackAdoptable) throws
+  func changeVolume(volume: Swift.Float)
+  var player: AVFAudio.AVAudioPlayer? { get set }
+  func autoRepeat(repeat: Swift.Bool)
+  func seekToStart(isEnabled: Swift.Bool)
+  func createAudioDirectory()
+  func unload()
+  var delegate: BanubaUtilities.AudioPlayerDelegate? { get set }
+}
+public protocol AudioPlayerDelegate : AnyObject {
+  func playerPlaysFrameAtTime(_ time: Foundation.TimeInterval)
+  func didEndPlaying()
+}
+public struct AlertViewConfiguration {
+  public var cornerRadius: CoreGraphics.CGFloat
+  public var refuseButtonRadius: CoreGraphics.CGFloat
+  public var agreeButtonRadius: CoreGraphics.CGFloat
+  public var refuseButtonBackgroundColor: UIKit.UIColor
+  public var agreeButtonBackgroundColor: UIKit.UIColor
+  public var additionalButtonBackgroundColor: UIKit.UIColor
+  public var resetButtonTextConfig: BanubaUtilities.TextButtonConfiguration
+  public var additionalButtonTextConfig: BanubaUtilities.TextButtonConfiguration
+  public var refuseButtonTextConfig: BanubaUtilities.TextButtonConfiguration
+  public var agreeButtonTextConfig: BanubaUtilities.TextButtonConfiguration
+  public var titleTextConfig: BanubaUtilities.TextConfiguration
+  public var messageTextCongig: BanubaUtilities.TextConfiguration?
+  public init(cornerRadius: CoreGraphics.CGFloat, refuseButtonRadius: CoreGraphics.CGFloat, agreeButtonRadius: CoreGraphics.CGFloat, refuseButtonBackgroundColor: UIKit.UIColor, agreeButtonBackgroundColor: UIKit.UIColor, additionalButtonBackgroundColor: UIKit.UIColor, resetButtonTextConfig: BanubaUtilities.TextButtonConfiguration, refuseButtonTextConfig: BanubaUtilities.TextButtonConfiguration, agreeButtonTextConfig: BanubaUtilities.TextButtonConfiguration, additionalButtonTextConfig: BanubaUtilities.TextButtonConfiguration, titleTextConfig: BanubaUtilities.TextConfiguration, messageTextCongig: BanubaUtilities.TextConfiguration? = nil)
+}
+public struct GalleryItemConfiguration {
+  public var orderNumberBackgroudColor: UIKit.UIColor
+  public var orderNumberTitleColor: UIKit.UIColor
+  public var orderNumberTitleFont: UIKit.UIFont
+  public var backgroundSelectionIndicatorImageName: Swift.String
+  public var hideSelectionIndicatorBySelection: Swift.Bool
+  public var durationLabelConfiguration: BanubaUtilities.TextConfiguration
+  public var durationLabelBackgroundColor: UIKit.UIColor
+  public var activityIndicatorConfiguration: BanubaUtilities.SmallActivityIndicatorConfiguration
+  public var cornerRadius: CoreGraphics.CGFloat
+  public init(orderNumberBackgroudColor: UIKit.UIColor, orderNumberTitleColor: UIKit.UIColor, orderNumberTitleFont: UIKit.UIFont, backgroundSelectionIndicatorImageName: Swift.String, hideSelectionIndicatorBySelection: Swift.Bool, durationLabelConfiguration: BanubaUtilities.TextConfiguration, durationLabelBackgroundColor: UIKit.UIColor, activityIndicatorConfiguration: BanubaUtilities.SmallActivityIndicatorConfiguration, cornerRadius: CoreGraphics.CGFloat)
+}
+extension UIKit.UIStackView {
+  @_Concurrency.MainActor(unsafe) public func addArrangedSubviews(_ subviews: [UIKit.UIView])
+  @_Concurrency.MainActor(unsafe) public func removeAllArrangedSubviews()
+}
+extension UIKit.UIStackView {
+  @_Concurrency.MainActor(unsafe) public func addBackground(color: UIKit.UIColor, cornerRadius: CoreGraphics.CGFloat)
+}
+public protocol AudioItem {
+  var id: Swift.Int32 { get }
+  var url: Foundation.URL { get }
+  var title: Swift.String? { get set }
+  var additionalTitle: Swift.String? { get set }
+  var isEditable: Swift.Bool { get set }
+}
+extension CoreGraphics.CGFloat {
+  public var gradientPoints: (CoreGraphics.CGPoint, CoreGraphics.CGPoint) {
+    get
+  }
+}
+public struct ItemCollectionModel {
+  public var assetCollection: Photos.PHAssetCollection
+  public var previewAsset: Photos.PHAsset?
+}
+public protocol GalleryAdapter : AnyObject {
+  var changesHandler: BanubaUtilities.GalleryManager.ChangesHandler? { get set }
+  func checkAccessStatus(completion: @escaping (Swift.Bool) -> ())
+  func getPreviewImageForGallery(completion: @escaping (UIKit.UIImage?) -> ())
+  func fetchMediaAsset(from album: Photos.PHAssetCollection?, type: Photos.PHAssetMediaType) -> [BanubaUtilities.GalleryItem]
+  func fetchSmartAlbums() -> [BanubaUtilities.ItemCollectionModel]
+  func register()
+}
+@objc final public class GalleryManager : ObjectiveC.NSObject, BanubaUtilities.GalleryAdapter {
+  final public let videoResolution: BanubaUtilities.VideoResolution
+  final public let minimumDurationFromGallery: Foundation.TimeInterval
+  final public var changesHandler: BanubaUtilities.GalleryManager.ChangesHandler?
+  public typealias ChangesHandler = ((Photos.PHChange, [Photos.PHAsset]?, [Photos.PHAsset]?) -> Swift.Void)
+  final public var authorizationStatus: Photos.PHAuthorizationStatus {
+    get
+  }
+  final public var isCollectionsObserve: Swift.Bool
+  required public init(isManuallyRegister: Swift.Bool, videoResolution: BanubaUtilities.VideoResolution, minimumDurationFromGallery: Foundation.TimeInterval)
+  final public func register()
+  final public func getPreviewImageForGallery(completion: @escaping (UIKit.UIImage?) -> ())
+  final public func fetchAssets(in collection: Photos.PHAssetCollection, options: Photos.PHFetchOptions) -> Photos.PHFetchResult<Photos.PHAsset>
+  @objc deinit
+}
+extension BanubaUtilities.GalleryManager : Photos.PHPhotoLibraryChangeObserver {
+  @objc final public func photoLibraryDidChange(_ changeInstance: Photos.PHChange)
+}
+extension BanubaUtilities.GalleryManager {
+  final public func fetchCollections(isNeedToStoreAssets: Swift.Bool) -> [BanubaUtilities.ItemCollectionModel]
+  final public func fetchSmartAlbums() -> [BanubaUtilities.ItemCollectionModel]
+  final public func fetchPhotoAndVideoAssets() -> [BanubaUtilities.BanubaGalleryItem]
+  final public func fetchMediaAsset(from album: Photos.PHAssetCollection? = nil, type: Photos.PHAssetMediaType) -> [BanubaUtilities.GalleryItem]
+  final public func checkAccessStatus(completion: @escaping (Swift.Bool) -> ())
+}
+extension BanubaUtilities.GalleryManager {
+  public static func requestAccessIfNeeded(completion: @escaping (Swift.Bool) -> ())
+}
+@objc public protocol GalleryViewControllerDelegate {
+  @objc func galleryViewControllerDidStartExport(_ controller: BanubaUtilities.GalleryViewController)
+  @objc func galleryViewControllerDidEndExport(_ controller: BanubaUtilities.GalleryViewController)
+  @objc func galleryViewControllerDidClose(_ controller: BanubaUtilities.GalleryViewController)
+  @objc func galleryViewControllerDone(_ controller: BanubaUtilities.GalleryViewController, withGalleryItems items: [BanubaUtilities.GalleryItem])
+  @objc func galleryViewController(_ controller: BanubaUtilities.GalleryViewController, presentMessage message: Swift.String)
+}
+@objc public enum GalleryMediaType : Swift.Int, Swift.CaseIterable {
+  case video
+  case photo
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [BanubaUtilities.GalleryMediaType]
+  public typealias RawValue = Swift.Int
+  public static var allCases: [BanubaUtilities.GalleryMediaType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public class GallerySelectionBehaviour : ObjectiveC.NSObject {
+  final public let maximumSelectedCount: Swift.Int
+  final public let selectedItemsCount: Swift.Int?
+  final public let isMultiselectModeEnabled: Swift.Bool
+  final public let minimumGalleryVideoDuration: Foundation.TimeInterval
+  final public let allowedMediaTypes: [BanubaUtilities.GalleryMediaType]
+  public init(maximumSelectedCount: Swift.Int, selectedItemsCount: Swift.Int? = nil, isMultiselectModeEnabled: Swift.Bool, minimumGalleryVideoDuration: Foundation.TimeInterval, allowedMediaTypes: [BanubaUtilities.GalleryMediaType])
+  public var isAdditionalItemsRequired: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc @_Concurrency.MainActor(unsafe) open class GalleryViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) weak open var delegate: BanubaUtilities.GalleryViewControllerDelegate?
+  @_Concurrency.MainActor(unsafe) open var configuration: BanubaUtilities.GalleryConfiguration?
+  @_Concurrency.MainActor(unsafe) open var selectionBehaviour: BanubaUtilities.GallerySelectionBehaviour?
+  @_Concurrency.MainActor(unsafe) open func useAlbum(_ albumView: BanubaUtilities.AlbumModel)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc @_Concurrency.MainActor(unsafe) open class AlbumsViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) weak open var delegate: BanubaUtilities.AlbumsViewControllerDelegate?
+  @_Concurrency.MainActor(unsafe) open var configuration: BanubaUtilities.AlbumsConfiguration?
+  @_Concurrency.MainActor(unsafe) open var selectedAlbum: BanubaUtilities.AlbumModel?
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc public protocol AlbumsViewControllerDelegate {
+  @objc func albumsViewController(_ controller: BanubaUtilities.AlbumsViewController, didSelect album: BanubaUtilities.AlbumModel)
+  @objc func albumsViewControllerDidClose(_ controller: BanubaUtilities.AlbumsViewController)
+}
+public struct CollectionInfoHeaderConfiguration {
+  public var textConfiguration: BanubaUtilities.TextConfiguration
+  public var hideButtonConfiguration: BanubaUtilities.ImageButtonConfigurationProtocol
+  public var height: CoreGraphics.CGFloat
+  public var backgroundColor: UIKit.UIColor
+  public var underlinedTextColor: UIKit.UIColor
+  public init(textConfiguration: BanubaUtilities.TextConfiguration, hideButtonConfiguration: BanubaUtilities.ImageButtonConfigurationProtocol, height: CoreGraphics.CGFloat, backgroundColor: UIKit.UIColor, underlinedTextColor: UIKit.UIColor)
+}
+extension Swift.CaseIterable where Self : Swift.Equatable {
+  public var next: Self {
+    get
+  }
+}
+public struct GalleryItemPreviewViewConfiguration {
+  public var backgroundViewBlurStyle: UIKit.UIBlurEffect.Style
+  public var selectionButtonView: BanubaUtilities.BackgroundConfiguration
+  public var selectionButtonSelectText: BanubaUtilities.TextConfiguration
+  public var selectionButtonDeselectText: BanubaUtilities.TextConfiguration
+  public var selectionButtonSelectImageName: Swift.String
+  public var selectionButtonDeselectImageName: Swift.String
+  public var previewContainerView: BanubaUtilities.BackgroundConfiguration
+  public init(backgroundViewBlurStyle: UIKit.UIBlurEffect.Style, selectionButtonView: BanubaUtilities.BackgroundConfiguration, selectionButtonSelectText: BanubaUtilities.TextConfiguration, selectionButtonDeselectText: BanubaUtilities.TextConfiguration, selectionButtonSelectImageName: Swift.String, selectionButtonDeselectImageName: Swift.String, previewContainerView: BanubaUtilities.BackgroundConfiguration)
+}
+public enum FileExtension {
+  public enum Video : Swift.String {
+    case mp4
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum Music : Swift.String {
+    case mp3
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+}
+public struct DeviceVibrateManager {
+  public static func vibrate(withPower power: UIKit.UIImpactFeedbackGenerator.FeedbackStyle)
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class CircularProgressView : UIKit.UIView, BanubaUtilities.ProgressAnimatableView {
+  @_Concurrency.MainActor(unsafe) public var progress: Swift.Float {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var progressColor: UIKit.UIColor
+  @_Concurrency.MainActor(unsafe) public var shadowColor: UIKit.UIColor
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc public protocol ImageConfigurationProtocol {
+  @objc var image: UIKit.UIImage? { get }
+  @objc var tintColor: UIKit.UIColor? { get }
+}
+public protocol AnimatableView : UIKit.UIView {
+  func start(completion: @escaping (Swift.Bool) -> Swift.Void)
+  func stop()
+}
+public protocol CountdownTimerAnimatableView : BanubaUtilities.AnimatableView {
+  var countdownDigit: Swift.Int { get set }
+}
+public protocol ProgressAnimatableView : UIKit.UIView {
+  var progress: Swift.Float { get set }
+}
+@objc public protocol AppStateObserverDelegate {
+  @objc func applicationWillResignActive(_ appStateObserver: BanubaUtilities.AppStateObserver)
+  @objc func applicationDidBecomeActive(_ appStateObserver: BanubaUtilities.AppStateObserver)
+  @objc optional func applicationWillEnterForeground(_ appStateObserver: BanubaUtilities.AppStateObserver)
+  @objc optional func applicationWillTerminateNotification(_ appStateObserver: BanubaUtilities.AppStateObserver)
+  @objc optional func applicationDidEnterBackgroundNotification(_ appStateObserver: BanubaUtilities.AppStateObserver)
+}
+@_inheritsConvenienceInitializers @objc public class AppStateObserver : ObjectiveC.NSObject {
+  weak public var delegate: BanubaUtilities.AppStateObserverDelegate?
+  @objc override dynamic public init()
+  convenience public init(delegate: BanubaUtilities.AppStateObserverDelegate?)
+  @objc deinit
+}
+extension BanubaUtilities.AppStateObserver {
+  public func subscribeToNotifications()
+  public func unsubscribeFromNotifications()
+  @objc dynamic public func handleApplicationWillResignActiveNotification(_ notification: Foundation.Notification)
+  @objc dynamic public func handleApplicationDidBecomeActiveNotification(_ notification: Foundation.Notification)
+  @objc dynamic public func handleWillEnterForegroundNotification(_ notification: Foundation.Notification)
+  @objc dynamic public func handleWillTerminateNotification(_ notification: Foundation.Notification)
+  @objc dynamic public func handleDidEnterBackgroundNotification(_ notification: Foundation.Notification)
+}
+public protocol PlayerStateStorable {
+  var playerState: Swift.Bool { get set }
+}
+public struct GalleryLayoutConfiguration {
+  public var numberOfItemsPerRow: Swift.Int
+  public var interitemSpacing: CoreGraphics.CGFloat
+  public var edgeInsets: UIKit.UIEdgeInsets
+  public init(numberOfItemsPerRow: Swift.Int, interitemSpacing: CoreGraphics.CGFloat, edgeInsets: UIKit.UIEdgeInsets)
+}
+public protocol ReusableView : AnyObject {
+}
+extension BanubaUtilities.ReusableView {
+  public static var reuseIdentifier: Swift.String {
+    get
+  }
+}
+public struct BackButtonConfiguration {
+  public var imageConfiguration: BanubaUtilities.ImageConfigurationProtocol
+  public var selectedImageConfiguration: BanubaUtilities.ImageConfigurationProtocol?
+  public var position: BanubaUtilities.BackButtonConfiguration.Position?
+  public var menuActions: [BanubaUtilities.PopoverAlertViewController.ActionType]
+  @frozen public enum Position {
+    case left
+    case right
+    public static func == (a: BanubaUtilities.BackButtonConfiguration.Position, b: BanubaUtilities.BackButtonConfiguration.Position) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public init(imageConfiguration: BanubaUtilities.ImageConfigurationProtocol, selectedImageConfiguration: BanubaUtilities.ImageConfigurationProtocol? = nil, position: BanubaUtilities.BackButtonConfiguration.Position? = nil, menuActions: [BanubaUtilities.PopoverAlertViewController.ActionType] = [])
+}
+public enum DrawableFigure : Swift.String, Swift.Codable {
+  case circle
+  case square
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class AudioServiceItem : BanubaUtilities.AudioItem {
+  final public let id: Swift.Int32
+  final public let url: Foundation.URL
+  public var title: Swift.String?
+  public var additionalTitle: Swift.String?
+  public var isEditable: Swift.Bool
+  public var timeRange: CoreMedia.CMTimeRange {
+    get
+  }
+  public init(id: Swift.Int32, url: Foundation.URL, title: Swift.String?, additionalTitle: Swift.String?, isEditable: Swift.Bool)
+  @objc deinit
+}
+public protocol AudioServicing {
+  var delegate: BanubaUtilities.AudioPlayerDelegate? { get set }
+  var rate: Swift.Float { get set }
+  var currentAudio: BanubaUtilities.AudioServiceItem? { get }
+  var duration: Foundation.TimeInterval? { get }
+  func autoRepeat(repeat: Swift.Bool, delay: Swift.Double)
+  func seekToStart()
+  func seek(to: Foundation.TimeInterval)
+  func load(item: BanubaUtilities.AudioServiceItem) throws
+  func unload()
+  func toggle()
+  func play()
+  func pause()
+  func setRate(_ rate: Swift.Float)
+  func setDelegate(_ delegate: BanubaUtilities.AudioPlayerDelegate)
+}
+@objc @_inheritsConvenienceInitializers public class AudioService : ObjectiveC.NSObject, BanubaUtilities.AudioServicing, BanubaUtilities.AudioEditorServiceAdoptable {
+  weak public var delegate: BanubaUtilities.AudioPlayerDelegate?
+  public var currentAudio: BanubaUtilities.AudioServiceItem?
+  public var player: AVFAudio.AVAudioPlayer?
+  public var duration: Foundation.TimeInterval? {
+    get
+  }
+  public var rate: Swift.Float {
+    get
+    set
+  }
+  public func autoRepeat(repeat: Swift.Bool)
+  public func autoRepeat(repeat: Swift.Bool, delay: Swift.Double = .zero)
+  public func seekToStart(isEnabled: Swift.Bool)
+  public func load(track: BanubaUtilities.AudioTrackAdoptable) throws
+  public func createAudioDirectory()
+  public func setRate(_ rate: Swift.Float)
+  public func changeVolume(volume: Swift.Float)
+  public func load(item: BanubaUtilities.AudioServiceItem) throws
+  public func load(trackUrl: Foundation.URL) throws
+  public func unload()
+  public func toggle()
+  public func play()
+  public func pause()
+  public func seekToStart()
+  public func seek(to: Foundation.TimeInterval)
+  public func setDelegate(_ delegate: BanubaUtilities.AudioPlayerDelegate)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension BanubaUtilities.AudioService : AVFAudio.AVAudioPlayerDelegate {
+  @objc dynamic public func audioPlayerDidFinishPlaying(_ player: AVFAudio.AVAudioPlayer, successfully flag: Swift.Bool)
+}
+extension BanubaUtilities.AudioServicing {
+  public var musicTrack: BanubaUtilities.MediaTrack? {
+    get
+  }
+}
+@objc public enum GalleryItemType : Swift.Int {
+  case photo
+  case video
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol GalleryItem : ObjectiveC.NSObjectProtocol {
+  @objc var urlAsset: AVFoundation.AVURLAsset? { get }
+  @objc var preview: UIKit.UIImage? { get set }
+  @objc var duration: Foundation.TimeInterval { get }
+  @objc var type: BanubaUtilities.GalleryItemType { get }
+  @objc func requestPreview(size: CoreGraphics.CGSize, synchronously: Swift.Bool, handler: @escaping (UIKit.UIImage?) -> Swift.Void)
+  @objc func requestPhoto(size: CoreGraphics.CGSize, progressHandler: ((Swift.Double) -> (Swift.Bool))?, handler: @escaping (UIKit.UIImage?, Swift.Error?) -> Swift.Void)
+  @objc func requestAVURLAsset(progressHandler: ((Swift.Double) -> (Swift.Bool))?, handler: @escaping (AVFoundation.AVURLAsset?, Swift.Error?) -> Swift.Void)
+  @objc func requestAVPlayerItem(progressHandler: ((Swift.Double) -> (Swift.Bool))?, handler: @escaping (AVFoundation.AVPlayerItem?, Swift.Error?) -> Swift.Void)
+}
+@objc open class BanubaGalleryItem : ObjectiveC.NSObject, BanubaUtilities.GalleryItem {
+  public static let defaultPreviewSize: CoreGraphics.CGSize
+  final public let asset: Photos.PHAsset
+  final public let videoResolution: BanubaUtilities.VideoResolution
+  @objc public var preview: UIKit.UIImage?
+  @objc public var duration: Foundation.TimeInterval {
+    @objc get
+  }
+  @objc public var urlAsset: AVFoundation.AVURLAsset? {
+    get
+  }
+  @objc public var type: BanubaUtilities.GalleryItemType {
+    @objc get
+  }
+  public init(asset: Photos.PHAsset, videoResolution: BanubaUtilities.VideoResolution)
+  @objc open func requestAVURLAsset(progressHandler: ((Swift.Double) -> (Swift.Bool))?, handler: @escaping (AVFoundation.AVURLAsset?, Swift.Error?) -> Swift.Void)
+  @objc open func requestAVPlayerItem(progressHandler: ((Swift.Double) -> (Swift.Bool))?, handler: @escaping (AVFoundation.AVPlayerItem?, Swift.Error?) -> Swift.Void)
+  @objc open func requestPreview(size: CoreGraphics.CGSize = BanubaGalleryItem.defaultPreviewSize, synchronously: Swift.Bool, handler: @escaping (UIKit.UIImage?) -> Swift.Void)
+  @objc open func requestPhoto(size: CoreGraphics.CGSize, progressHandler: ((Swift.Double) -> (Swift.Bool))?, handler: @escaping (UIKit.UIImage?, Swift.Error?) -> Swift.Void)
+  @objc deinit
+}
+extension BanubaUtilities.BanubaGalleryItem {
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+}
+@objc public protocol GalleryViewControllerFactory : ObjectiveC.NSObjectProtocol {
+  @objc func makeGalleryViewController(withConfiguration configuration: BanubaUtilities.GalleryConfiguration, albumsConfiguration: BanubaUtilities.AlbumsConfiguration, selectionBehaviour: BanubaUtilities.GallerySelectionBehaviour) -> BanubaUtilities.GalleryViewController
+}
+extension Swift.Array {
+  public func unique<T>(by keyPath: Swift.KeyPath<Element, T>) -> [Element] where T : Swift.Hashable
+}
+extension Swift.Error {
+  public var errorMessage: Swift.String {
+    get
+  }
+}
+@objc public class SmallActivityIndicatorConfiguration : ObjectiveC.NSObject {
+  @objc public enum GradientTypeAdapter : Swift.Int {
+    case color
+    case image
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public class GradientType : ObjectiveC.NSObject {
+    public var type: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientTypeAdapter
+    public var color: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientColorConfiguration?
+    public var image: BanubaUtilities.ImageConfigurationProtocol?
+    public init(type: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientTypeAdapter, color: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientColorConfiguration?, image: BanubaUtilities.ImageConfigurationProtocol?)
+    @objc deinit
+  }
+  @objc public class GradientColorConfiguration : ObjectiveC.NSObject {
+    public var angle: CoreGraphics.CGFloat
+    public var colors: [CoreGraphics.CGColor]
+    public init(angle: CoreGraphics.CGFloat, colors: [CoreGraphics.CGColor])
+    @objc deinit
+  }
+  public var gradientType: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientType
+  public var activityLineWidth: CoreGraphics.CGFloat
+  public init(gradientType: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientType, activityLineWidth: CoreGraphics.CGFloat)
+  @objc deinit
+}
+extension BanubaUtilities.SmallActivityIndicatorConfiguration.GradientType {
+  @objc public static func color(_ color: BanubaUtilities.SmallActivityIndicatorConfiguration.GradientColorConfiguration) -> BanubaUtilities.SmallActivityIndicatorConfiguration.GradientType
+  @objc public static func image(_ image: BanubaUtilities.ImageConfigurationProtocol) -> BanubaUtilities.SmallActivityIndicatorConfiguration.GradientType
+}
+public enum VideoResolution : Swift.String {
+  case qhd2560x1440
+  case hd1920x1080
+  case hd1280x720
+  case md960x540
+  case default854x480
+  public var isFullHDEnabled: Swift.Bool {
+    get
+  }
+  public var сaptureSessionPreset: AVFoundation.AVCaptureSession.Preset {
+    get
+  }
+  public var assetExportPreset: Swift.String {
+    get
+  }
+  public var size: CoreGraphics.CGSize {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VideoResolutionConfiguration {
+  public var `default`: BanubaUtilities.VideoResolution
+  public let resolutions: [BanubaUtilities.DeviceModel : BanubaUtilities.VideoResolution]
+  public let thumbnailHeights: [BanubaUtilities.DeviceModel : CoreGraphics.CGFloat]
+  public let defaultThumbnailHeight: CoreGraphics.CGFloat
+  public var current: BanubaUtilities.VideoResolution {
+    get
+  }
+  public var currentThumbnailHeight: CoreGraphics.CGFloat {
+    get
+  }
+  public init(default: BanubaUtilities.VideoResolution, resolutions: [BanubaUtilities.DeviceModel : BanubaUtilities.VideoResolution], thumbnailHeights: [BanubaUtilities.DeviceModel : CoreGraphics.CGFloat], defaultThumbnailHeight: CoreGraphics.CGFloat)
+}
+public enum DeviceModel : Swift.String {
+  case simulator, iPod1, iPod2, iPod3, iPod4, iPod5, iPod6, iPod7, iPad2, iPad3, iPad4, iPad5, iPad6, iPad7, iPad8, iPadMini1, iPadMini2, iPadMini3, iPadMini4, iPadMini5, iPadAir1, iPadAir2, iPadAir3, iPadAir4, iPadPro9_7, iPadPro10_5, iPadPro11, iPadPro2_11, iPadPro3_11, iPadPro12_9, iPadPro2_12_9, iPadPro3_12_9, iPadPro4_12_9, iPadPro5_12_9, iPhone4, iPhone4S, iPhone5, iPhone5S, iPhone5C, iPhone6, iPhone6plus, iPhone6S, iPhone6Splus, iPhoneSE, iPhone7, iPhone7plus, iPhone8, iPhone8plus, iPhoneX, iPhoneXS, iPhoneXSmax, iPhoneXR, iPhone11, iPhone11Pro, iPhone11ProMax, iPhoneSE2ndGen, iPhone12, iPhone12Mini, iPhone12Pro, iPhone12ProMax, unrecognized
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension UIKit.UIDevice {
+  @_Concurrency.MainActor(unsafe) public var type: BanubaUtilities.DeviceModel {
+    get
+  }
+}
+extension AVFoundation.AVCaptureSession.Preset {
+  public mutating func downgrade()
+}
+public struct RoundedButtonConfiguration {
+  public var textConfiguration: BanubaUtilities.TextConfiguration?
+  public var borderWidth: CoreGraphics.CGFloat?
+  public var borderColor: CoreGraphics.CGColor?
+  public var cornerRadius: CoreGraphics.CGFloat
+  public var backgroundColor: UIKit.UIColor
+  public var width: CoreGraphics.CGFloat
+  public var height: CoreGraphics.CGFloat
+  public var titleSpacing: CoreGraphics.CGFloat?
+  public init(textConfiguration: BanubaUtilities.TextConfiguration?, cornerRadius: CoreGraphics.CGFloat, backgroundColor: UIKit.UIColor, borderWidth: CoreGraphics.CGFloat? = nil, borderColor: CoreGraphics.CGColor? = nil, width: CoreGraphics.CGFloat = 70.0, height: CoreGraphics.CGFloat = 30.0)
+}
+extension Swift.Error {
+  public var isCancelled: Swift.Bool {
+    get
+  }
+}
+public class PreviewExtractor {
+  final public let asset: AVFoundation.AVAsset
+  final public let thumbnailHeight: CoreGraphics.CGFloat
+  public var imageGenerator: AVFoundation.AVAssetImageGenerator
+  public init(asset: AVFoundation.AVAsset, thumbnailHeight: CoreGraphics.CGFloat)
+  @objc deinit
+  public func extractPreview(at time: CoreMedia.CMTime) -> UIKit.UIImage?
+}
+extension UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public func roundCorners(corners: UIKit.UIRectCorner, radius: CoreGraphics.CGFloat)
+  @_Concurrency.MainActor(unsafe) public func roundCorners(cornerMask: QuartzCore.CACornerMask, radius: CoreGraphics.CGFloat)
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class VideoEditorActivityIndicator : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public var configuration: BanubaUtilities.SmallActivityIndicatorConfiguration? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var bounds: CoreGraphics.CGRect {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) public func startAnimating()
+  @_Concurrency.MainActor(unsafe) public func stopAnimating()
+  @objc deinit
+}
+public enum OverlayPopoverActionsPosition {
+  case bottomLeft(_: CoreGraphics.CGPoint)
+  case topLeft(_: CoreGraphics.CGPoint)
+  case topRight(_: CoreGraphics.CGPoint)
+  case bottomRight(_: CoreGraphics.CGPoint)
+  case center
+}
+public struct PopoverAlertViewConfiguration {
+  public static var `default`: BanubaUtilities.PopoverAlertViewConfiguration {
+    get
+  }
+}
+public struct OverlayPopoverActionConfiguration {
+  public init(leftImage: BanubaUtilities.ImageConfigurationProtocol?, rightImage: BanubaUtilities.ImageConfigurationProtocol?, title: BanubaUtilities.TextConfiguration, titleImageInset: CoreGraphics.CGFloat)
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class PopoverAlertViewController : UIKit.UIViewController, BanubaUtilities.NibLoadable {
+  public enum ActionType {
+    case edit(BanubaUtilities.OverlayPopoverActionConfiguration)
+    case delete(BanubaUtilities.OverlayPopoverActionConfiguration)
+    case discardChanges(BanubaUtilities.OverlayPopoverActionConfiguration)
+    case updateDraft(BanubaUtilities.OverlayPopoverActionConfiguration)
+  }
+  @_Concurrency.MainActor(unsafe) public var configuration: BanubaUtilities.PopoverAlertViewConfiguration
+  @_Concurrency.MainActor(unsafe) public var actions: [BanubaUtilities.PopoverAlertViewController.ActionType]
+  @_Concurrency.MainActor(unsafe) public var actionsPosition: BanubaUtilities.OverlayPopoverActionsPosition
+  @_Concurrency.MainActor(unsafe) public var resultCompletion: ((BanubaUtilities.PopoverAlertViewController.ActionType) -> Swift.Void)?
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewWillLayoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public protocol AudioTrackAdoptable : AnyObject {
+  var position: BanubaUtilities.AudioTrackLinePosition { get set }
+  var compositionTrack: AVFoundation.AVMutableCompositionTrack? { get set }
+  var compositionStart: CoreMedia.CMTime { get set }
+  var avAssetTrack: AVFoundation.AVAssetTrack? { get set }
+  var avURLAsset: AVFoundation.AVURLAsset { get set }
+  var timeRange: CoreMedia.CMTimeRange { get set }
+  var url: Foundation.URL { get set }
+  var originalURL: Foundation.URL { get set }
+  var title: Swift.String? { get set }
+  var additionalTitle: Swift.String? { get set }
+  var id: Swift.Int32 { get set }
+  var isAudioRecord: Swift.Bool { get set }
+  var applyedFilterId: Swift.Int? { get set }
+  var isEditable: Swift.Bool { get set }
+  var isCameraTrack: Swift.Bool { get }
+  init(url: Foundation.URL, originalURL: Foundation.URL, id: Swift.Int32, timeRange: CoreMedia.CMTimeRange, compositionStart: CoreMedia.CMTime, avURLAsset: AVFoundation.AVURLAsset, isAudioRecord: Swift.Bool, isEditable: Swift.Bool, isCameraTrack: Swift.Bool, title: Swift.String?, additionalTitle: Swift.String?, applyedFilterId: Swift.Int?)
+}
+public enum AudioTrackLinePosition : Swift.Int, Swift.CaseIterable {
+  case first
+  case second
+  case third
+  case fourth
+  public func getRelevantMovement(movement: BanubaUtilities.AudioTrackLineViewMovement?) -> BanubaUtilities.AudioTrackLinePosition?
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [BanubaUtilities.AudioTrackLinePosition]
+  public typealias RawValue = Swift.Int
+  public static var allCases: [BanubaUtilities.AudioTrackLinePosition] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum AudioTrackLineViewMovement {
+  case top
+  case bottom
+  public static func == (a: BanubaUtilities.AudioTrackLineViewMovement, b: BanubaUtilities.AudioTrackLineViewMovement) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol VideoEditorPlayable : AnyObject {
+  func startPlay(loop: Swift.Bool, fixedSpeed: Swift.Bool)
+  func startPlay(loop: Swift.Bool, fixedSpeed: Swift.Bool, start: CoreMedia.CMTime, end: CoreMedia.CMTime)
+  func startStopPlay(loop: Swift.Bool, fixedSpeed: Swift.Bool)
+  func pausePlay()
+  func stopPlay()
+  func resumePlay()
+  func previewLayer() -> AVFoundation.AVPlayerLayer
+  func smoothlySeek(to time: CoreMedia.CMTime)
+  func seek(to time: CoreMedia.CMTime)
+  func reloadPreview()
+  func reloadPreview(shouldAutoStart: Swift.Bool)
+  func reloadComposition(shouldAutoStart: Swift.Bool)
+  var isPlaying: Swift.Bool { get }
+  var isMuted: Swift.Bool { get set }
+  var playerItem: AVFoundation.AVPlayerItem? { get }
+  var audioMix: AVFoundation.AVAudioMix? { get set }
+  var playerDelegate: BanubaUtilities.VideoEditorPlayerDelegate? { get set }
+  var avPlayer: AVFoundation.AVPlayer { get }
+  var currentTime: Foundation.TimeInterval { get }
+  var videoDuration: Swift.Double { get }
+  var currentTimeInCMTime: CoreMedia.CMTime { get }
+  var videoDurationCMTime: CoreMedia.CMTime { get }
+  var startTimePlay: CoreMedia.CMTime { get }
+  var endTimePlay: CoreMedia.CMTime { get }
+}
+public protocol VideoEditorPlayerDelegate : AnyObject {
+  func playerPlaysFrame(_ player: BanubaUtilities.VideoEditorPlayable, atTime time: CoreMedia.CMTime)
+  func playerDidEndPlaying(_ player: BanubaUtilities.VideoEditorPlayable)
+}
+public protocol NibLoadable : AnyObject {
+  static var nib: UIKit.UINib { get }
+}
+extension BanubaUtilities.NibLoadable {
+  public static var nib: UIKit.UINib {
+    get
+  }
+}
+extension BanubaUtilities.NibLoadable where Self : UIKit.UIView {
+  public static func loadFromNib() -> Self
+}
+@objc public class TextConfiguration : ObjectiveC.NSObject {
+  public var kern: Swift.Double
+  public var font: UIKit.UIFont
+  public var color: UIKit.UIColor
+  public var alignment: UIKit.NSTextAlignment
+  public var text: Swift.String?
+  public var shadow: BanubaUtilities.TextShadowConfiguration?
+  public var lineBreakMode: UIKit.NSLineBreakMode
+  public init(kern: Swift.Double = 0, font: UIKit.UIFont, color: UIKit.UIColor, alignment: UIKit.NSTextAlignment = .center, text: Swift.String? = nil, shadow: BanubaUtilities.TextShadowConfiguration? = nil, lineBreakModel: UIKit.NSLineBreakMode = .byWordWrapping)
+  @objc deinit
+}
+public struct TextShadowConfiguration {
+  public var shadowColor: UIKit.UIColor
+  public var shadowOffset: CoreGraphics.CGSize
+  public var shadowBlurRadius: CoreGraphics.CGFloat
+  public init(shadowColor: UIKit.UIColor = UIColor.black.withAlphaComponent(0.4), shadowOffset: CoreGraphics.CGSize = CGSize(width: 0, height: 1), shadowBlurRadius: CoreGraphics.CGFloat = 2.0)
+  public func shadow() -> UIKit.NSShadow
+}
+extension BanubaUtilities.AlertViewController.ButtonType : Swift.Equatable {}
+extension BanubaUtilities.AlertViewController.ButtonType : Swift.Hashable {}
+extension BanubaUtilities.AspectRatio : Swift.Equatable {}
+extension BanubaUtilities.AspectRatio : Swift.Hashable {}
+extension BanubaUtilities.AspectRatio : Swift.RawRepresentable {}
+extension BanubaUtilities.Connection : Swift.Equatable {}
+extension BanubaUtilities.Connection : Swift.Hashable {}
+extension BanubaUtilities.VideoSequenceEditingStep : Swift.Equatable {}
+extension BanubaUtilities.VideoSequenceEditingStep : Swift.Hashable {}
+extension BanubaUtilities.VideoSequenceEditingStep : Swift.RawRepresentable {}
+extension BanubaUtilities.TransitionType : Swift.Equatable {}
+extension BanubaUtilities.TransitionType : Swift.Hashable {}
+extension BanubaUtilities.TransitionType : Swift.RawRepresentable {}
+extension BanubaUtilities.GalleryMediaType : Swift.Equatable {}
+extension BanubaUtilities.GalleryMediaType : Swift.Hashable {}
+extension BanubaUtilities.GalleryMediaType : Swift.RawRepresentable {}
+extension BanubaUtilities.FileExtension.Video : Swift.Equatable {}
+extension BanubaUtilities.FileExtension.Video : Swift.Hashable {}
+extension BanubaUtilities.FileExtension.Video : Swift.RawRepresentable {}
+extension BanubaUtilities.FileExtension.Music : Swift.Equatable {}
+extension BanubaUtilities.FileExtension.Music : Swift.Hashable {}
+extension BanubaUtilities.FileExtension.Music : Swift.RawRepresentable {}
+extension BanubaUtilities.BackButtonConfiguration.Position : Swift.Equatable {}
+extension BanubaUtilities.BackButtonConfiguration.Position : Swift.Hashable {}
+extension BanubaUtilities.BackButtonConfiguration.Position : Swift.Sendable {}
+extension BanubaUtilities.DrawableFigure : Swift.Equatable {}
+extension BanubaUtilities.DrawableFigure : Swift.Hashable {}
+extension BanubaUtilities.DrawableFigure : Swift.RawRepresentable {}
+extension BanubaUtilities.GalleryItemType : Swift.Equatable {}
+extension BanubaUtilities.GalleryItemType : Swift.Hashable {}
+extension BanubaUtilities.GalleryItemType : Swift.RawRepresentable {}
+extension BanubaUtilities.SmallActivityIndicatorConfiguration.GradientTypeAdapter : Swift.Equatable {}
+extension BanubaUtilities.SmallActivityIndicatorConfiguration.GradientTypeAdapter : Swift.Hashable {}
+extension BanubaUtilities.SmallActivityIndicatorConfiguration.GradientTypeAdapter : Swift.RawRepresentable {}
+extension BanubaUtilities.VideoResolution : Swift.Equatable {}
+extension BanubaUtilities.VideoResolution : Swift.Hashable {}
+extension BanubaUtilities.VideoResolution : Swift.RawRepresentable {}
+extension BanubaUtilities.DeviceModel : Swift.Equatable {}
+extension BanubaUtilities.DeviceModel : Swift.Hashable {}
+extension BanubaUtilities.DeviceModel : Swift.RawRepresentable {}
+extension BanubaUtilities.AudioTrackLinePosition : Swift.Equatable {}
+extension BanubaUtilities.AudioTrackLinePosition : Swift.Hashable {}
+extension BanubaUtilities.AudioTrackLinePosition : Swift.RawRepresentable {}
+extension BanubaUtilities.AudioTrackLineViewMovement : Swift.Equatable {}
+extension BanubaUtilities.AudioTrackLineViewMovement : Swift.Hashable {}

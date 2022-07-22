@@ -1,0 +1,11 @@
+framework module VEExportSDK {
+  umbrella header "VEExportSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module VEExportSDK.Swift {
+    header "VEExportSDK-Swift.h"
+    requires objc
+}

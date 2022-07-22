@@ -1,0 +1,15 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PryntTrimmerView" "${PODS_CONFIGURATION_BUILD_DIR}/SteviaLayout" "${PODS_CONFIGURATION_BUILD_DIR}/YPImagePicker" "${PODS_ROOT}/BNBLicenseUtils" "${PODS_ROOT}/BanubaEffectPlayer" "${PODS_ROOT}/BanubaLicenseServicingSDK" "${PODS_ROOT}/BanubaSDK" "${PODS_ROOT}/BanubaSDKServicing" "${PODS_ROOT}/BanubaUtilities" "${PODS_ROOT}/VEEffectsSDK" "${PODS_ROOT}/VEExportSDK" "${PODS_ROOT}/VEPlaybackSDK" "${PODS_ROOT}/VideoEditor" "${PODS_XCFRAMEWORKS_BUILD_DIR}/BNBLicenseUtils" "${PODS_XCFRAMEWORKS_BUILD_DIR}/BanubaEffectPlayer" "${PODS_XCFRAMEWORKS_BUILD_DIR}/BanubaLicenseServicingSDK" "${PODS_XCFRAMEWORKS_BUILD_DIR}/BanubaSDK" "${PODS_XCFRAMEWORKS_BUILD_DIR}/BanubaSDKServicing" "${PODS_XCFRAMEWORKS_BUILD_DIR}/BanubaUtilities" "${PODS_XCFRAMEWORKS_BUILD_DIR}/VEEffectsSDK" "${PODS_XCFRAMEWORKS_BUILD_DIR}/VEExportSDK" "${PODS_XCFRAMEWORKS_BUILD_DIR}/VEPlaybackSDK" "${PODS_XCFRAMEWORKS_BUILD_DIR}/VideoEditor"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PryntTrimmerView/PryntTrimmerView.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SteviaLayout/Stevia.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/YPImagePicker/YPImagePicker.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
+OTHER_LDFLAGS = $(inherited) -framework "AVFoundation" -framework "AVKit" -framework "Accelerate" -framework "BNBLicenseUtils" -framework "BanubaEffectPlayer" -framework "BanubaLicenseServicingSDK" -framework "BanubaSDKServicing" -framework "BanubaSdk" -framework "BanubaUtilities" -framework "CoreMedia" -framework "CoreMotion" -framework "CoreVideo" -framework "Foundation" -framework "GLKit" -framework "MediaPlayer" -framework "OpenGLES" -framework "Photos" -framework "PryntTrimmerView" -framework "QuartzCore" -framework "Stevia" -framework "UIKit" -framework "VEEffectsSDK" -framework "VEExportSDK" -framework "VEPlaybackSDK" -framework "VideoEditor" -framework "YPImagePicker"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
+PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

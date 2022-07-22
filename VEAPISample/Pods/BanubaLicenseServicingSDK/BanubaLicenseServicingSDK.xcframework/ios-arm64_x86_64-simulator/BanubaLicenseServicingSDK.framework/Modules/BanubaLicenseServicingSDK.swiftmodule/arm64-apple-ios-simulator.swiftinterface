@@ -1,0 +1,169 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name BanubaLicenseServicingSDK
+import BNBLicenseUtils
+@_exported import BanubaLicenseServicingSDK
+import BanubaUtilities
+import Foundation
+import Swift
+import UIKit
+import _Concurrency
+import os.log
+import os
+public enum BNBInformerEventType {
+  case `init`(BanubaLicenseServicingSDK.BasicEventOptions)
+  case present(BanubaLicenseServicingSDK.BasicEventOptions)
+  case export(BanubaLicenseServicingSDK.BasicEventOptions)
+}
+public protocol BasicEventOptions : Swift.Decodable, Swift.Encodable {
+  var sdkVersion: Swift.String { get }
+  var iOSVersion: Swift.String { get }
+  var token: Swift.String { get }
+  func adjustStringJson() -> Swift.String?
+}
+public struct VideoSource : Swift.Codable {
+  public init(name: Swift.String, startTime: Swift.String, endTime: Swift.String, type: Swift.String)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ExportEventOptions : BanubaLicenseServicingSDK.BasicEventOptions {
+  public var token: Swift.String
+  public var sdkVersion: Swift.String
+  public var iOSVersion: Swift.String
+  public init(token: Swift.String, exportSuccess: Swift.Bool, videoResolutions: [Swift.String], postProcessingEffects: [Swift.String]?, cameraEffects: [Swift.String]?, exportDuration: Foundation.TimeInterval, videoDuration: Foundation.TimeInterval, videoCount: Swift.UInt8, videoSources: [BanubaLicenseServicingSDK.VideoSource])
+  public func adjustStringJson() -> Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct InitEventOptions : BanubaLicenseServicingSDK.BasicEventOptions {
+  public var token: Swift.String
+  public var sdkVersion: Swift.String
+  public var iOSVersion: Swift.String
+  public init(token: Swift.String)
+  public func adjustStringJson() -> Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public typealias BanubaVideoEditorEntryPoint = BanubaLicenseServicingSDK.PresentEventOptions.EntryPoint
+public struct PresentEventOptions : BanubaLicenseServicingSDK.BasicEventOptions {
+  public var token: Swift.String
+  public var sdkVersion: Swift.String
+  public var iOSVersion: Swift.String
+  public enum EntryPoint : Swift.String, Swift.Codable {
+    case camera
+    case pip
+    case trimmer
+    case editor
+    case drafts
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(token: Swift.String, entryPoint: BanubaLicenseServicingSDK.PresentEventOptions.EntryPoint)
+  public func adjustStringJson() -> Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum EffectType : Swift.String {
+  case mask
+  case filter
+  case beautification
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc(BNBAnalyticsManager) public class BNBAnalyticsManager : ObjectiveC.NSObject {
+  public static var token: Swift.String {
+    get
+  }
+  public var license: BanubaLicenseServicingSDK.License {
+    get
+  }
+  public var cameraEffects: [BanubaLicenseServicingSDK.EffectType : [Swift.String?]]
+  public init(token: Swift.String, license: BanubaLicenseServicingSDK.License)
+  @objc deinit
+}
+extension BanubaLicenseServicingSDK.BNBAnalyticsManager {
+  public func sendEvent(withType type: BanubaLicenseServicingSDK.BNBInformerEventType)
+}
+@objc public class License : ObjectiveC.NSObject {
+  @objc public var clientId: Swift.String {
+    get
+  }
+  @objc public var giphyApiKey: Swift.String? {
+    get
+  }
+  @objc public var isTrialToken: Swift.Bool {
+    get
+  }
+  @objc public var maxFaces: Swift.Int32 {
+    get
+  }
+  @objc public var collectAnalytics: Swift.Bool {
+    get
+  }
+  @objc public var supportsAnalytics: Swift.Bool {
+    get
+  }
+  @objc public var supportsFaceAR: Swift.Bool {
+    get
+  }
+  @objc public var supportsPiP: Swift.Bool {
+    get
+  }
+  @objc public var supportsBlur: Swift.Bool {
+    get
+  }
+  @objc public var supportsAudioBrowser: Swift.Bool {
+    get
+  }
+  @objc public var supportsBgSeparation: Swift.Bool {
+    get
+  }
+  @objc public var postProcessingEffects: [Swift.Int] {
+    get
+  }
+  @objc public var arCloudURL: Swift.String? {
+    get
+  }
+  @objc public var timeBomb: BanubaLicenseServicingSDK.TimeBomb? {
+    get
+  }
+  @objc public var supportsFHD: Swift.Bool {
+    get
+  }
+  @objc public var isExportAPIEnabled: Swift.Bool {
+    get
+  }
+  @objc public var isPlaybackAPIEnabled: Swift.Bool {
+    get
+  }
+  @objc public var isVESDKEnabled: Swift.Bool {
+    get
+  }
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc public init(isExportAPIEnabled: Swift.Bool, isPlaybackAPIEnabled: Swift.Bool, isVESDKEnabled: Swift.Bool, clientId: Swift.String, giphyApiKey: Swift.String?, isTrialToken: Swift.Bool, maxFaces: Swift.Int32, collectAnalytics: Swift.Bool, supportsAnalytics: Swift.Bool, supportsFaceAR: Swift.Bool, supportsPiP: Swift.Bool, supportsBlur: Swift.Bool, supportsAudioBrowser: Swift.Bool, supportsBgSeparation: Swift.Bool, postProcessingEffects: [Swift.Int], arCloudURL: Swift.String?, timeBomb: BanubaLicenseServicingSDK.TimeBomb?, supportsFHD: Swift.Bool, licenseManager: BNBLicenseUtils.XBNBLicenseManager?)
+  @objc public static func isTokenExpired(token: Swift.String) -> Swift.Bool
+  @objc public static func getLicense(fromToken token: Swift.String) -> BanubaLicenseServicingSDK.License?
+  @objc deinit
+}
+@objc public class TimeBomb : ObjectiveC.NSObject, Swift.Codable {
+  @objc public var yearBegin: Swift.Int, monBegin: Swift.Int, dayBegin: Swift.Int, yearEnd: Swift.Int
+  @objc public var monEnd: Swift.Int, dayEnd: Swift.Int
+  @objc public var isExpired: Swift.Bool {
+    @objc get
+  }
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+extension BanubaLicenseServicingSDK.PresentEventOptions.EntryPoint : Swift.Equatable {}
+extension BanubaLicenseServicingSDK.PresentEventOptions.EntryPoint : Swift.Hashable {}
+extension BanubaLicenseServicingSDK.PresentEventOptions.EntryPoint : Swift.RawRepresentable {}
+extension BanubaLicenseServicingSDK.EffectType : Swift.Equatable {}
+extension BanubaLicenseServicingSDK.EffectType : Swift.Hashable {}
+extension BanubaLicenseServicingSDK.EffectType : Swift.RawRepresentable {}

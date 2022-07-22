@@ -1,0 +1,11 @@
+framework module VEEffectsSDK {
+  umbrella header "VEEffectsSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module VEEffectsSDK.Swift {
+    header "VEEffectsSDK-Swift.h"
+    requires objc
+}

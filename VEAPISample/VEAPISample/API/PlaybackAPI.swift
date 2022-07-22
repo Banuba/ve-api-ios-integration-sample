@@ -14,7 +14,7 @@ class PlaybackAPI {
   static var shared = PlaybackAPI()
   
   // MARK: - Core API
-  let playbackAPI: VEPlayback
+  let playbackAPI: VEPlayback?
   
   init() {
     playbackAPI = VEPlayback(
