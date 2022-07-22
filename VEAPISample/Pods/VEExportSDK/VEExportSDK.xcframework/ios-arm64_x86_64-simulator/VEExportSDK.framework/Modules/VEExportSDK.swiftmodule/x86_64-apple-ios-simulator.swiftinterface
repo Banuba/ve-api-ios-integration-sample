@@ -1,0 +1,94 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name VEExportSDK
+import AVFoundation
+import BanubaUtilities
+import Foundation
+import Swift
+import UIKit
+@_exported import VEExportSDK
+import VideoEditor
+import _Concurrency
+public protocol ImageSlideshow {
+  func exportSlideshowImages(_ images: [VideoEditor.VideoEditorImageAssetProtocol], to fileUrl: Foundation.URL?, videoResolution: BanubaUtilities.VideoResolution, completion: ((Swift.Bool, Foundation.URL, Swift.Error?) -> Swift.Void)?)
+}
+extension VEExportSDK.ImageSlideshow {
+  public func exportSlideshowImages(_ images: [VideoEditor.VideoEditorImageAssetProtocol], to fileUrl: Foundation.URL? = nil, videoResolution: BanubaUtilities.VideoResolution, completion: ((Swift.Bool, Foundation.URL, Swift.Error?) -> Swift.Void)?)
+}
+public enum ExportQuality {
+  case videoConfiguration(VEExportSDK.ExportVideoInfo)
+  case auto
+}
+public struct GifSettings {
+  public var duration: Foundation.TimeInterval
+  public init(duration: Foundation.TimeInterval)
+}
+public struct ExportConfiguration {
+  public let videoConfigurations: [VEExportSDK.ExportVideoConfiguration]
+  public let isCoverEnabled: Swift.Bool
+  public var gifSettings: VEExportSDK.GifSettings?
+  public init(videoConfigurations: [VEExportSDK.ExportVideoConfiguration], isCoverEnabled: Swift.Bool, gifSettings: VEExportSDK.GifSettings?)
+}
+public struct ExportVideoConfiguration {
+  public let fileURL: Foundation.URL
+  public let quality: VEExportSDK.ExportQuality
+  public let watermarkConfiguration: VideoEditor.WatermarkConfiguration?
+  public let useHEVCCodecIfPossible: Swift.Bool
+  public init(fileURL: Foundation.URL, quality: VEExportSDK.ExportQuality, useHEVCCodecIfPossible: Swift.Bool, watermarkConfiguration: VideoEditor.WatermarkConfiguration?)
+}
+public protocol VEExportServicing : VEExportSDK.ImageSlideshow {
+  func exportVideo(to fileURL: Foundation.URL, using exportVideoInfo: VEExportSDK.ExportVideoInfo, watermarkFilterModel: VideoEditor.VideoEditorFilterModel?, completion: ((_ isSuccess: Swift.Bool, _ error: Swift.Error?) -> Swift.Void)?)
+  func exportAudio(to fileURL: Foundation.URL, completion: ((_ isSuccess: Swift.Bool, _ error: Swift.Error?) -> Swift.Void)?)
+}
+public typealias Bitrate = Swift.Int
+public class ExportVideoInfo {
+  public enum Resolution : Swift.String {
+    case qhd1440
+    case fullHd1080
+    case hd720
+    case md540
+    case md480
+    case ld360
+    case original
+    public var size: CoreGraphics.CGSize {
+      get
+    }
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  final public let resolution: VEExportSDK.ExportVideoInfo.Resolution
+  final public let aspect: BanubaUtilities.AspectRatio?
+  final public let exportSettings: VEExportSDK.ExportVideoSettings
+  public init(resolution: VEExportSDK.ExportVideoInfo.Resolution, aspect: BanubaUtilities.AspectRatio? = nil, useHEVCCodecIfPossible: Swift.Bool, frameRate: Swift.Int = 30, scalingMode: Swift.String = AVVideoScalingModeResize)
+  public static func setupOriginalSize(size: CoreGraphics.CGSize)
+  @objc deinit
+}
+public struct ExportVideoInfoFactory {
+  public static func assetExportSettings(resolution: BanubaUtilities.VideoResolution, aspect: BanubaUtilities.AspectRatio? = nil, useHEVCCodecIfPossible: Swift.Bool, frameRate: Swift.Int = 30, scalingMode: Swift.String = AVVideoScalingModeResize) -> VEExportSDK.ExportVideoInfo
+}
+@_hasMissingDesignatedInitializers public class ExportVideoSettings {
+  final public let width: Swift.Int
+  final public let height: Swift.Int
+  final public let aspect: BanubaUtilities.AspectRatio?
+  final public let bitrate: VEExportSDK.Bitrate
+  final public let frameRate: Swift.Int
+  final public let codecType: AVFoundation.AVVideoCodecType
+  final public let scalingMode: Swift.String
+  public var options: [Swift.String : Any] {
+    get
+  }
+  @objc deinit
+}
+public class VEExport {
+  public init?(videoEditorService: VideoEditor.VideoEditorService)
+  public func exportVideo(to fileURL: Foundation.URL, using exportVideoInfo: VEExportSDK.ExportVideoInfo, watermarkFilterModel: VideoEditor.VideoEditorFilterModel?, completion: ((_ isSuccess: Swift.Bool, _ error: Swift.Error?) -> Swift.Void)?)
+  public func exportAudio(to fileURL: Foundation.URL, completion: ((_ isSuccess: Swift.Bool, _ error: Swift.Error?) -> Swift.Void)?)
+  public func exportSlideshowImages(_ images: [VideoEditor.VideoEditorImageAssetProtocol], to fileUrl: Foundation.URL? = nil, videoResolution: BanubaUtilities.VideoResolution, completion: ((Swift.Bool, Foundation.URL, Swift.Error?) -> Swift.Void)?)
+  @objc deinit
+}
+extension VEExportSDK.ExportVideoInfo.Resolution : Swift.Equatable {}
+extension VEExportSDK.ExportVideoInfo.Resolution : Swift.Hashable {}
+extension VEExportSDK.ExportVideoInfo.Resolution : Swift.RawRepresentable {}

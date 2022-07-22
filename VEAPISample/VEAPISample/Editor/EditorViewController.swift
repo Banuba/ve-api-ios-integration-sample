@@ -35,6 +35,7 @@ class EditorViewController: UIViewController {
   
   // MARK: - Music track id
   var trackId: CMPersistentTrackID = .zero
+  var trackUrl: URL?
   
   // MARK: - Unique effect id
   var uniqueEffectId: UInt {
@@ -77,7 +78,9 @@ extension EditorViewController {
       currentView.removeFromSuperview()
     }
     // Get playable view
-    let view = PlaybackAPI.shared.playbackAPI.getPlayableView(delegate: self)
+    guard let view = PlaybackAPI.shared.playbackAPI?.getPlayableView(delegate: self) else {
+      return
+    }
     playableView = view
     // Setup view frame
     view.frame = playerContainerView.frame
@@ -127,7 +130,7 @@ extension EditorViewController {
     // Export video with set of params
     let exportSDK = VEExport(videoEditorService: CoreAPI.shared.coreAPI)
     
-    exportSDK.exportVideo(
+    exportSDK?.exportVideo(
       to: fileURL,
       using: exportInfo,
       watermarkFilterModel: watermarkModel
@@ -243,6 +246,7 @@ extension EditorViewController {
 
     // Store id to essence of removing existing track
     let id = CMPersistentTrackID(uniqueEffectId)
+    trackUrl = url
     trackId = id
     
     // Track instance
@@ -262,10 +266,12 @@ extension EditorViewController {
   
   private func reloadPlayer() {
     // Get new instance of player to playback music track
-    let player = PlaybackAPI.shared.playbackAPI.getPlayer(
+    guard let player = PlaybackAPI.shared.playbackAPI?.getPlayer(
       forExternalAsset: nil,
       delegate: self
-    )
+    ) else {
+      return
+    }
     
     // Setup new player
     playableView?.setPlayer(player, isThumbnailNeeded: false)
@@ -311,7 +317,13 @@ extension EditorViewController {
     sender.isSelected = !sender.isSelected
     guard sender.isSelected else {
       // Undo music effect
-      CoreAPI.shared.coreAPI.videoAsset?.removeMusic(trackId: trackId)
+      guard let url = trackUrl else {
+        return
+      }
+      CoreAPI.shared.coreAPI.videoAsset?.removeMusic(
+        trackId: trackId,
+        url: url
+      )
       // Get new instance of player to playback music track
       reloadPlayer()
       return

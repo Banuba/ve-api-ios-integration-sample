@@ -1,0 +1,328 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name VEEffectsSDK
+import AVFoundation
+import BanubaLicenseServicingSDK
+import BanubaSDKServicing
+import BanubaUtilities
+import CoreMedia
+import Foundation
+import GLKit
+import MetalKit
+import QuartzCore
+import Swift
+import UIKit
+@_exported import VEEffectsSDK
+import VideoEditor
+import _Concurrency
+@_hasMissingDesignatedInitializers public class VideoCompositionRenderQueue {
+  public static let queue: Dispatch.DispatchQueue
+  @objc deinit
+}
+public class ShapeDrawer : VideoEditor.CompositionRenderering {
+  public var shapeTexture: Metal.MTLTexture?
+  required public init()
+  public init(renderer: VEEffectsSDK.EffectRenderer)
+  public func render(in pixelBuffer: CoreVideo.CVPixelBuffer, source allSources: CoreVideo.CVPixelBuffer, sampleTime: CoreMedia.CMTime, effect: VideoEditor.EditorCompositionEffectProtocol, additionalParameters: [Swift.String : Any]?)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class BanubaMaskDrawer : VEEffectsSDK.VideoEditorEffectDrawer {
+  required public init()
+  @objc deinit
+}
+public class VideoEditorEffectDrawer : VideoEditor.CompositionRenderering {
+  public var renderer: VEEffectsSDK.EffectRenderer? {
+    get
+  }
+  required public init()
+  public func render(in pixelBuffer: CoreVideo.CVPixelBuffer, source: CoreVideo.CVPixelBuffer, sampleTime: CoreMedia.CMTime, effect: VideoEditor.EditorCompositionEffectProtocol, additionalParameters: [Swift.String : Any]?)
+  @objc deinit
+}
+public protocol EffectsApplicatorServicing : AnyObject {
+  var pixelateApplicatorService: VEEffectsSDK.PixelateApplicatorServicing { get }
+  init(editor: VideoEditor.VideoEditorServicing, effectConfigHolder: VEEffectsSDK.EffectsHolderServicing)
+  func applyVisualEffectApplicatorType(_ type: VEEffectsSDK.VisualEffectApplicatorType, startTime: CoreMedia.CMTime, endTime: CoreMedia.CMTime, removeSameType: Swift.Bool, effectId: Swift.UInt)
+  func applySpeedEffectType(_ type: VEEffectsSDK.SpeedEffectType, startTime: CoreMedia.CMTime, endTime: CoreMedia.CMTime, removeSameType: Swift.Bool, effectId: Swift.UInt)
+  func applyOverlayEffectType(_ type: VEEffectsSDK.OverlayEffectApplicatorType, effectInfo: VEEffectsSDK.VideoEditorEffectInfo)
+  func addTransformEffect(atStartTime start: CoreMedia.CMTime, end: CoreMedia.CMTime, rotation: VideoEditor.AssetRotation, isVideoFitsAspect: Swift.Bool)
+  func applyTransitionEffect(type: BanubaUtilities.TransitionType, effectInfo: VEEffectsSDK.TransitionEffectInfo)
+}
+public class EffectApplicator : VEEffectsSDK.EffectsApplicatorServicing {
+  final public let pixelateApplicatorService: VEEffectsSDK.PixelateApplicatorServicing
+  required public init(editor: VideoEditor.VideoEditorServicing, effectConfigHolder: VEEffectsSDK.EffectsHolderServicing)
+  @objc deinit
+}
+extension VEEffectsSDK.EffectApplicator {
+  public func applyVisualEffectApplicatorType(_ type: VEEffectsSDK.VisualEffectApplicatorType, startTime: CoreMedia.CMTime, endTime: CoreMedia.CMTime, removeSameType: Swift.Bool, effectId: Swift.UInt)
+}
+extension VEEffectsSDK.EffectApplicator {
+  public func applySpeedEffectType(_ type: VEEffectsSDK.SpeedEffectType, startTime: CoreMedia.CMTime, endTime: CoreMedia.CMTime, removeSameType: Swift.Bool, effectId: Swift.UInt)
+}
+extension VEEffectsSDK.EffectApplicator {
+  public func applyOverlayEffectType(_ type: VEEffectsSDK.OverlayEffectApplicatorType, effectInfo: VEEffectsSDK.VideoEditorEffectInfo)
+}
+extension VEEffectsSDK.EffectApplicator {
+  public func applyColorEffect(name: Swift.String, lutUrl: Foundation.URL, startTime: CoreMedia.CMTime, endTime: CoreMedia.CMTime, removeSameType: Swift.Bool, effectId: Swift.UInt)
+}
+extension VEEffectsSDK.EffectApplicator {
+  public func addTransformEffect(atStartTime start: CoreMedia.CMTime, end: CoreMedia.CMTime, rotation: VideoEditor.AssetRotation, isVideoFitsAspect: Swift.Bool)
+}
+extension VEEffectsSDK.EffectApplicator {
+  public func applyTransitionEffect(type: BanubaUtilities.TransitionType, effectInfo: VEEffectsSDK.TransitionEffectInfo)
+}
+@_inheritsConvenienceInitializers public class ColorEffectDrawer : VEEffectsSDK.VideoEditorEffectDrawer {
+  required public init()
+  @objc deinit
+}
+public class WatermarkApplicator : VideoEditor.WatermarkApplicatorServicing {
+  public init()
+  public func adjustWatermarkEffect(configuration: VideoEditor.WatermarkConfiguration, videoSize: CoreGraphics.CGSize) -> VideoEditor.VideoEditorFilterModel
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BanubaMaskRenderer : VEEffectsSDK.EffectRenderer {
+  public static var postprocessServicing: BanubaSDKServicing.SDKMaskPostprocessServicing?
+  public func render(in pixelBuffer: CoreVideo.CVPixelBuffer, source: CoreVideo.CVPixelBuffer, sampleTime: CoreMedia.CMTime, startTime: CoreMedia.CMTime, path: Swift.String, additionalParameters: [Swift.String : Any]?)
+  @objc deinit
+  public static func destroy()
+}
+public class EffectMetalRenderer : VEEffectsSDK.EffectRenderer {
+  required public init()
+  public func render(in pixelBuffer: CoreVideo.CVPixelBuffer, source: CoreVideo.CVPixelBuffer, sampleTime: CoreMedia.CMTime, startTime: CoreMedia.CMTime, path: Swift.String, additionalParameters: [Swift.String : Any]?)
+  @objc deinit
+}
+public class EditorEffectModelBuilder {
+  public init()
+  public func gifModel(id: Swift.UInt, rendererInstance: VideoEditor.CompositionRenderering?) -> VideoEditor.VideoEditorFilterModel
+  public func textModel(id: Swift.UInt, rendererInstance: VideoEditor.CompositionRenderering?) -> VideoEditor.VideoEditorFilterModel
+  public func pixelateModel(id: Swift.UInt, rendererInstance: VideoEditor.CompositionRenderering?, rendererTexture: Metal.MTLTexture?) -> VideoEditor.VideoEditorFilterModel
+  public func makeModels(configs: [[VEEffectsSDK.EditorEffectKey : Any]], startId: Swift.UInt) -> [VideoEditor.VideoEditorFilterModel]
+  public func makeModel(config: [VEEffectsSDK.EditorEffectKey : Any], id: Swift.UInt) -> VideoEditor.VideoEditorFilterModel
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class PixelationStaticEffectRenderer : VEEffectsSDK.EffectMetalRenderer {
+  override public func render(in pixelBuffer: CoreVideo.CVPixelBuffer, source: CoreVideo.CVPixelBuffer, sampleTime: CoreMedia.CMTime, startTime: CoreMedia.CMTime, path: Swift.String, additionalParameters: [Swift.String : Any]?)
+  required public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class RotateEffectDrawer : VEEffectsSDK.VideoEditorEffectDrawer {
+  required public init(rotation: VideoEditor.AssetRotation, isVideoFitsAspect: Swift.Bool)
+  required public init()
+  @objc deinit
+}
+public protocol ImagesSequence {
+  var relativeScreenPoints: VEEffectsSDK.ImagePoints { get }
+  func getImage(at time: Foundation.TimeInterval) -> CoreGraphics.CGImage
+}
+public protocol EffectsHolderServicing : AnyObject {
+  init(token: Swift.String)
+  var transitionEffectsConfig: [[VEEffectsSDK.EditorEffectKey : Any]] { get }
+  var speedEffectsConfig: [[VEEffectsSDK.EditorEffectKey : Any]] { get }
+  var visualEffectsConfig: [[VEEffectsSDK.EditorEffectKey : Any]] { get }
+}
+@objc public class EditorEffectsConfigHolder : ObjectiveC.NSObject, VEEffectsSDK.EffectsHolderServicing {
+  required public init(token: Swift.String)
+  public var transitionEffectsConfig: [[VEEffectsSDK.EditorEffectKey : Any]] {
+    get
+  }
+  public var speedEffectsConfig: [[VEEffectsSDK.EditorEffectKey : Any]] {
+    get
+  }
+  public var visualEffectsConfig: [[VEEffectsSDK.EditorEffectKey : Any]] {
+    get
+  }
+  @objc deinit
+}
+public struct TransitionEffectInfo {
+  public var type: VEEffectsSDK.TransitionEffectType {
+    get
+  }
+  public var start: CoreMedia.CMTime {
+    get
+  }
+  public var end: CoreMedia.CMTime {
+    get
+  }
+  public init(type: VEEffectsSDK.TransitionEffectType, start: CoreMedia.CMTime, end: CoreMedia.CMTime)
+}
+public protocol TransformEffectsSDKServicing {
+  var effectsApplicator: VEEffectsSDK.EffectsApplicatorServicing { get }
+}
+public protocol EffectsSDKServicing : VEEffectsSDK.TransformEffectsSDKServicing {
+  var watermarkApplicator: VideoEditor.WatermarkApplicatorServicing { get }
+  var effectsConfigHolder: VEEffectsSDK.EffectsHolderServicing { get }
+}
+public struct ImagePoints {
+  public init(leftTop: CoreGraphics.CGPoint, rightTop: CoreGraphics.CGPoint, leftBottom: CoreGraphics.CGPoint, rightBottom: CoreGraphics.CGPoint)
+  public var leftTop: CoreGraphics.CGPoint
+  public var rightTop: CoreGraphics.CGPoint
+  public var leftBottom: CoreGraphics.CGPoint
+  public var rightBottom: CoreGraphics.CGPoint
+  public func applying(_ t: CoreGraphics.CGAffineTransform) -> VEEffectsSDK.ImagePoints
+}
+public class ImageEffectInfo {
+  final public let image: CoreGraphics.CGImage
+  final public let imagePoints: VEEffectsSDK.ImagePoints
+  public init(image: CoreGraphics.CGImage, imagePoints: VEEffectsSDK.ImagePoints)
+  @objc deinit
+}
+public struct EffectIDs {
+  public static let colorEffectStartId: Swift.UInt
+  public static let maskEffectStartId: Swift.UInt
+  public static let speedEffectStartId: Swift.UInt
+  public static let visualEffectStartId: Swift.UInt
+  public static let transformEffectId: Swift.UInt
+  public static let pixelateEffectId: Swift.UInt
+}
+public protocol EffectRenderer {
+  func render(in pixelBuffer: CoreVideo.CVPixelBuffer, source: CoreVideo.CVPixelBuffer, sampleTime: CoreMedia.CMTime, startTime: CoreMedia.CMTime, path: Swift.String, additionalParameters: [Swift.String : Any]?)
+}
+@objc public class CameraLutStage : ObjectiveC.NSObject {
+  @objc public var name: Swift.String
+  @objc public var isActive: Swift.Bool
+  public init(file url: Foundation.URL)
+  @objc deinit
+}
+extension VEEffectsSDK.CameraLutStage : BanubaSDKServicing.RenderEffect {
+  @objc dynamic public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc dynamic public func load()
+  @objc dynamic public func unload()
+  @objc dynamic public func apply(pixelBuffer: CoreVideo.CVPixelBuffer)
+}
+public struct VideoEditorEffectInfo {
+  public var id: Swift.UInt {
+    get
+  }
+  public var image: UIKit.UIImage? {
+    get
+  }
+  public var relativeScreenPoints: VEEffectsSDK.ImagePoints? {
+    get
+  }
+  public var start: CoreMedia.CMTime {
+    get
+  }
+  public var end: CoreMedia.CMTime {
+    get
+  }
+  public init(id: Swift.UInt, image: UIKit.UIImage? = nil, relativeScreenPoints: VEEffectsSDK.ImagePoints? = nil, start: CoreMedia.CMTime, end: CoreMedia.CMTime)
+}
+public protocol PixelateApplicatorServicing : AnyObject {
+  func changeTextureLocation(drawableFigure: BanubaUtilities.DrawableFigure, shapeRenderer: VEEffectsSDK.ShapeDrawer, coordinates: BanubaUtilities.PixelateCoordinateParams, completion: (() -> Swift.Void)?)
+}
+@_hasMissingDesignatedInitializers public class PixelateApplicator : VEEffectsSDK.PixelateApplicatorServicing {
+  public func changeTextureLocation(drawableFigure: BanubaUtilities.DrawableFigure, shapeRenderer: VEEffectsSDK.ShapeDrawer, coordinates: BanubaUtilities.PixelateCoordinateParams, completion: (() -> Swift.Void)?)
+  @objc deinit
+}
+public enum EditorEffectKey : Swift.String {
+  case name
+  case type
+  case warpType
+  case speed
+  case renderer
+  case path
+  case id
+  case effectType
+  case additionalParameters
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum OverlayEffectApplicatorType {
+  case gif
+  case text
+  case pixelate(drawableFigure: BanubaUtilities.DrawableFigure, coordinates: BanubaUtilities.PixelateCoordinateParams)
+}
+public enum VisualEffectApplicatorType : Swift.String, Swift.CaseIterable {
+  case acid
+  case cathode
+  case dslrKaleidoscope
+  case dvCam
+  case flash
+  case glitch
+  case glitch2
+  case glitch3
+  case glitchEffect2
+  case kaleidoscope
+  case heatmap
+  case lumeire
+  case mirror
+  case mirror2
+  case pixelationDynamic
+  case pixelationStatic
+  case polaroid
+  case rave
+  case soul
+  case stars
+  case tvFoam
+  case transition
+  case transition2
+  case transition3
+  case transition4
+  case vhs
+  case vhs2
+  case zoom
+  case zoom2
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [VEEffectsSDK.VisualEffectApplicatorType]
+  public typealias RawValue = Swift.String
+  public static var allCases: [VEEffectsSDK.VisualEffectApplicatorType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum SpeedEffectType : Swift.String, Swift.CaseIterable {
+  case slowmo
+  case rapid
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [VEEffectsSDK.SpeedEffectType]
+  public typealias RawValue = Swift.String
+  public static var allCases: [VEEffectsSDK.SpeedEffectType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TransitionEffectType : Swift.String, Swift.CaseIterable {
+  case normal
+  case whipDown
+  case whipUp
+  case whipRight
+  case whipLeft
+  case scrollDown
+  case scrollUp
+  case scrollRight
+  case scrollLeft
+  case spinRight
+  case fade
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [VEEffectsSDK.TransitionEffectType]
+  public typealias RawValue = Swift.String
+  public static var allCases: [VEEffectsSDK.TransitionEffectType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension VEEffectsSDK.TransitionEffectType {
+  public static func type(from type: BanubaUtilities.TransitionType) -> VEEffectsSDK.TransitionEffectType
+}
+extension VEEffectsSDK.EditorEffectKey : Swift.Equatable {}
+extension VEEffectsSDK.EditorEffectKey : Swift.Hashable {}
+extension VEEffectsSDK.EditorEffectKey : Swift.RawRepresentable {}
+extension VEEffectsSDK.VisualEffectApplicatorType : Swift.Equatable {}
+extension VEEffectsSDK.VisualEffectApplicatorType : Swift.Hashable {}
+extension VEEffectsSDK.VisualEffectApplicatorType : Swift.RawRepresentable {}
+extension VEEffectsSDK.SpeedEffectType : Swift.Equatable {}
+extension VEEffectsSDK.SpeedEffectType : Swift.Hashable {}
+extension VEEffectsSDK.SpeedEffectType : Swift.RawRepresentable {}
+extension VEEffectsSDK.TransitionEffectType : Swift.Equatable {}
+extension VEEffectsSDK.TransitionEffectType : Swift.Hashable {}
+extension VEEffectsSDK.TransitionEffectType : Swift.RawRepresentable {}

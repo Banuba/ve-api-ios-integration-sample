@@ -1,0 +1,11 @@
+framework module BanubaLicenseServicingSDK {
+  umbrella header "BanubaLicenseServicingSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module BanubaLicenseServicingSDK.Swift {
+    header "BanubaLicenseServicingSDK-Swift.h"
+    requires objc
+}
