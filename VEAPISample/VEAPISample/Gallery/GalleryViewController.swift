@@ -103,11 +103,11 @@ extension GalleryViewController {
       VideoEditorAssetTrackInfo(
         uuidString: UUID().uuidString,
         url: url,
-        rotation: .rotate90,
+        rotation: .none,
         thumbnail: nil,
         fillAspectRatioRange: VideoAspectRatio.fillAspectRatioRange,
         videoResolutionConfiguration: Configs.resolutionConfig,
-        isGalleryAsset: false,
+        isGalleryAsset: true,
         isSlideShow: false,
         transitionEffectType: .normal
       )
@@ -138,23 +138,12 @@ extension GalleryViewController {
     
     // Apply transform for different types of videos
     trackInfos.forEach { assetTrack in
-      // Video natural size
-      guard let size = assetTrack.url.videoSize else {
-        return
-      }
       // Portrait videos should apply 90 degrees transform
-      let rotation: AssetRotation = size.width < size.height ? .rotate90 : .none
-      
+      let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
       // Start time setups with start interval from iteration cycle
-      let startTime = CMTime(
-        seconds: startTimeStep,
-        preferredTimescale: assetTrack.urlAsset.duration.timescale
-      )
+      let startTime = assetTrack.timeRangeInGlobal.start
       // End time setups with start interval and asset duration from iteration cycle
-      let endTime = CMTime(
-        seconds: assetTrack.urlAsset.duration.seconds + startTimeStep,
-        preferredTimescale: assetTrack.urlAsset.duration.timescale
-      )
+      let endTime = assetTrack.timeRangeInGlobal.end
       // Add relevant transform to videoEditorAsset from CoreAPI
       EffectsAPI.shared.effectApplicator.addTransformEffect(
         atStartTime: startTime,
