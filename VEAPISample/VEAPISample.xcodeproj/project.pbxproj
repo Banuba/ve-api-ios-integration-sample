@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
 		8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01658A27D8B783003E36FB /* AppDelegate.swift */; };
 		8A01658F27D8B783003E36FB /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01658E27D8B783003E36FB /* CameraViewController.swift */; };
 		8A01659227D8B783003E36FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A01659027D8B783003E36FB /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; };
 		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A01658727D8B783003E36FB /* VEAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01658A27D8B783003E36FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		633B444428CF317800AE5C1C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		8A01657E27D8B782003E36FB = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +142,7 @@
 			children = (
 				8AB4931027DB917C003CD6CF /* Components */,
 				8AB4930D27DB906F003CD6CF /* Extensions */,
+				633B444428CF317800AE5C1C /* Helpers */,
 				8A02DB0D27DB6ED00019AB99 /* GalleryViewController.swift */,
 			);
 			path = Gallery;
@@ -303,6 +314,7 @@
 				8A01658F27D8B783003E36FB /* CameraViewController.swift in Sources */,
 				8ABDB0A627DA26F30002B9BC /* PlaybackAPI.swift in Sources */,
 				8ABDB08D27DA18100002B9BC /* EditorViewController.swift in Sources */,
+				633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */,
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
 				8ABDB09027DA18550002B9BC /* CoreAPI.swift in Sources */,
 				8AB4930F27DB9081003CD6CF /* VideoURL+Size.swift in Sources */,

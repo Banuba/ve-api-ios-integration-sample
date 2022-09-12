@@ -10,10 +10,10 @@ import AVFoundation
 import UIKit
 
 extension URL {
-  var videoSize: CGSize? {
-    let track = AVAsset(url: self).tracks(withMediaType: .video).first
-    guard let track = track else { return nil }
-    let size = track.naturalSize.applying(track.preferredTransform)
-    return CGSize(width: abs(size.width), height: abs(size.height))
-  }
+    var videoSize: CGSize? {
+        let track = AVAsset(url: self).tracks(withMediaType: .video).first
+        guard let track = track else { return nil }
+        let size = track.naturalSize.applying(track.preferredTransform)
+        return CGSize(width: abs(size.width), height: abs(size.height))
+    }
 }
