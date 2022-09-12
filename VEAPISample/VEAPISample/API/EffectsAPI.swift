@@ -9,19 +9,19 @@ import Foundation
 import VEEffectsSDK
 
 class EffectsAPI {
-    // MARK: - Singleton
-    static var shared = EffectsAPI()
-    
-    // MARK: - Core API
-    let effectApplicator: EffectApplicator
-    
-    init() {
-        let effectsHolder = EditorEffectsConfigHolder(
-            token: token
-        )
-        effectApplicator = EffectApplicator(
-            editor: CoreAPI.shared.coreAPI,
-            effectConfigHolder: effectsHolder
-        )
-    }
+  // MARK: - Singleton
+  static var shared = EffectsAPI()
+  
+  // MARK: - Core API
+  let effectApplicator: EffectApplicator
+  
+  init() {
+    let effectsHolder = EditorEffectsConfigHolder(
+      token: token
+    )
+    effectApplicator = EffectApplicator(
+      editor: CoreAPI.shared.coreAPI,
+      effectConfigHolder: effectsHolder
+    )
+  }
 }

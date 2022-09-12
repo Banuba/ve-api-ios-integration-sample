@@ -11,17 +11,17 @@ import VideoEditor
 import VEEffectsSDK
 
 class CoreAPI {
-    // MARK: - Singleton
-    static var shared = CoreAPI()
-    
-    // MARK: - Core API
-    let coreAPI: VideoEditorService
-    
-    init() {
-        let watermarkApplicator = WatermarkApplicator()
-        coreAPI = VideoEditorService(
-            token: token,
-            watermarkApplicator: watermarkApplicator
-        )
-    }
+  // MARK: - Singleton
+  static var shared = CoreAPI()
+  
+  // MARK: - Core API
+  let coreAPI: VideoEditorService
+  
+  init() {
+    let watermarkApplicator = WatermarkApplicator()
+    coreAPI = VideoEditorService(
+      token: token,
+      watermarkApplicator: watermarkApplicator
+    )
+  }
 }
