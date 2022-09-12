@@ -33,9 +33,15 @@ class EditorViewController: UIViewController {
     // MARK: - Navigation button
     @IBOutlet weak var nextButton: UIButton!
     
+    // MARK: - Music volume controls
+    @IBOutlet weak var musicTrackControlsTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var videoVolumeSlider: UISlider!
+    @IBOutlet weak var trackVolumeSlider: UISlider!
+    
     // MARK: - Music track id
     var trackId: CMPersistentTrackID = .zero
     var trackUrl: URL?
+    let originalVideoAudioTrackId: CMPersistentTrackID = 2
     
     // MARK: - Unique effect id
     var uniqueEffectId: UInt {
@@ -299,21 +305,6 @@ extension EditorViewController {
         // Apply color effect
         applyColorEffect()
     }
-  @IBAction func musicButtonDidTap(_ sender: UIButton) {
-    // Change button state
-    sender.isSelected = !sender.isSelected
-    guard sender.isSelected else {
-      // Undo music effect
-      guard let url = trackUrl else {
-        return
-      }
-      CoreAPI.shared.coreAPI.videoAsset?.removeMusic(
-        trackId: trackId,
-        url: url
-      )
-      // Get new instance of player to playback music track
-      reloadPlayer()
-      return
     
     @IBAction func speedButtonDidTap(_ sender: UIButton) {
         // Change button state
@@ -327,10 +318,15 @@ extension EditorViewController {
         applySpeedEffect()
     }
     
+    @IBAction func musicButtonDidTap(_ sender: UIButton) {
+        let hasSelectedTrack = sender.isSelected
+        if hasSelectedTrack {
+            showMusicControlsView()
+        } else {
+            applyMusicEffect()
+            sender.isSelected = true
+        }
     }
-    // Apply color effect
-    applyMusicEffect()
-  }
     
     @IBAction func effectButtonDidTap(_ sender: UIButton) {
         // Change button state
@@ -528,11 +524,63 @@ extension EditorViewController {
     }
 }
 
-    
-    
-    
+// MARK: - Music helpers
+extension EditorViewController {
+    func showMusicControlsView() {
+        videoVolumeSlider.value = CoreAPI.shared.coreAPI.audioMixer?.volume(forTrackId: originalVideoAudioTrackId) ?? 1.0
+        trackVolumeSlider.value = CoreAPI.shared.coreAPI.audioMixer?.volume(forTrackId: trackId) ?? 0.0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.musicTrackControlsTopConstraint.constant = -300
+            self.view.layoutIfNeeded()
+        })
     }
     
+    func hideMusicControlsView() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.musicTrackControlsTopConstraint.constant = self.view.safeAreaLayoutGuide.layoutFrame.height
+                self.view.layoutIfNeeded()
+            })
+    }
     
+    @IBAction func applyMusicSettingsTap(_ sender: Any) {
+        // Apply music volume
+        CoreAPI.shared.coreAPI.audioMixer?.setVolume(videoVolumeSlider.value, forTrackId: originalVideoAudioTrackId)
+        CoreAPI.shared.coreAPI.audioMixer?.setVolume(trackVolumeSlider.value, forTrackId: trackId)
+        
+        applyVolumeChanges()
+        
+        hideMusicControlsView()
+    }
+    
+    @IBAction func removeTrackTap(_ sender: Any) {
+        guard let url = trackUrl else {
+            return
+        }
+        CoreAPI.shared.coreAPI.videoAsset?.removeMusic(
+            trackId: trackId,
+            url: url
+        )
+        hideMusicControlsView()
+        musicButton.isSelected = false
+        
+        reloadPlayer()
+    }
+    
+    @IBAction func videoVolumeChanged(_ sender: Any) {
+        CoreAPI.shared.coreAPI.audioMixer?.setVolume(videoVolumeSlider.value, forTrackId: originalVideoAudioTrackId)
+        applyVolumeChanges()
+    }
+    
+    @IBAction func trackVolumeChanged(_ sender: Any) {
+        CoreAPI.shared.coreAPI.audioMixer?.setVolume(trackVolumeSlider.value, forTrackId: trackId)
+        applyVolumeChanges()
+    }
+    
+    private func applyVolumeChanges() {
+        playableView?.videoEditorPlayer?.audioMix = CoreAPI.shared.coreAPI.audioMixer?.audioMix
+    }
 }
 
