@@ -363,6 +363,35 @@ extension EditorViewController {
     // Apply color effect
     applyOverlayEffect(withType: .gif)
   }
+  
+  @IBAction func trimDidTap(_ sender: Any) {
+    // The example of trimming first video track of video asset with 1 second at start and 1 second at end
+    guard let firstTrack = CoreAPI.shared.coreAPI.videoAsset?.tracksInfo.first,
+          // Validate is track can be trimmed
+          firstTrack.timeRange.duration.seconds > 2 else {
+      return
+    }
+    
+    let trackTimeRange = firstTrack.timeRange
+    let trimStartTime = CMTime(
+      seconds: 1.0,
+      preferredTimescale: trackTimeRange.start.timescale
+    )
+    let trimEndTime = CMTime(
+      seconds: trackTimeRange.end.seconds - 1.0,
+      preferredTimescale: trackTimeRange.end.timescale
+    )
+    firstTrack.trimTimeRange = CMTimeRange(
+      start: trimStartTime,
+      end: trimEndTime
+    )
+    
+    // Reload video asset to apply trimming
+    CoreAPI.shared.coreAPI.videoAsset?.reloadComposition()
+    
+    // Reload player to apply trimming at preview
+    reloadPlayer()
+  }
 }
 
 // MARK: - VideoEditorPlayerDelegate
