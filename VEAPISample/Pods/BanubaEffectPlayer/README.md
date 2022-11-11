@@ -1,2 +1,0 @@
-# BanubaEffectPlayer-iOS
-BanubaEffectPlayer-iOS

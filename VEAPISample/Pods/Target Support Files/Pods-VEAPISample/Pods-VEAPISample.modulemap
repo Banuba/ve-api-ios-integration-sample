@@ -1,6 +1,0 @@
-framework module Pods_VEAPISample {
-  umbrella header "Pods-VEAPISample-umbrella.h"
-
-  export *
-  module * { export * }
-}

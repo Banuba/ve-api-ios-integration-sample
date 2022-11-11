@@ -1,2 +1,0 @@
-# BanubaSDK-iOS
-BanubaSDK-iOS

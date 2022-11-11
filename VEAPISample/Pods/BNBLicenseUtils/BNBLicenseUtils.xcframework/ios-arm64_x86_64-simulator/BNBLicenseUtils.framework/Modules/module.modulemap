@@ -1,6 +1,0 @@
-framework module BNBLicenseUtils {
-  umbrella header "BNBLicenseUtils.h"
-
-  export *
-  module * { export * }
-}
