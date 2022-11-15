@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  VEAPISample
 //
-//  Created by Gleb Markin on 9.03.22.
+//  Created by Banuba on 9.03.22.
 //
 
 import UIKit

@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  VEAPISample
 //
-//  Created by Gleb Markin on 9.03.22.
+//  Created by Banuba on 9.03.22.
 //
 
 import UIKit
@@ -59,15 +59,10 @@ class CameraViewController: UIViewController {
   private var recordedVideos: [URL] = [] {
     didSet {
       // Hide buttons if videos doesn't exist
-      guard recordedVideos.count > .zero else {
-        galleryButton.isHidden = false
-        nextButton.isHidden = true
-        removeButton.isHidden = true
-        return
-      }
-      galleryButton.isHidden = true
-      nextButton.isHidden = false
-      removeButton.isHidden = false
+      let hasVideos = recordedVideos.count > .zero
+      galleryButton.isHidden = hasVideos
+      nextButton.isHidden = !hasVideos
+      removeButton.isHidden = !hasVideos
     }
   }
   
@@ -116,13 +111,13 @@ extension CameraViewController {
 // MARK: - FAR helpers
 extension CameraViewController {
   private func setUpRenderTarget() {
-    // EffectPlayerView consist of CAEAGLLayer which we need set as render target for Effect Player
-    guard let glLayer = effectPlayerView?.layer as? CAEAGLLayer else {
+    // EffectPlayerView consist of CAMetalLayer which we need set as render target for Effect Player
+    guard let renderLayer = effectPlayerView?.layer as? CAMetalLayer else {
       return
     }
-    // Setup rendet target from gl layer
-    sdkManager.setRenderTarget(layer: glLayer, playerConfiguration: nil)
-    // Start effect player after launching gl layer
+    // Setup rendet target from effect player layer
+    sdkManager.setRenderTarget(layer: renderLayer, playerConfiguration: nil)
+    // Start effect player after launching render layer
     sdkManager.startEffectPlayer()
   }
   
@@ -265,7 +260,7 @@ extension CameraViewController {
     sender.isSelected = !sender.isSelected
     
     // Apply or disable predefined mask with Effect Player by effect name
-    let name = sender.isSelected ? "UnluckyWitch" : ""
+    let name = sender.isSelected ? "AsaiLines" : ""
     _ = sdkManager.loadEffect(name, synchronous: false)
   }
   
