@@ -188,6 +188,7 @@ extension CameraViewController {
             }
           }
         },
+        shouldSkipFrame: { return false },
         periodicProgressTimeInterval: 0.1,
         boundaryTimes: [NSValue](),
         boundaryHandler: { _ in },
