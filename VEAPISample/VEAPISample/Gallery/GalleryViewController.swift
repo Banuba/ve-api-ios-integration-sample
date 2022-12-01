@@ -86,11 +86,18 @@ extension GalleryViewController {
       queue: .global(qos: .userInteractive)
     ) { [weak self] in
       // Adjust current video urls to VideoEditorAsset entity
-      self?.adjustPreparedVideoUrls(urls)
+      let resolution = CGSize(
+        width: CGFloat(assets.first?.pixelWidth ?? 720),
+        height: CGFloat(assets.first?.pixelHeight ?? 1280)
+      )
+      self?.adjustPreparedVideoUrls(urls, originalResolution: resolution)
     }
   }
   
-  private func adjustPreparedVideoUrls(_ urls: [Int: URL]) {
+  private func adjustPreparedVideoUrls(
+    _ urls: [Int: URL],
+    originalResolution: CGSize
+  ) {
     // Reorder urls with following key order values
     let relevantUrls = urls.sorted { element, element in
       element.key > element.key
@@ -109,7 +116,8 @@ extension GalleryViewController {
         videoResolutionConfiguration: Configs.resolutionConfig,
         isGalleryAsset: true,
         isSlideShow: false,
-        transitionEffectType: .normal
+        transitionEffectType: .normal,
+        originalAssetResolution: originalResolution
       )
     }
     

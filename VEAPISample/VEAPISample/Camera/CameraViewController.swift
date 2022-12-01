@@ -171,6 +171,7 @@ extension CameraViewController {
       // Start video capturing
       sdkManager.output?.startVideoCapturing(
         fileURL: fileURL,
+        isMicrophoneEnabled: !muteButton.isSelected,
         externalAudioConfiguration: nil,
         progress: { [weak self] time in
           DispatchQueue.main.async {
@@ -189,6 +190,7 @@ extension CameraViewController {
           }
         },
         shouldSkipFrame: { return false },
+        isFirstRun: videoSequence?.totalDuration() == .zero,
         periodicProgressTimeInterval: 0.1,
         boundaryTimes: [NSValue](),
         boundaryHandler: { _ in },
