@@ -250,6 +250,10 @@ extension CameraViewController {
 
 // MARK: - Actions
 extension CameraViewController {
+  @IBAction func closeButtonAction(_ sender: UIButton) {
+    dismiss(animated: true)
+  }
+  
   @IBAction func muteButtonDidTap(_ sender: UIButton) {
     // Change button icon with relevant state
     sender.isSelected = !sender.isSelected
