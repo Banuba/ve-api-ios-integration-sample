@@ -18,19 +18,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="S5b-ZU-Sko">
-                                <rect key="frame" x="40" y="772" width="334" height="50"/>
+                                <rect key="frame" x="107" y="108" width="200" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-kg-IdM">
-                                        <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
-                                        <color key="backgroundColor" red="1" green="0.75294117647058822" blue="0.011764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="40"/>
+                                        <color key="backgroundColor" systemColor="tintColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="QFd-HN-YCf"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="pCy-i2-HZr"/>
+                                            <constraint firstAttribute="height" constant="40" id="RoO-D6-jey"/>
+                                            <constraint firstAttribute="width" constant="200" id="tDI-bG-vRB"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="START MAIN FLOW">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <segue destination="xkF-QP-GOb" kind="show" id="FUw-m4-nhv"/>
@@ -40,11 +40,10 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tzI-e0-HWg"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="S5b-ZU-Sko" firstAttribute="leading" secondItem="tzI-e0-HWg" secondAttribute="leading" constant="40" id="38E-lj-Rsb"/>
-                            <constraint firstItem="tzI-e0-HWg" firstAttribute="bottom" secondItem="S5b-ZU-Sko" secondAttribute="bottom" constant="40" id="GJg-Ob-BQR"/>
-                            <constraint firstItem="tzI-e0-HWg" firstAttribute="trailing" secondItem="S5b-ZU-Sko" secondAttribute="trailing" constant="40" id="kuP-wj-IZm"/>
+                            <constraint firstItem="S5b-ZU-Sko" firstAttribute="top" secondItem="tzI-e0-HWg" secondAttribute="top" constant="60" id="L11-DK-w4u"/>
+                            <constraint firstItem="S5b-ZU-Sko" firstAttribute="centerX" secondItem="tzI-e0-HWg" secondAttribute="centerX" id="hrk-c2-H5l"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xSp-le-RPM"/>
@@ -633,6 +632,9 @@
         <image name="ic_text_on" width="36" height="36"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
