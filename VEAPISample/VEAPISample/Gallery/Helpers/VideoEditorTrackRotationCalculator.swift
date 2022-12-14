@@ -2,7 +2,7 @@
 //  VideoEditorTrackRotationCalculator.swift
 //  VEAPISample
 //
-//  Created by Ruslan Filistovich on 1.08.22.
+//  Created by Banuba on 1.08.22.
 //
 
 import Foundation
