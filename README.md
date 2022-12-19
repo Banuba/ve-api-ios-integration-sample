@@ -65,7 +65,7 @@ There is nothing complicated about it - [contact us](https://www.banuba.com/vide
 ## Token 
 We offer а free 14-days trial for you could thoroughly test and assess Video Editor SDK functionality in your app. To get access to your trial, please, get in touch with us by [filling a form](https://www.banuba.com/video-editor-sdk) on our website. Our sales managers will send you the trial token.
 
-Video Editor token should be put [here](https://github.com/Banuba/ve-api-ios-integration-sample/blob/6459c63eb529042601a7e61c474d7f83badc27d6/VEAPISample/VEAPISample/AppDelegate.swift#L12).
+Video Editor token should be put [here](https://github.com/Banuba/ve-api-ios-integration-sample/blob/6459c63eb529042601a7e61c474d7f83badc27d6/VEAPISample/VEAPISample/AppDelegate.swift#L18).
 
 ## Getting Started
 ### CocoaPods

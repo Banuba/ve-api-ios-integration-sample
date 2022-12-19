@@ -17,7 +17,7 @@ class EffectsAPI {
   
   init() {
     let effectsHolder = EditorEffectsConfigHolder(
-      token: token
+      token: AppDelegate.banubaClientToken
     )
     effectApplicator = EffectApplicator(
       editor: CoreAPI.shared.coreAPI,

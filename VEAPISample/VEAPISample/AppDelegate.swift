@@ -9,12 +9,13 @@ import UIKit
 import BanubaSdk
 import BanubaEffectPlayer
 
-let token = <#Place your token here#>
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
+  
+  // Banuba client token
+  static let banubaClientToken = <#Please set your Banuba Video Editor SDK token here#>
   
   func application(
     _ application: UIApplication,
@@ -26,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
     BanubaSdkManager.initialize(
       resourcePath: dirs,
-      clientTokenString: token,
+      clientTokenString: AppDelegate.banubaClientToken,
       logLevel: .info
     )
     
