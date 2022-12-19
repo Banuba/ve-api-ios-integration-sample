@@ -20,7 +20,7 @@ class CoreAPI {
   init() {
     let watermarkApplicator = WatermarkApplicator()
     coreAPI = VideoEditorService(
-      token: AppDelegate.banubaClientToken,
+      token: AppDelegate.licenseToken,
       watermarkApplicator: watermarkApplicator
     )
   }

@@ -14,8 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   
-  // Banuba client token
-  static let banubaClientToken = <#Please set your Banuba Video Editor SDK token here#>
+  // License token is required to start Video Editor SDK
+  static let licenseToken: String = <#Enter your license token#>
   
   func application(
     _ application: UIApplication,
@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
     BanubaSdkManager.initialize(
       resourcePath: dirs,
-      clientTokenString: AppDelegate.banubaClientToken,
+      clientTokenString: AppDelegate.licenseToken,
       logLevel: .info
     )
     
