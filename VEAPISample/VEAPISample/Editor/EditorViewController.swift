@@ -43,13 +43,10 @@ class EditorViewController: UIViewController {
   var trackUrl: URL?
   let originalVideoAudioTrackId: CMPersistentTrackID = 2
   
-  // MARK: - Unique effect id
-  var uniqueEffectId: UInt {
-    UInt.random(in: 0...100)
-  }
-  
   // MARK: - VideoPlayableView
   var playableView: VideoPlayableView?
+  
+  private var exportEffectProvider: ExportEffectProvider = ExportEffectProvider(totalVideoDuration: .zero)
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -58,6 +55,9 @@ class EditorViewController: UIViewController {
     setupPlaybackView()
     // Setup navigation buttons
     setupNavigationButtons()
+    
+    let totalDuration = CoreAPI.shared.coreAPI.videoAsset?.composition.duration ?? .zero
+    exportEffectProvider = ExportEffectProvider(totalVideoDuration: totalDuration)
   }
 }
 
@@ -170,67 +170,6 @@ extension EditorViewController {
 
 // MARK: - Effect applicator
 extension EditorViewController {
-  func applyColorEffect() {
-    // Color URL
-    guard let url = Bundle.main.url(forResource: "luts/japan", withExtension: "png") else {
-      return
-    }
-    // Apply color filter with following url and parmas
-    EffectsAPI.shared.effectApplicator.applyColorEffect(
-      name: "Japan",
-      lutUrl: url,
-      startTime: .zero,
-      endTime: .indefinite,
-      removeSameType: false,
-      effectId: EffectIDs.colorEffectStartId + uniqueEffectId
-    )
-  }
-  
-  func applySpeedEffect() {
-    // Apply speed effect
-    EffectsAPI.shared.effectApplicator.applySpeedEffectType(
-      .rapid,
-      startTime: .zero,
-      endTime: .indefinite,
-      removeSameType: false,
-      effectId: EffectIDs.speedEffectStartId + uniqueEffectId
-    )
-  }
-  
-  func applyVisualEffect() {
-    // Apply visual effect
-    EffectsAPI.shared.effectApplicator.applyVisualEffectApplicatorType(
-      .vhs,
-      startTime: .zero,
-      endTime: .indefinite,
-      removeSameType: false,
-      effectId: EffectIDs.visualEffectStartId + uniqueEffectId
-    )
-  }
-  
-  // Apply text  or gif effect
-  func applyOverlayEffect(withType type: OverlayEffectApplicatorType) {
-    // Ouput image should be created from cgImage reference
-    var image: UIImage?
-    
-    switch type {
-    case .gif:
-      image = createGifImage()
-    case .text:
-      image = createTextImage()
-    default: break
-    }
-    
-    
-    guard let outputImage = image else {
-      return
-    }
-    // Create required effect settings
-    let info = createEffectInfo(withImage: outputImage, for: type)
-    
-    // Apply effect
-    EffectsAPI.shared.effectApplicator.applyOverlayEffectType(type, effectInfo: info)
-  }
   
   func applyMusicEffect() {
     // Get relevant instance of video asset
@@ -255,7 +194,7 @@ extension EditorViewController {
     )
     
     // Store id to essence of removing existing track
-    let id = CMPersistentTrackID(uniqueEffectId)
+    let id = CMPersistentTrackID.random(in: 100...CMPersistentTrackID.max)
     trackUrl = url
     trackId = id
     
@@ -306,8 +245,21 @@ extension EditorViewController {
       let _ = CoreAPI.shared.coreAPI.undoLast(type: .color)
       return
     }
-    // Apply color effect
-    applyColorEffect()
+    
+    let exportEffect = exportEffectProvider.provideColorExportEffect()
+    
+    guard let lutUrl = exportEffect.additionalInfo[ExportEffectAdditionalInfoKey.url] as? URL,
+          let name = exportEffect.additionalInfo[ExportEffectAdditionalInfoKey.name] as? String else {
+      return
+    }
+    EffectsAPI.shared.effectApplicator.applyColorEffect(
+      name: name,
+      lutUrl: lutUrl,
+      startTime: exportEffect.startTime,
+      endTime: exportEffect.endTime,
+      removeSameType: false,
+      effectId: exportEffect.id
+    )
   }
   
   @IBAction func speedButtonDidTap(_ sender: UIButton) {
@@ -318,8 +270,18 @@ extension EditorViewController {
       let _ = CoreAPI.shared.coreAPI.undoLast(type: .time)
       return
     }
-    // Apply color effect
-    applySpeedEffect()
+    
+    let exportEffect = exportEffectProvider.provideSpeedExportEffect(type: .slowmo)
+    guard let speedEffectType = exportEffect.additionalInfo[ExportEffectAdditionalInfoKey.name] as? SpeedEffectType else {
+      return
+    }
+    EffectsAPI.shared.effectApplicator.applySpeedEffectType(
+      speedEffectType,
+      startTime: exportEffect.startTime,
+      endTime: exportEffect.endTime,
+      removeSameType: false,
+      effectId: exportEffect.id
+    )
   }
   
   @IBAction func musicButtonDidTap(_ sender: UIButton) {
@@ -340,8 +302,17 @@ extension EditorViewController {
       let _ = CoreAPI.shared.coreAPI.undoLast(type: .visual)
       return
     }
-    // Apply color effect
-    applyVisualEffect()
+    let exportEffect = exportEffectProvider.provideVisualExportEffect(type: .vhs)
+    guard let visualEffectType = exportEffect.additionalInfo[ExportEffectAdditionalInfoKey.name] as? VisualEffectApplicatorType else {
+      return
+    }
+    EffectsAPI.shared.effectApplicator.applyVisualEffectApplicatorType(
+      visualEffectType,
+      startTime: exportEffect.startTime,
+      endTime: exportEffect.endTime,
+      removeSameType: false,
+      effectId: exportEffect.id
+    )
   }
   
   @IBAction func textButtonDidTap(_ sender: UIButton) {
@@ -352,8 +323,8 @@ extension EditorViewController {
       let _ = CoreAPI.shared.coreAPI.undoLast(type: .text)
       return
     }
-    // Apply color effect
-    applyOverlayEffect(withType: .text)
+    
+    applyOverlayEffect(type: .text)
   }
   
   @IBAction func gifButtonDidTap(_ sender: UIButton) {
@@ -364,8 +335,21 @@ extension EditorViewController {
       let _ = CoreAPI.shared.coreAPI.undoLast(type: .gif)
       return
     }
-    // Apply color effect
-    applyOverlayEffect(withType: .gif)
+		
+    applyOverlayEffect(type: .gif)
+  }
+  
+  private func applyOverlayEffect(type: OverlayEffectApplicatorType) {
+    let exportEffect = exportEffectProvider.provideOverlayExportEffect(type: type)
+    guard let type = exportEffect.additionalInfo[ExportEffectAdditionalInfoKey.name] as? OverlayEffectApplicatorType,
+          let effectInfo = exportEffect.additionalInfo[ExportEffectAdditionalInfoKey.effectInfo] as? VideoEditorEffectInfo else {
+      return
+    }
+    
+    EffectsAPI.shared.effectApplicator.applyOverlayEffectType(
+      type,
+      effectInfo: effectInfo
+    )
   }
 }
 
@@ -379,152 +363,6 @@ extension EditorViewController: VideoEditorPlayerDelegate {
   func playerDidEndPlaying(_ player: VideoEditorPlayable) {
     // proccess player did end playing if needed
     print("Did end playing")
-  }
-}
-
-// MARK: - Gif and Text helpers
-extension EditorViewController {
-  // Create text image
-  func createTextImage() -> UIImage?{
-    // Background creation
-    let height = 40
-    let width = 120
-    
-    let numComponents = 3
-    let numBytes = height * width * numComponents
-    
-    let pixelData = [UInt8](repeating: 210, count: numBytes)
-    let colorspace = CGColorSpaceCreateDeviceRGB()
-    
-    let rgbData = CFDataCreate(nil, pixelData, numBytes)!
-    let provider = CGDataProvider(data: rgbData)!
-    
-    let rgbImageRef = CGImage(
-      width: width,
-      height: height,
-      bitsPerComponent: 8,
-      bitsPerPixel: 8 * numComponents,
-      bytesPerRow: width * numComponents,
-      space: colorspace,
-      bitmapInfo: CGBitmapInfo(rawValue: 0),
-      provider: provider,
-      decode: nil,
-      shouldInterpolate: true,
-      intent: CGColorRenderingIntent.defaultIntent
-    )!
-    
-    let image = UIImage(cgImage: rgbImageRef)
-    
-    // Text creation
-    UIGraphicsBeginImageContext(image.size)
-    
-    let text = "Hello world!"
-    let rect = CGRect(origin: .zero, size: image.size)
-    image.draw(in: rect)
-    
-    let font = UIFont(name: "Helvetica-Bold", size: 14)!
-    let textColor = UIColor.white
-    let textStyle = NSMutableParagraphStyle()
-    textStyle.alignment = .center
-    
-    let attributes = [
-      NSAttributedString.Key.font: font,
-      NSAttributedString.Key.paragraphStyle: textStyle,
-      NSAttributedString.Key.foregroundColor: textColor
-    ]
-    
-    let textHeight = font.lineHeight
-    let textY = (image.size.height - textHeight) / 2
-    let textRect = CGRect(
-      x: .zero,
-      y: textY,
-      width: image.size.width,
-      height: textHeight
-    )
-    
-    text.draw(in: textRect.integral, withAttributes: attributes)
-    let result = UIGraphicsGetImageFromCurrentImageContext()
-    
-    UIGraphicsEndImageContext()
-    
-    return result
-  }
-  
-  // MARK: - Gif image
-  // Create gif from sample resource
-  func createGifImage() -> UIImage? {
-    guard let path = Bundle.main.path(forResource: "GifExample", ofType: "gif") else {
-      print("Gif does not exist at that path")
-      return nil
-    }
-    
-    let url = URL(fileURLWithPath: path)
-    guard let gifData = try? Data(contentsOf: url),
-          let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else {
-      return nil
-    }
-    
-    var images = [UIImage]()
-    let imageCount = CGImageSourceGetCount(source)
-    for i in 0 ..< imageCount {
-      if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
-        images.append(UIImage(cgImage: image))
-      }
-    }
-    
-    let gifImage = UIImage.animatedImage(with: images, duration: 0.4)
-    
-    return gifImage
-  }
-  
-  // Create VideoEditorEffectInfo instance
-  func createEffectInfo(
-    withImage image: UIImage,
-    for type: OverlayEffectApplicatorType
-  ) -> VideoEditorEffectInfo {
-    
-    // Relevant screen points
-    var points: ImagePoints?
-    
-    switch type {
-    case .gif:
-      points = gifImagePoints
-    case .text:
-      points = textImagePoints
-    default: break
-    }
-    
-    // Result effect info
-    let effectInfo = VideoEditorEffectInfo(
-      id: UInt.random(in: 0...1000),
-      image: image,
-      relativeScreenPoints: points,
-      start: .zero,
-      end: .indefinite
-    )
-    
-    return effectInfo
-  }
-  
-  // MARK: - ImagePoints helpers
-  // Gif image points
-  var gifImagePoints: ImagePoints {
-    ImagePoints(
-      leftTop: CGPoint(x: 0.15, y: 0.45),
-      rightTop: CGPoint(x: 0.8, y: 0.45),
-      leftBottom: CGPoint(x: 0.15, y: 0.55),
-      rightBottom: CGPoint(x: 0.8, y: 0.55)
-    )
-  }
-  
-  // Text image points
-  var textImagePoints: ImagePoints {
-    ImagePoints(
-      leftTop: CGPoint(x: 0.15, y: 0.25),
-      rightTop: CGPoint(x: 0.8, y: 0.25),
-      leftBottom: CGPoint(x: 0.15, y: 0.35),
-      rightBottom: CGPoint(x: 0.8, y: 0.35)
-    )
   }
 }
 
