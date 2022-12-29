@@ -72,7 +72,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tzI-e0-HWg"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="S5b-ZU-Sko" firstAttribute="top" secondItem="tzI-e0-HWg" secondAttribute="top" constant="60" id="L11-DK-w4u"/>
                             <constraint firstItem="S5b-ZU-Sko" firstAttribute="centerX" secondItem="tzI-e0-HWg" secondAttribute="centerX" id="hrk-c2-H5l"/>
@@ -82,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dwP-WE-XHN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-783" y="23"/>
+            <point key="canvasLocation" x="-1417" y="631"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zie-ey-Wfu">
@@ -834,14 +834,30 @@
                                     <action selector="openVideoAction:" destination="67R-Am-jb7" eventType="touchUpInside" id="bNP-0o-YfA"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZQ-Ef-UBy">
+                                <rect key="frame" x="20" y="68" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="eG5-zC-IJm"/>
+                                    <constraint firstAttribute="width" constant="45" id="zLg-XP-QFb"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="back_arrow"/>
+                                <connections>
+                                    <action selector="backAction:" destination="67R-Am-jb7" eventType="touchUpInside" id="Y91-Uu-qqX"/>
+                                    <action selector="backAction:" destination="otI-aV-wrs" eventType="touchUpInside" id="nZo-bI-jkN"/>
+                                    <action selector="closeButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qBC-Io-efG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="G2H-sw-wsE"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="SbC-J3-r87" secondAttribute="bottom" id="9lt-VC-cJ6"/>
                             <constraint firstItem="SbC-J3-r87" firstAttribute="bottom" secondItem="bdo-4U-x5s" secondAttribute="bottom" constant="60" id="Bou-zl-FHI"/>
+                            <constraint firstItem="xZQ-Ef-UBy" firstAttribute="leading" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="20" id="Czh-kx-9Q1"/>
                             <constraint firstItem="bdo-4U-x5s" firstAttribute="width" secondItem="Pst-9I-0Uk" secondAttribute="width" multiplier="0.4" id="RON-fQ-nI0"/>
                             <constraint firstItem="SbC-J3-r87" firstAttribute="top" secondItem="Pst-9I-0Uk" secondAttribute="top" id="W3C-rX-9DZ"/>
+                            <constraint firstItem="xZQ-Ef-UBy" firstAttribute="top" secondItem="G2H-sw-wsE" secondAttribute="top" constant="20" id="c3r-EP-8B5"/>
                             <constraint firstItem="bdo-4U-x5s" firstAttribute="centerX" secondItem="Pst-9I-0Uk" secondAttribute="centerX" id="ipw-q7-rtt"/>
                             <constraint firstItem="SbC-J3-r87" firstAttribute="centerX" secondItem="Pst-9I-0Uk" secondAttribute="centerX" id="lo1-el-dEZ"/>
                         </constraints>

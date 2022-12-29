@@ -75,6 +75,11 @@ extension PlaybackViewController {
     presentMediaPicker()
   }
   
+  @IBAction func backAction(_ sender: Any) {
+    playableView?.videoEditorPlayer?.pausePlay()
+    navigationController?.dismiss(animated: true)
+  }
+  
   private func presentMediaPicker() {
     // Usage of YPImagePicker is for demonstration purposes.
     // You could use your own implementation of gallery or another third-party library.
