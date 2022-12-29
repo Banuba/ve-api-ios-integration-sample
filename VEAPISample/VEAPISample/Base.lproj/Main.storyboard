@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="S5b-ZU-Sko">
-                                <rect key="frame" x="107" y="108" width="200" height="130"/>
+                                <rect key="frame" x="107" y="108" width="200" height="215"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-kg-IdM">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="45"/>
@@ -48,6 +48,21 @@
                                         </state>
                                         <connections>
                                             <segue destination="R4j-OK-GJS" kind="presentation" id="8VW-X0-UWQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="As3-zb-xLn">
+                                        <rect key="frame" x="0.0" y="170" width="200" height="45"/>
+                                        <color key="backgroundColor" systemColor="tintColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="42G-28-e40"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="START PLAYBACK FLOW">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="gTu-Zj-9cZ" kind="presentation" id="YGP-hs-ssW"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -766,6 +781,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="omc-9P-Zk5" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1384" y="422"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cUU-nn-OQA">
+            <objects>
+                <navigationController modalPresentationStyle="fullScreen" navigationBarHidden="YES" id="gTu-Zj-9cZ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="hnw-cX-Z9g"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4z8-k7-Fys">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="67R-Am-jb7" kind="relationship" relationship="rootViewController" id="Ps7-v9-i8l"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vkU-Sd-oLH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="564" y="1154"/>
+        </scene>
+        <!--Playback View Controller-->
+        <scene sceneID="5sd-gR-2fd">
+            <objects>
+                <viewController id="67R-Am-jb7" customClass="PlaybackViewController" customModule="VEAPISample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pst-9I-0Uk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SbC-J3-r87">
+                                <rect key="frame" x="-45" y="0.0" width="504" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="SbC-J3-r87" secondAttribute="height" multiplier="9:16" id="lGG-Rs-dd0"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bdo-4U-x5s">
+                                <rect key="frame" x="124" y="791" width="166" height="45"/>
+                                <color key="backgroundColor" systemColor="tintColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Slc-ZO-Q5B"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="OPEN VIDEO">
+                                    <color key="baseForegroundColor" white="0.97407988459999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="openVideoAction:" destination="67R-Am-jb7" eventType="touchUpInside" id="bNP-0o-YfA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="G2H-sw-wsE"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="SbC-J3-r87" secondAttribute="bottom" id="9lt-VC-cJ6"/>
+                            <constraint firstItem="SbC-J3-r87" firstAttribute="bottom" secondItem="bdo-4U-x5s" secondAttribute="bottom" constant="60" id="Bou-zl-FHI"/>
+                            <constraint firstItem="bdo-4U-x5s" firstAttribute="width" secondItem="Pst-9I-0Uk" secondAttribute="width" multiplier="0.4" id="RON-fQ-nI0"/>
+                            <constraint firstItem="SbC-J3-r87" firstAttribute="top" secondItem="Pst-9I-0Uk" secondAttribute="top" id="W3C-rX-9DZ"/>
+                            <constraint firstItem="bdo-4U-x5s" firstAttribute="centerX" secondItem="Pst-9I-0Uk" secondAttribute="centerX" id="ipw-q7-rtt"/>
+                            <constraint firstItem="SbC-J3-r87" firstAttribute="centerX" secondItem="Pst-9I-0Uk" secondAttribute="centerX" id="lo1-el-dEZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="vTl-tb-he3"/>
+                    <connections>
+                        <outlet property="openVideoButton" destination="bdo-4U-x5s" id="Mlz-t0-MHT"/>
+                        <outlet property="playerContainerView" destination="SbC-J3-r87" id="NgT-2f-NWa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MXs-CK-JCQ" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1383" y="1154"/>
         </scene>
     </scenes>
     <resources>

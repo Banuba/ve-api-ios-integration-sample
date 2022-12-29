@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
+		63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63454196295C627100A6EC0A /* PlaybackViewController.swift */; };
+		634541C9295D878700A6EC0A /* PlaybackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634541C8295D878700A6EC0A /* PlaybackDelegate.swift */; };
+		634541DE295D881E00A6EC0A /* ProcessingFunctionality .swift in Sources */ = {isa = PBXBuildFile; fileRef = 634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */; };
 		639DFABC2948AE840021458F /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DFABB2948AE840021458F /* ExportViewController.swift */; };
 		63A1C8EB2950B771007BA126 /* ExportEffectProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */; };
 		8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01658A27D8B783003E36FB /* AppDelegate.swift */; };
@@ -32,6 +35,9 @@
 
 /* Begin PBXFileReference section */
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; };
+		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
+		634541C8295D878700A6EC0A /* PlaybackDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackDelegate.swift; sourceTree = "<group>"; };
+		634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessingFunctionality .swift"; sourceTree = "<group>"; };
 		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportEffectProvider.swift; sourceTree = "<group>"; };
 		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +101,16 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		63454195295C5E8000A6EC0A /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				63454196295C627100A6EC0A /* PlaybackViewController.swift */,
+				634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */,
+				634541C8295D878700A6EC0A /* PlaybackDelegate.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
 		639DFABA2948AE6E0021458F /* Export */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +141,7 @@
 		8A01658927D8B783003E36FB /* VEAPISample */ = {
 			isa = PBXGroup;
 			children = (
+				63454195295C5E8000A6EC0A /* Playback */,
 				639DFABA2948AE6E0021458F /* Export */,
 				8ABDB08E27DA18310002B9BC /* API */,
 				8A02DB0C27DB6E4A0019AB99 /* Gallery */,
@@ -329,12 +346,15 @@
 				639DFABC2948AE840021458F /* ExportViewController.swift in Sources */,
 				8ABDB0A627DA26F30002B9BC /* PlaybackAPI.swift in Sources */,
 				8ABDB08D27DA18100002B9BC /* EditorViewController.swift in Sources */,
+				63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */,
 				633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */,
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
+				634541DE295D881E00A6EC0A /* ProcessingFunctionality .swift in Sources */,
 				8ABDB09027DA18550002B9BC /* CoreAPI.swift in Sources */,
 				8AB4930F27DB9081003CD6CF /* VideoURL+Size.swift in Sources */,
 				8AB4931227DB9189003CD6CF /* VideoAspectRatio.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* ExportEffectProvider.swift in Sources */,
+				634541C9295D878700A6EC0A /* PlaybackDelegate.swift in Sources */,
 				8ABDB0A927DA27C80002B9BC /* Configs.swift in Sources */,
 				8A02DAD727DB52FB0019AB99 /* EffectsAPI.swift in Sources */,
 			);
