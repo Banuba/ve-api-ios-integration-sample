@@ -29,7 +29,7 @@ class PlaybackViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
    
-    appStateObserver = AppStateObserver(delegate: self)
+    setupAppStateHandler()
   }
 }
 
@@ -72,7 +72,7 @@ extension PlaybackViewController: AppStateObserverDelegate {
 // MARK: - Action
 extension PlaybackViewController {
   @IBAction func openVideoAction(_ sender: Any) {
-		presentMediaPicker()
+    presentMediaPicker()
   }
   
   private func presentMediaPicker() {
