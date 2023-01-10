@@ -19,7 +19,9 @@ class PlaybackViewController: UIViewController {
   // MARK: - Player container
   @IBOutlet weak var playerContainerView: UIView!
   @IBOutlet weak var openVideoButton: UIButton!
-  
+
+  @IBOutlet weak var invalidTokenLabel: UILabel!
+        
   // MARK: - VideoPlayableView
   var playableView: VideoPlayableView?
 
@@ -72,7 +74,9 @@ extension PlaybackViewController: AppStateObserverDelegate {
 // MARK: - Action
 extension PlaybackViewController {
   @IBAction func openVideoAction(_ sender: Any) {
-    presentMediaPicker()
+    checkLicense {
+      self.presentMediaPicker()
+    }
   }
   
   @IBAction func backAction(_ sender: Any) {
@@ -125,3 +129,14 @@ extension PlaybackViewController {
   }
 }
 
+// MARK: - Private
+extension PlaybackViewController {
+  private func checkLicense(completion: @escaping () -> Void) {
+    CoreAPI.shared.coreAPI.getLicenseState(completion: { [weak self] isValid in
+      self?.invalidTokenLabel.isHidden = isValid
+      if isValid {
+        completion()
+      }
+    })
+  }
+}

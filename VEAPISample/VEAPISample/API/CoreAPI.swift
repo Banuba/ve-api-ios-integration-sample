@@ -18,10 +18,9 @@ class CoreAPI {
   let coreAPI: VideoEditorService
   
   init() {
-    let watermarkApplicator = WatermarkApplicator()
-    coreAPI = VideoEditorService(
-      token: AppDelegate.licenseToken,
-      watermarkApplicator: watermarkApplicator
-    )
+    guard let coreAPI = VideoEditorService(token: AppDelegate.licenseToken) else {
+      fatalError("The token is invalid. Please check if token contains all characters.")
+    }
+    self.coreAPI = coreAPI
   }
 }

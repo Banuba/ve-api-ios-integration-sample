@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qyd-Pi-6VS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qyd-Pi-6VS">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -116,6 +116,12 @@
                                     <constraint firstAttribute="width" secondItem="sPx-ID-PnG" secondAttribute="height" multiplier="9:16" id="ad4-KA-rw0"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your token is either revoked or expired" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOK-Zp-Zbz">
+                                <rect key="frame" x="61.5" y="445" width="291.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2R-Kl-f6J">
                                 <rect key="frame" x="207" y="68" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -316,12 +322,14 @@
                             <constraint firstItem="v2R-Kl-f6J" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="KiH-Fy-niF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sKG-At-PyX" secondAttribute="bottom" constant="15" id="MFe-PR-clQ"/>
                             <constraint firstItem="sgO-op-XXr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="NGQ-WO-Dgj"/>
+                            <constraint firstItem="xOK-Zp-Zbz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="POW-fU-5o8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Ln-Kb-apj" secondAttribute="trailing" constant="30" id="Qgg-4z-VhI"/>
                             <constraint firstItem="8fG-ho-7cq" firstAttribute="bottom" secondItem="k6A-8M-FSa" secondAttribute="top" constant="-40" id="cWZ-Xx-Y1B"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sgO-op-XXr" secondAttribute="trailing" constant="30" id="fdu-tc-9e4"/>
                             <constraint firstItem="sKG-At-PyX" firstAttribute="top" secondItem="wI6-Je-biT" secondAttribute="bottom" constant="15" id="fhF-5Z-b6z"/>
                             <constraint firstItem="sKG-At-PyX" firstAttribute="centerX" secondItem="sPx-ID-PnG" secondAttribute="centerX" id="hrF-i2-a3q"/>
                             <constraint firstItem="CDx-GK-cbQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="j1C-vR-jDt"/>
+                            <constraint firstItem="xOK-Zp-Zbz" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="qUf-hL-OX9"/>
                             <constraint firstItem="Sk4-y7-Rz9" firstAttribute="centerY" secondItem="sKG-At-PyX" secondAttribute="centerY" id="rdb-g4-abP"/>
                             <constraint firstItem="6Ln-Kb-apj" firstAttribute="top" secondItem="sgO-op-XXr" secondAttribute="bottom" constant="40" id="t9I-sW-6uQ"/>
                             <constraint firstItem="k6A-8M-FSa" firstAttribute="centerY" secondItem="sKG-At-PyX" secondAttribute="centerY" id="tgz-M7-wPF"/>
@@ -339,6 +347,7 @@
                         <outlet property="effectView" destination="sPx-ID-PnG" id="bJI-cL-FSx"/>
                         <outlet property="flashlightButton" destination="sgO-op-XXr" id="Qmi-ou-muH"/>
                         <outlet property="galleryButton" destination="OcT-kE-w9b" id="Fup-av-kqe"/>
+                        <outlet property="invalidTokenLabel" destination="xOK-Zp-Zbz" id="7yC-iR-8jc"/>
                         <outlet property="maskButton" destination="k6A-8M-FSa" id="ubP-1V-QyU"/>
                         <outlet property="muteButton" destination="muG-5u-eUA" id="0ci-CP-b6B"/>
                         <outlet property="nextButton" destination="Sk4-y7-Rz9" id="7YE-uC-Q9C"/>
@@ -753,10 +762,17 @@
                                     <action selector="closeButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="baf-d0-2FO"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your token is either revoked or expired" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcd-c1-yp0">
+                                <rect key="frame" x="61.5" y="445" width="291.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nEq-Ze-Cfx"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="xcd-c1-yp0" firstAttribute="centerY" secondItem="nEq-Ze-Cfx" secondAttribute="centerY" id="2o2-yb-7WR"/>
                             <constraint firstItem="udz-lW-OSB" firstAttribute="centerX" secondItem="6Qo-R0-yc8" secondAttribute="centerX" id="5rO-QH-Ea1"/>
                             <constraint firstItem="YDi-io-455" firstAttribute="height" secondItem="6Qo-R0-yc8" secondAttribute="height" multiplier="0.5" id="Jos-0U-Fgx"/>
                             <constraint firstItem="udz-lW-OSB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YDi-io-455" secondAttribute="bottom" constant="40" id="M2a-vV-3cd"/>
@@ -765,11 +781,13 @@
                             <constraint firstItem="YDi-io-455" firstAttribute="top" secondItem="nEq-Ze-Cfx" secondAttribute="top" constant="60" id="dHL-5g-det"/>
                             <constraint firstItem="YDi-io-455" firstAttribute="centerX" secondItem="6Qo-R0-yc8" secondAttribute="centerX" id="qXW-gB-7qW"/>
                             <constraint firstItem="nEq-Ze-Cfx" firstAttribute="bottom" secondItem="udz-lW-OSB" secondAttribute="bottom" constant="20" id="xz7-6W-YM9"/>
+                            <constraint firstItem="xcd-c1-yp0" firstAttribute="centerX" secondItem="nEq-Ze-Cfx" secondAttribute="centerX" id="zNC-Bi-4sL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6s4-22-ucP"/>
                     <connections>
                         <outlet property="activityIndicator" destination="vWI-zf-v5i" id="jd1-BZ-OCj"/>
+                        <outlet property="invalidTokenLabel" destination="xcd-c1-yp0" id="Vg7-nB-e7M"/>
                         <outlet property="playVideoButton" destination="oiJ-tg-Qy4" id="HZM-82-5EO"/>
                         <outlet property="previewContainer" destination="YDi-io-455" id="0ZK-pB-zch"/>
                         <outlet property="previewImageView" destination="8LH-YC-KDh" id="Qxd-YH-lrb"/>
@@ -834,6 +852,12 @@
                                     <action selector="openVideoAction:" destination="67R-Am-jb7" eventType="touchUpInside" id="bNP-0o-YfA"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your token is either revoked or expired" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTN-fE-Bgd">
+                                <rect key="frame" x="61.5" y="445" width="291.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZQ-Ef-UBy">
                                 <rect key="frame" x="20" y="68" width="45" height="45"/>
                                 <constraints>
@@ -855,6 +879,8 @@
                             <constraint firstAttribute="bottom" secondItem="SbC-J3-r87" secondAttribute="bottom" id="9lt-VC-cJ6"/>
                             <constraint firstItem="SbC-J3-r87" firstAttribute="bottom" secondItem="bdo-4U-x5s" secondAttribute="bottom" constant="60" id="Bou-zl-FHI"/>
                             <constraint firstItem="xZQ-Ef-UBy" firstAttribute="leading" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="20" id="Czh-kx-9Q1"/>
+                            <constraint firstItem="ZTN-fE-Bgd" firstAttribute="centerX" secondItem="G2H-sw-wsE" secondAttribute="centerX" id="EU2-WT-VO8"/>
+                            <constraint firstItem="ZTN-fE-Bgd" firstAttribute="centerY" secondItem="G2H-sw-wsE" secondAttribute="centerY" id="HEA-a8-a6a"/>
                             <constraint firstItem="bdo-4U-x5s" firstAttribute="width" secondItem="Pst-9I-0Uk" secondAttribute="width" multiplier="0.4" id="RON-fQ-nI0"/>
                             <constraint firstItem="SbC-J3-r87" firstAttribute="top" secondItem="Pst-9I-0Uk" secondAttribute="top" id="W3C-rX-9DZ"/>
                             <constraint firstItem="xZQ-Ef-UBy" firstAttribute="top" secondItem="G2H-sw-wsE" secondAttribute="top" constant="20" id="c3r-EP-8B5"/>
@@ -864,6 +890,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="vTl-tb-he3"/>
                     <connections>
+                        <outlet property="invalidTokenLabel" destination="ZTN-fE-Bgd" id="bYJ-dL-hhF"/>
                         <outlet property="openVideoButton" destination="bdo-4U-x5s" id="Mlz-t0-MHT"/>
                         <outlet property="playerContainerView" destination="SbC-J3-r87" id="NgT-2f-NWa"/>
                     </connections>
