@@ -47,6 +47,9 @@ class CameraViewController: UIViewController {
   // MARK: - Control button
   @IBOutlet var controlButtons: [UIButton]!
   
+  // MARK: - Invalid token warning
+  @IBOutlet weak var invalidTokenLabel: UILabel!
+  
   // MARK: - FAR
   private var sdkManager = BanubaSdkManager()
   private let config = EffectPlayerConfiguration(renderMode: .video)
@@ -83,6 +86,17 @@ class CameraViewController: UIViewController {
     videoSequence = VideoSequence(folderURL: Defaults.videosDirectory)
     // Rotate to display back camera
     rotateCameraButtonTap(rotateCameraButton)
+      
+    // Check license
+    CoreAPI.shared.coreAPI.getLicenseState(completion: { [weak self] isValid in
+      guard let self, !isValid else { return }
+      self.sdkManager.destroyEffectPlayer()
+      self.controlButtons.forEach { button in
+        button.isHidden = true
+      }
+      self.recordButton.isHidden = true
+      self.invalidTokenLabel.isHidden = false
+    })
   }
   
   override func viewWillAppear(_ animated: Bool) {

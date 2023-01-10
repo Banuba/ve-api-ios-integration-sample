@@ -200,6 +200,7 @@ extension EditorViewController {
     
     // Track instance
     let track = MediaTrack(
+      uuid: UUID(),
       id: id,
       url: url,
       timeRange: timeRange,

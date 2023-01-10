@@ -28,6 +28,8 @@ class ExportViewController: UIViewController {
   @IBOutlet weak var progressView: UIProgressView!
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
+  @IBOutlet weak var invalidTokenLabel: UILabel!
+  
   private var cancelExportHandler: CancelExportHandler?
   
   private var exportedVideoUrl: URL?
@@ -46,7 +48,9 @@ extension ExportViewController {
     exportedVideoUrl = nil
     playVideoButton.isHidden = true
     
-    presentMediaPicker()
+    checkLicense {
+      self.presentMediaPicker()
+    }
   }
   
   @IBAction func stopExportAction(_ sender: Any) {
@@ -116,6 +120,15 @@ extension ExportViewController {
 }
 
 extension ExportViewController {
+  private func checkLicense(completion: @escaping () -> Void) {
+    CoreAPI.shared.coreAPI.getLicenseState(completion: { [weak self] isValid in
+      self?.invalidTokenLabel.isHidden = isValid
+      if isValid {
+        completion()
+      }
+    })
+  }
+    
   private func exportVideo(videoUrls: [URL]) {
     // Get sequence folder url
     let sequenceName = UUID().uuidString

@@ -13,7 +13,7 @@ import BanubaUtilities
 // MARK: - VideoEditorPlayerDelegate
 extension PlaybackViewController: VideoEditorPlayerDelegate {
   func playerPlaysFrame(_ player: VideoEditorPlayable, atTime time: CMTime) {
-    print(time.seconds)
+    
   }
   
   func playerDidEndPlaying(_ player: VideoEditorPlayable) {
