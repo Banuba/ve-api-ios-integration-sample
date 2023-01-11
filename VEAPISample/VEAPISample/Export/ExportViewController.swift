@@ -237,6 +237,9 @@ extension ExportViewController {
     // Export video
     let exportSDK = VEExport(videoEditorService: CoreAPI.shared.coreAPI)
     
+    // Set initial video size
+    CoreAPI.shared.coreAPI.videoSize = videoSequence.videos.map { $0.videoInfo.resolution }.first!
+    
     startExportAnimation()
     cancelExportHandler = exportSDK?.exportVideo(
       to: exportedVideoUrl,
