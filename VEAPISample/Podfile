@@ -1,10 +1,10 @@
 source 'https://github.com/Banuba/specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '12.0'
+platform :ios, '13.0'
 use_frameworks!
 
-banuba_sdk_version = '1.26.4'
+banuba_sdk_version = '1.26.5'
 
 target 'VEAPISample' do
   pod 'YPImagePicker'
