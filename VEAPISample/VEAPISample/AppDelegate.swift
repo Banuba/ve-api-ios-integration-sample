@@ -8,6 +8,7 @@
 import UIKit
 import BanubaSdk
 import BanubaEffectPlayer
+import VEEffectsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       clientTokenString: AppDelegate.licenseToken,
       logLevel: .info
     )
+    
+    // Setup mask renderer
+    BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(renderSize: Configs.resolutionConfig.current.size)
     
     return true
   }

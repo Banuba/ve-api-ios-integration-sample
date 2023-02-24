@@ -74,7 +74,7 @@ extension PlaybackViewController {
         guard let visualEffectType = additionalInfo[ExportEffectAdditionalInfoKey.name] as? VisualEffectApplicatorType else {
           return
         }
-        
+
         effectApplicator.applyVisualEffectApplicatorType(
           visualEffectType,
           startTime: exportEffect.startTime,
@@ -86,7 +86,7 @@ extension PlaybackViewController {
         guard let speedEffectType = additionalInfo[ExportEffectAdditionalInfoKey.name] as? SpeedEffectType else {
           return
         }
-        
+
         effectApplicator.applySpeedEffectType(
           speedEffectType,
           startTime: exportEffect.startTime,
@@ -103,6 +103,34 @@ extension PlaybackViewController {
         effectApplicator.applyOverlayEffectType(
           type,
           effectInfo: effectInfo
+        )
+      case .mask:
+        guard let name = additionalInfo[ExportEffectAdditionalInfoKey.name] as? String,
+              let maskPath = additionalInfo[ExportEffectAdditionalInfoKey.url] as? String else {
+          return
+        }
+        
+        let effectModel = VideoEditorFilterModel(
+          name: name,
+          type: .mask,
+          renderer: BanubaMaskDrawer.self,
+          path: maskPath,
+          id: exportEffect.id,
+          tokenId: "\(exportEffect.id)",
+          rendererInstance: nil,
+          preview: nil,
+          additionalParameters: nil
+        )
+        
+        // Setup Banuba Mask Renderer
+        // This operation can be time consuming
+        BanubaMaskRenderer.loadEffectPath(maskPath)
+        
+        CoreAPI.shared.coreAPI.applyFilter(
+          effectModel: effectModel,
+          start: exportEffect.startTime,
+          end: exportEffect.endTime,
+          removeSameType: true
         )
       }
     }

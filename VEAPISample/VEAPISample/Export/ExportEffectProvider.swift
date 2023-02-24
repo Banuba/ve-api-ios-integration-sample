@@ -13,6 +13,7 @@ enum ExportEffectType {
   case visual
   case speed
   case overlay
+  case mask
 }
 
 struct ExportEffect {
@@ -26,7 +27,7 @@ struct ExportEffect {
 struct ExportEffectAdditionalInfoKey {
   static let url: String = "url"
   static let name: String = "name"
-  static let effectInfo: String = "effecInfo"
+  static let effectInfo: String = "effectInfo"
 }
 
 class ExportEffectProvider {
@@ -43,12 +44,33 @@ class ExportEffectProvider {
   
   func provideExportEffects() -> [ExportEffect] {
     return [
+      provideMaskExportEffect(),
       provideColorExportEffect(),
       provideVisualExportEffect(type: .vhs),
       provideSpeedExportEffect(type: .slowmo),
       provideOverlayExportEffect(type: .gif),
       provideOverlayExportEffect(type: .text)
     ]
+  }
+  
+  func provideMaskExportEffect() -> ExportEffect {
+    let maskName = "AsaiLines"
+    let url = Bundle.main.bundlePath + "/effects/" + maskName
+    var isDirectory = ObjCBool(true)
+    guard FileManager.default.fileExists(atPath: url, isDirectory: &isDirectory) else {
+      fatalError("Unable to find mask at specified url")
+    }
+    
+    return ExportEffect(
+      type: .mask,
+      id: EffectIDs.maskEffectStartId + uniqueEffectId,
+      startTime: .zero,
+      endTime: totalVideoDuration,
+      additionalInfo: [
+        ExportEffectAdditionalInfoKey.url: url,
+        ExportEffectAdditionalInfoKey.name: maskName
+      ]
+    )
   }
   
   func provideColorExportEffect() -> ExportEffect {

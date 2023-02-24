@@ -219,6 +219,34 @@ extension ExportViewController {
           type,
           effectInfo: effectInfo
         )
+      case .mask:
+        guard let name = additionalInfo[ExportEffectAdditionalInfoKey.name] as? String,
+              let maskPath = additionalInfo[ExportEffectAdditionalInfoKey.url] as? String else {
+          return
+        }
+        
+        let effectModel = VideoEditorFilterModel(
+          name: name,
+          type: .mask,
+          renderer: BanubaMaskDrawer.self,
+          path: maskPath,
+          id: exportEffect.id,
+          tokenId: "\(exportEffect.id)",
+          rendererInstance: nil,
+          preview: nil,
+          additionalParameters: nil
+        )
+        
+        // Setup Banuba Mask Renderer
+        // This operation can be time consuming
+        BanubaMaskRenderer.loadEffectPath(maskPath)
+        
+        CoreAPI.shared.coreAPI.applyFilter(
+          effectModel: effectModel,
+          start: exportEffect.startTime,
+          end: exportEffect.endTime,
+          removeSameType: true
+        )
       }
     }
     
