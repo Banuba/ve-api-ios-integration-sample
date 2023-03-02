@@ -140,3 +140,14 @@ extension PlaybackViewController {
     })
   }
 }
+
+// MARK: - VideoEditorPlayerDelegate
+extension PlaybackViewController: VideoEditorPlayerDelegate {
+  func playerPlaysFrame(_ player: VideoEditorPlayable, atTime time: CMTime) {
+    
+  }
+  
+  func playerDidEndPlaying(_ player: VideoEditorPlayable) {
+    print("Did end playing")
+  }
+}

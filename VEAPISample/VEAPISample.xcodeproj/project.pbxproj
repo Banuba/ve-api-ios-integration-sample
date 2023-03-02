@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
 		63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63454196295C627100A6EC0A /* PlaybackViewController.swift */; };
-		634541C9295D878700A6EC0A /* PlaybackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634541C8295D878700A6EC0A /* PlaybackDelegate.swift */; };
 		634541DE295D881E00A6EC0A /* ProcessingFunctionality .swift in Sources */ = {isa = PBXBuildFile; fileRef = 634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */; };
 		639DFABC2948AE840021458F /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DFABB2948AE840021458F /* ExportViewController.swift */; };
 		63A1C8EB2950B771007BA126 /* ExportEffectProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */; };
@@ -30,7 +29,6 @@
 /* Begin PBXFileReference section */
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; };
 		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		634541C8295D878700A6EC0A /* PlaybackDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackDelegate.swift; sourceTree = "<group>"; };
 		634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessingFunctionality .swift"; sourceTree = "<group>"; };
 		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportEffectProvider.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 			children = (
 				63454196295C627100A6EC0A /* PlaybackViewController.swift */,
 				634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */,
-				634541C8295D878700A6EC0A /* PlaybackDelegate.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -290,7 +287,6 @@
 				634541DE295D881E00A6EC0A /* ProcessingFunctionality .swift in Sources */,
 				8ABDB09027DA18550002B9BC /* CoreAPI.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* ExportEffectProvider.swift in Sources */,
-				634541C9295D878700A6EC0A /* PlaybackDelegate.swift in Sources */,
 				8ABDB0A927DA27C80002B9BC /* Configs.swift in Sources */,
 				8A02DAD727DB52FB0019AB99 /* EffectsAPI.swift in Sources */,
 			);
