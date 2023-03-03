@@ -7,6 +7,7 @@
 
 import VEEffectsSDK
 import UIKit
+import BanubaUtilities
 
 enum ExportEffectType {
   case color
@@ -14,6 +15,7 @@ enum ExportEffectType {
   case speed
   case overlay
   case mask
+  case music
 }
 
 struct ExportEffect {
@@ -44,7 +46,7 @@ class ExportEffectProvider {
   
   func provideExportEffects() -> [ExportEffect] {
     return [
-      provideMaskExportEffect(),
+      provideMaskEffect(),
       provideColorExportEffect(),
       provideVisualExportEffect(type: .vhs),
       provideSpeedExportEffect(type: .slowmo),
@@ -53,8 +55,7 @@ class ExportEffectProvider {
     ]
   }
   
-  func provideMaskExportEffect() -> ExportEffect {
-    let maskName = "AsaiLines"
+  func provideMaskEffect(withName maskName: String = "AsaiLines") -> ExportEffect {
     let url = Bundle.main.bundlePath + "/effects/" + maskName
     var isDirectory = ObjCBool(true)
     guard FileManager.default.fileExists(atPath: url, isDirectory: &isDirectory) else {
@@ -110,6 +111,23 @@ class ExportEffectProvider {
     )
   }
   
+  func provideMusicExportEffect() -> ExportEffect {
+    guard let url = Bundle.main.url(forResource: "sample", withExtension: "wav") else {
+      fatalError("Can't find music track")
+    }
+    
+    return ExportEffect(
+      type: .music,
+      id: uniqueEffectId,
+      startTime: .zero,
+      endTime: totalVideoDuration,
+      additionalInfo: [
+        ExportEffectAdditionalInfoKey.name: "sample",
+        ExportEffectAdditionalInfoKey.url: url
+      ]
+    )
+  }
+  
   func provideOverlayExportEffect(type: OverlayEffectApplicatorType) -> ExportEffect {
     // Ouput image should be created from cgImage reference
     var image: UIImage?
@@ -122,14 +140,9 @@ class ExportEffectProvider {
      default:break
     }
     
-    
-    guard let outputImage = image else {
-      fatalError("Overlay image should be provided")
-    }
-    
     // Create required effect settings
     let info = createEffectInfo(
-      withImage: outputImage,
+      withImage: image,
       for: type,
       start: .zero,
       end: totalVideoDuration
@@ -149,7 +162,7 @@ class ExportEffectProvider {
 
   // MARK: - ExportEffectProvider helper
   private func createEffectInfo(
-    withImage image: UIImage,
+    withImage image: UIImage?,
     for type: OverlayEffectApplicatorType,
     start: CMTime,
     end: CMTime
@@ -165,7 +178,6 @@ class ExportEffectProvider {
         points = textImagePoints
       default: break
     }
-    
     
     // Result effect info
     let effectInfo = VideoEditorEffectInfo(

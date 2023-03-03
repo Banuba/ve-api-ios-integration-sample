@@ -34,10 +34,29 @@ class ExportViewController: UIViewController {
   
   private var exportedVideoUrl: URL?
   
+  // MARK: - Banuba Services
+  private var editor: VideoEditorService!
+  private var effectApplicator: EffectApplicator!
+  private var exportSDK: VEExport!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    setupBanubaServices()
     activityIndicator.isHidden = true
+  }
+  
+  private func setupBanubaServices() {
+    guard let editor = VideoEditorService(token: AppDelegate.licenseToken) else {
+      fatalError("The token is invalid. Please check if token contains all characters.")
+    }
+    
+    self.editor = editor
+    self.effectApplicator = EffectApplicator(
+      editor: editor,
+      effectConfigHolder: EditorEffectsConfigHolder(token: AppDelegate.licenseToken)
+    )
+    self.exportSDK = VEExport(videoEditorService: editor)
   }
 }
 
@@ -121,7 +140,7 @@ extension ExportViewController {
 
 extension ExportViewController {
   private func checkLicense(completion: @escaping () -> Void) {
-    CoreAPI.shared.coreAPI.getLicenseState(completion: { [weak self] isValid in
+    editor.getLicenseState(completion: { [weak self] isValid in
       self?.invalidTokenLabel.isHidden = isValid
       if isValid {
         completion()
@@ -153,20 +172,18 @@ extension ExportViewController {
     )
     
     // Set cuurent video asset to video editor service
-    CoreAPI.shared.coreAPI.setCurrentAsset(videoEditorAsset)
+    editor.setCurrentAsset(videoEditorAsset)
 
     // Apply original track rotation for each asset track
     videoEditorAsset.tracksInfo.forEach { assetTrack in
       let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-      EffectsAPI.shared.effectApplicator.addTransformEffect(
+      effectApplicator.addTransformEffect(
         atStartTime: assetTrack.timeRangeInGlobal.start,
         end: assetTrack.timeRangeInGlobal.end,
         rotation: rotation,
         isVideoFitsAspect: false
       )
     }
-    
-    let effectApplicator = EffectsAPI.shared.effectApplicator
 
     let exportEffectsProvider = ExportEffectProvider(totalVideoDuration: videoEditorAsset.composition.duration)
     exportEffectsProvider.provideExportEffects().forEach { exportEffect in
@@ -241,12 +258,39 @@ extension ExportViewController {
         // This operation can be time consuming
         BanubaMaskRenderer.loadEffectPath(maskPath)
         
-        CoreAPI.shared.coreAPI.applyFilter(
+        editor.applyFilter(
           effectModel: effectModel,
           start: exportEffect.startTime,
           end: exportEffect.endTime,
           removeSameType: true
         )
+      case .music:
+        guard let title = additionalInfo[ExportEffectAdditionalInfoKey.name] as? String,
+              let musicUrl = additionalInfo[ExportEffectAdditionalInfoKey.url] as? URL else {
+          return
+        }
+        
+        let trackTimeRange = CMTimeRange(
+          start: exportEffect.startTime,
+          duration: exportEffect.startTime + exportEffect.endTime
+        )
+        
+        // Track time range
+        let timeRange = MediaTrackTimeRange(
+          startTime: .zero,
+          playingTimeRange: trackTimeRange
+        )
+        
+        // Track instance
+        let track = MediaTrack(
+          uuid: UUID(),
+          id: CMPersistentTrackID(exportEffect.id),
+          url: musicUrl,
+          timeRange: timeRange,
+          isEditable: true,
+          title: title
+        )
+        videoEditorAsset.addMusicTrack(track)
       }
     }
     
@@ -262,14 +306,11 @@ extension ExportViewController {
       useHEVCCodecIfPossible: true
     )
     
-    // Export video
-    let exportSDK = VEExport(videoEditorService: CoreAPI.shared.coreAPI)
-    
     // Set initial video size
-    CoreAPI.shared.coreAPI.videoSize = videoSequence.videos.map { $0.videoInfo.resolution }.first!
+    editor.videoSize = videoSequence.videos.map { $0.videoInfo.resolution }.first!
     
     startExportAnimation()
-    cancelExportHandler = exportSDK?.exportVideo(
+    cancelExportHandler = exportSDK.exportVideo(
       to: exportedVideoUrl,
       using: exportVideoInfo,
       watermarkFilterModel: nil,
