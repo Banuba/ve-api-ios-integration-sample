@@ -95,7 +95,7 @@ class PickVideoViewController: UIViewController {
     guard
       segue.identifier == "showVideoEditorPlayback",
       let videoUrls = sender as? [URL],
-        let playbackVC = segue.destination as? PlaybackViewController
+      let playbackVC = segue.destination as? PlaybackViewController
     else {
       super.prepare(for: segue, sender: sender)
       return
