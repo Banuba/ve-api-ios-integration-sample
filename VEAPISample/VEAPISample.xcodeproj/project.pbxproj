@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
 		63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63454196295C627100A6EC0A /* PlaybackViewController.swift */; };
-		634541DE295D881E00A6EC0A /* ProcessingFunctionality .swift in Sources */ = {isa = PBXBuildFile; fileRef = 634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */; };
 		637D252829B0C76100B446E0 /* EffectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637D252729B0C76100B446E0 /* EffectButton.swift */; };
 		637D252A29B0F41A00B446E0 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637D252929B0F41A00B446E0 /* sample.wav */; };
 		639DFABC2948AE840021458F /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DFABB2948AE840021458F /* ExportViewController.swift */; };
-		63A1C8EB2950B771007BA126 /* ExportEffectProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */; };
+		63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* EffectsProvider.swift */; };
 		63B8E49029B092CC000F043F /* PickVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B8E48F29B092CC000F043F /* PickVideoViewController.swift */; };
+		63D833E229B5E904009DCF99 /* EffectsApplyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D833E129B5E904009DCF99 /* EffectsApplyer.swift */; };
 		63E308B329B1EE3400172732 /* PreviewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E308B229B1EE3400172732 /* PreviewImageViewController.swift */; };
 		8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01658A27D8B783003E36FB /* AppDelegate.swift */; };
 		8A01659227D8B783003E36FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A01659027D8B783003E36FB /* Main.storyboard */; };
@@ -30,12 +30,12 @@
 /* Begin PBXFileReference section */
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; };
 		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessingFunctionality .swift"; sourceTree = "<group>"; };
 		637D252729B0C76100B446E0 /* EffectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectButton.swift; sourceTree = "<group>"; };
 		637D252929B0F41A00B446E0 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
 		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportEffectProvider.swift; sourceTree = "<group>"; };
+		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; };
 		63B8E48F29B092CC000F043F /* PickVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickVideoViewController.swift; sourceTree = "<group>"; };
+		63D833E129B5E904009DCF99 /* EffectsApplyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsApplyer.swift; sourceTree = "<group>"; };
 		63E308B229B1EE3400172732 /* PreviewImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageViewController.swift; sourceTree = "<group>"; };
 		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A01658727D8B783003E36FB /* VEAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +84,8 @@
 		633B444428CF317800AE5C1C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				63B8E48F29B092CC000F043F /* PickVideoViewController.swift */,
+				63E308B229B1EE3400172732 /* PreviewImageViewController.swift */,
 				633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */,
 				637D252729B0C76100B446E0 /* EffectButton.swift */,
 			);
@@ -94,9 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				63454196295C627100A6EC0A /* PlaybackViewController.swift */,
-				634541DD295D881E00A6EC0A /* ProcessingFunctionality .swift */,
-				63B8E48F29B092CC000F043F /* PickVideoViewController.swift */,
-				63E308B229B1EE3400172732 /* PreviewImageViewController.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -105,7 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				639DFABB2948AE840021458F /* ExportViewController.swift */,
-				63A1C8EA2950B771007BA126 /* ExportEffectProvider.swift */,
 			);
 			path = Export;
 			sourceTree = "<group>";
@@ -135,6 +133,8 @@
 				639DFABA2948AE6E0021458F /* Export */,
 				633B444428CF317800AE5C1C /* Helpers */,
 				8ABDB0A727DA27BC0002B9BC /* Configs */,
+				63A1C8EA2950B771007BA126 /* EffectsProvider.swift */,
+				63D833E129B5E904009DCF99 /* EffectsApplyer.swift */,
 				8A0165B427D8CB67003E36FB /* effects */,
 				8A02DAD927DB560D0019AB99 /* luts */,
 				8A02DAD827DB560D0019AB99 /* GifExample.gif */,
@@ -278,11 +278,11 @@
 				639DFABC2948AE840021458F /* ExportViewController.swift in Sources */,
 				63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */,
 				63E308B329B1EE3400172732 /* PreviewImageViewController.swift in Sources */,
+				63D833E229B5E904009DCF99 /* EffectsApplyer.swift in Sources */,
 				63B8E49029B092CC000F043F /* PickVideoViewController.swift in Sources */,
 				633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */,
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
-				634541DE295D881E00A6EC0A /* ProcessingFunctionality .swift in Sources */,
-				63A1C8EB2950B771007BA126 /* ExportEffectProvider.swift in Sources */,
+				63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */,
 				8ABDB0A927DA27C80002B9BC /* Configs.swift in Sources */,
 				637D252829B0C76100B446E0 /* EffectButton.swift in Sources */,
 			);

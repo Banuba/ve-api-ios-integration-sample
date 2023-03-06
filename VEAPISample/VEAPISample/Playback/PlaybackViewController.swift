@@ -20,7 +20,7 @@ private struct Defaults {
 
 class PlaybackViewController: UIViewController {
   
-  // Must be initialized before presenting
+  // Video urls for playback
   var videoUrls: [URL]!
 
   // MARK: - Player container
@@ -32,31 +32,91 @@ class PlaybackViewController: UIViewController {
   var isPlaying: Bool { playPauseButton.isSelected }
   
   // MARK: - VideoPlayableView
-  var playableView: VideoPlayableView?
-  var player: VideoEditorPlayable? { playableView?.videoEditorPlayer }
-  var currentTime: CMTime { playableView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
-  var videoDuration: CMTime { editor.videoAsset?.composition.duration ?? .zero }
+  private(set) var playableView: VideoPlayableView?
+  
+  // MARK: - Playback helpers
+  private var player: VideoEditorPlayable? { playableView?.videoEditorPlayer }
+  private var currentTime: CMTime { playableView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
+  private var videoDuration: CMTime { editor.videoAsset?.composition.duration ?? .zero }
 
   // MARK: - AppStateObserver
-  var appStateObserver: AppStateObserver?
+  // Pauses video when app collapsed and resumes when app unfolds. See AppStateObserverDelegate extension
+  private var appStateObserver: AppStateObserver?
   
-  // MARK: - Banuba Services
-  // Initilize before use. See method seetupPlaybackServices()
+  // MARK: - Banuba Services used for playback
+  // Video editor service stores resulted video asset and applied effects
   var editor: VideoEditorService!
-  var effectApplicator: EffectApplicator!
+  // Playback sdk provides playback view for previewing decorated video
   var playbackSDK: VEPlayback!
   
-  private var effectsProvider: ExportEffectProvider!
+  // MARK: - Effect managing helpers
+  private var effectsProvider: EffectsProvider!
+  private var effectsApplyer: EffectsApplyer!
   
   override func viewDidLoad() {
     super.viewDidLoad()
    
-    seetupPlaybackServices()
-    setupPlayback(with: videoUrls)
+    effectsApplyer = EffectsApplyer(editor: editor)
+    // configure video editor service with video urls. Video must be downloaded
+    setupVideoEditor(with: videoUrls)
+    
+    playbackSDK = VEPlayback(videoEditorService: editor)
+    effectsProvider = EffectsProvider(totalVideoDuration: videoDuration)
+    
     setupPlaybackView()
     setupAppStateHandler()
+  }
+  
+  /// Setup current video editor service for playback
+  private func setupVideoEditor(with videoUrls: [URL]) {
+    // Setup sequence name and location
+    let sequenceName = UUID().uuidString
+    let folderURL = FileManager.default.temporaryDirectory.appendingPathComponent(sequenceName)
     
-    effectsProvider = ExportEffectProvider(totalVideoDuration: videoDuration)
+    // Create sequence at location
+    let videoSequence = VideoSequence(folderURL: folderURL)
+    
+    // Fill up sequence with videos
+    videoUrls.forEach { videoURL in
+      videoSequence.addVideo(
+        at: videoURL,
+        isSlideShow: false,
+        transition: .normal
+      )
+    }
+    
+    // Create VideoEditorAsset from relevant sequence
+    let videoEditorAsset = VideoEditorAsset(
+      sequence: videoSequence,
+      isGalleryAssets: true,
+      isSlideShow: false,
+      videoResolutionConfiguration: Configs.resolutionConfig
+    )
+
+    // Set current video asset to video editor service
+    editor.setCurrentAsset(videoEditorAsset)
+    
+    // Apply original track rotation for each asset track
+    videoEditorAsset.tracksInfo.forEach { assetTrack in
+      let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
+      effectsApplyer.applyTransformEffect(
+        start: assetTrack.timeRangeInGlobal.start,
+        end: assetTrack.timeRangeInGlobal.end,
+        rotation: rotation
+      )
+    }
+    
+    // Set initial video size
+    editor.videoSize = videoSequence.videos.map { video in
+      let resolution = video.videoInfo.resolution
+      let urlAsset = AVURLAsset(url: video.url)
+      let preferredTransform = urlAsset.tracks(withMediaType: .video).first?.preferredTransform ?? .identity
+      let rotatedResolution = resolution.applying(preferredTransform)
+      return CGSize(
+        width: abs(rotatedResolution.width),
+        height: abs(rotatedResolution.height)
+      )
+    }.first!
   }
 }
 
@@ -126,7 +186,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .mask)
     } else {
       let effect = effectsProvider.provideMaskEffect(withName: "AsaiLines")
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -138,7 +198,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .visual)
     } else {
       let effect = effectsProvider.provideVisualExportEffect(type: .vhs)
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -150,7 +210,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .time)
     } else {
       let effect = effectsProvider.provideSpeedExportEffect(type: .rapid)
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -162,7 +222,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .time)
     } else {
       let effect = effectsProvider.provideSpeedExportEffect(type: .slowmo)
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -174,7 +234,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .text)
     } else {
       let effect = effectsProvider.provideOverlayExportEffect(type: .text)
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -186,7 +246,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .color)
     } else {
       let effect = effectsProvider.provideColorExportEffect()
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -198,7 +258,7 @@ extension PlaybackViewController {
       editor.undoAll(type: .gif)
     } else {
       let effect = effectsProvider.provideOverlayExportEffect(type: .gif)
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -216,8 +276,8 @@ extension PlaybackViewController {
     } else {
       let effect = effectsProvider.provideMusicExportEffect()
       AppliedTrackInfo.id = CMPersistentTrackID(effect.id)
-      AppliedTrackInfo.url = effect.additionalInfo[ExportEffectAdditionalInfoKey.url] as? URL
-      applyEffect(effect)
+      AppliedTrackInfo.url = effect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()
@@ -243,7 +303,7 @@ extension PlaybackViewController {
           )
         )
       )
-      applyEffect(effect)
+      effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     sender.isSelected.toggle()

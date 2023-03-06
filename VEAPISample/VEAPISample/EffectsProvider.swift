@@ -1,38 +1,49 @@
 //
-//  ExportEffectProvider.swift
+//  EffectsProvider.swift
 //  VEAPISample
 //
-//  Created by Andrei Sak on 19.12.22.
+//  Created by Andrey Sak on 19.12.22.
 //
 
 import VEEffectsSDK
 import UIKit
 import BanubaUtilities
 
-enum ExportEffectType {
+/// Available effect types
+enum EffectType {
   case color
   case visual
   case speed
+  /// gif, text or blur
   case overlay
   case mask
   case music
 }
 
-struct ExportEffect {
-  let type: ExportEffectType
+/// Effect contains info about type, id, timeRange in asset and additional info
+struct Effect {
+  /// Unique id of effect
   let id: UInt
-  let startTime: CMTime
-  let endTime: CMTime
+  /// Type of effect
+  let type: EffectType
+  /// Time range of video asset which will be applied by effect
+  let timeRange: CMTimeRange
+  /// Additional values required by effect
   let additionalInfo: [String: Any]
+  
+  /// Additional info keys required by effect
+  struct AdditionalInfoKey {
+    /// Effect url
+    static let url: String = "url"
+    /// Effect name
+    static let name: String = "name"
+    /// Additional effect settings
+    static let effectSettings: String = "effectSettings"
+  }
 }
 
-struct ExportEffectAdditionalInfoKey {
-  static let url: String = "url"
-  static let name: String = "name"
-  static let effectInfo: String = "effectInfo"
-}
-
-class ExportEffectProvider {
+/// This effects provider applies effect to full video duration
+class EffectsProvider {
   /// Unique effect id
   var uniqueEffectId: UInt {
     UInt.random(in: 0...100)
@@ -44,91 +55,94 @@ class ExportEffectProvider {
     self.totalVideoDuration = totalVideoDuration
   }
   
-  func provideExportEffects() -> [ExportEffect] {
+  // provides all available effect
+  func provideAllEffects() -> [Effect] {
     return [
       provideMaskEffect(),
-      provideColorExportEffect(),
-      provideVisualExportEffect(type: .vhs),
-      provideSpeedExportEffect(type: .slowmo),
-      provideOverlayExportEffect(type: .gif),
-      provideOverlayExportEffect(type: .text)
+      provideColorEffect(),
+      provideVisualEffect(type: .vhs),
+      provideSpeedEffect(type: .slowmo),
+      provideOverlayEffect(type: .gif),
+      provideOverlayEffect(type: .text),
+      provideMusicEffect()
     ]
   }
   
-  func provideMaskEffect(withName maskName: String = "AsaiLines") -> ExportEffect {
+  // Returns mask effect with specific name. Mask should be located in effects folder.
+  func provideMaskEffect(withName maskName: String = "AsaiLines") -> Effect {
     let url = Bundle.main.bundlePath + "/effects/" + maskName
     var isDirectory = ObjCBool(true)
     guard FileManager.default.fileExists(atPath: url, isDirectory: &isDirectory) else {
       fatalError("Unable to find mask at specified url")
     }
     
-    return ExportEffect(
-      type: .mask,
+    return Effect(
       id: EffectIDs.maskEffectStartId + uniqueEffectId,
-      startTime: .zero,
-      endTime: totalVideoDuration,
+      type: .mask,
+      timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
       additionalInfo: [
-        ExportEffectAdditionalInfoKey.url: url,
-        ExportEffectAdditionalInfoKey.name: maskName
+        Effect.AdditionalInfoKey.url: url,
+        Effect.AdditionalInfoKey.name: maskName
       ]
     )
   }
   
-  func provideColorExportEffect() -> ExportEffect {
+  // Returns color effect
+  func provideColorEffect() -> Effect {
     guard let url = Bundle.main.url(forResource: "luts/japan", withExtension: "png") else {
       fatalError("Unable to find color filter at specified url")
     }
     
-    return ExportEffect(
-      type: .color,
+    return Effect(
       id: EffectIDs.colorEffectStartId + uniqueEffectId,
-      startTime: .zero,
-      endTime: totalVideoDuration,
+      type: .color,
+      timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
       additionalInfo: [
-        ExportEffectAdditionalInfoKey.url: url,
-        ExportEffectAdditionalInfoKey.name: "Japan"
+        Effect.AdditionalInfoKey.url: url,
+        Effect.AdditionalInfoKey.name: "Japan"
       ]
     )
   }
   
-  func provideVisualExportEffect(type: VisualEffectApplicatorType) -> ExportEffect {
-    return ExportEffect(
-      type: .visual,
+  // Returns visual effect for specific type
+  func provideVisualEffect(type: VisualEffectApplicatorType) -> Effect {
+    return Effect(
       id: EffectIDs.visualEffectStartId + uniqueEffectId,
-      startTime: .zero,
-      endTime: totalVideoDuration,
-      additionalInfo: [ExportEffectAdditionalInfoKey.name: type]
+      type: .visual,
+      timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
+      additionalInfo: [Effect.AdditionalInfoKey.name: type]
     )
   }
   
-  func provideSpeedExportEffect(type: SpeedEffectType) -> ExportEffect {
-    return ExportEffect(
-      type: .speed,
+  // Returns speed effect for specific type (rapid or slowmo)
+  func provideSpeedEffect(type: SpeedEffectType) -> Effect {
+    return Effect(
       id: EffectIDs.speedEffectStartId + uniqueEffectId,
-      startTime: .zero,
-      endTime: totalVideoDuration,
-      additionalInfo: [ExportEffectAdditionalInfoKey.name: type]
+      type: .speed,
+      timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
+      additionalInfo: [Effect.AdditionalInfoKey.name: type]
     )
   }
   
-  func provideMusicExportEffect() -> ExportEffect {
+  // Returns music effect
+  func provideMusicEffect() -> Effect {
     guard let url = Bundle.main.url(forResource: "sample", withExtension: "wav") else {
       fatalError("Can't find music track")
     }
     
-    return ExportEffect(
-      type: .music,
+    return Effect(
       id: uniqueEffectId,
-      startTime: .zero,
-      endTime: totalVideoDuration,
+      type: .music,
+      timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
       additionalInfo: [
-        ExportEffectAdditionalInfoKey.name: "sample",
-        ExportEffectAdditionalInfoKey.url: url
+        Effect.AdditionalInfoKey.name: "sample",
+        Effect.AdditionalInfoKey.url: url
       ]
     )
   }
   
-  func provideOverlayExportEffect(type: OverlayEffectApplicatorType) -> ExportEffect {
+  // Returns overlay effect for specific type
+  func provideOverlayEffect(type: OverlayEffectApplicatorType) -> Effect {
     // Ouput image should be created from cgImage reference
     var image: UIImage?
     
@@ -137,38 +151,39 @@ class ExportEffectProvider {
         image = createGifImage()
       case .text:
         image = createTextImage()
-     default:break
+     default: break
     }
     
+    let timeRange = CMTimeRange(start: .zero, duration: totalVideoDuration)
+    
     // Create required effect settings
-    let info = createEffectInfo(
+    let effectSettings = createEffectSettings(
       withImage: image,
       for: type,
-      start: .zero,
-      end: totalVideoDuration
+      start: timeRange.start,
+      end: timeRange.end
     )
     
-    return ExportEffect(
-      type: .overlay,
+    return Effect(
       id: uniqueEffectId,
-      startTime: .zero,
-      endTime: totalVideoDuration,
+      type: .overlay,
+      timeRange: timeRange,
       additionalInfo: [
-        ExportEffectAdditionalInfoKey.name: type,
-        ExportEffectAdditionalInfoKey.effectInfo: info
+        Effect.AdditionalInfoKey.name: type,
+        Effect.AdditionalInfoKey.effectSettings: effectSettings
       ]
     )
   }
 
-  // MARK: - ExportEffectProvider helper
-  private func createEffectInfo(
+  // MARK: - EffectsProvider helper
+  private func createEffectSettings(
     withImage image: UIImage?,
     for type: OverlayEffectApplicatorType,
     start: CMTime,
     end: CMTime
   ) -> VideoEditorEffectInfo {
     
-    // Relevant screen points
+    // Relevant normilized positions of overlay
     var points: ImagePoints?
     
     switch type {
@@ -181,7 +196,7 @@ class ExportEffectProvider {
     
     // Result effect info
     let effectInfo = VideoEditorEffectInfo(
-      id: UInt.random(in: 0...1000),
+      id: uniqueEffectId,
       image: image,
       relativeScreenPoints: points,
       start: start,
