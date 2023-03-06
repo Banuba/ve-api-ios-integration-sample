@@ -184,7 +184,7 @@ extension ExportViewController {
     }
     
     let effectsProvider = EffectsProvider(totalVideoDuration: videoEditorAsset.composition.duration)
-    effectsProvider.provideExportEffects().forEach { effect in
+    effectsProvider.provideAllEffects().forEach { effect in
       effectsApplyer.applyEffect(effect)
     }
     

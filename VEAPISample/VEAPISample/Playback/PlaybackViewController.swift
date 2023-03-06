@@ -197,7 +197,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.undoAll(type: .visual)
     } else {
-      let effect = effectsProvider.provideVisualExportEffect(type: .vhs)
+      let effect = effectsProvider.provideVisualEffect(type: .vhs)
       effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
@@ -209,7 +209,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.undoAll(type: .time)
     } else {
-      let effect = effectsProvider.provideSpeedExportEffect(type: .rapid)
+      let effect = effectsProvider.provideSpeedEffect(type: .rapid)
       effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
@@ -221,7 +221,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.undoAll(type: .time)
     } else {
-      let effect = effectsProvider.provideSpeedExportEffect(type: .slowmo)
+      let effect = effectsProvider.provideSpeedEffect(type: .slowmo)
       effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
@@ -233,7 +233,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.undoAll(type: .text)
     } else {
-      let effect = effectsProvider.provideOverlayExportEffect(type: .text)
+      let effect = effectsProvider.provideOverlayEffect(type: .text)
       effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
@@ -245,7 +245,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.undoAll(type: .color)
     } else {
-      let effect = effectsProvider.provideColorExportEffect()
+      let effect = effectsProvider.provideColorEffect()
       effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
@@ -257,7 +257,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.undoAll(type: .gif)
     } else {
-      let effect = effectsProvider.provideOverlayExportEffect(type: .gif)
+      let effect = effectsProvider.provideOverlayEffect(type: .gif)
       effectsApplyer.applyEffect(effect)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
@@ -274,7 +274,7 @@ extension PlaybackViewController {
     if isEffectApplied {
       editor.videoAsset?.removeMusic(trackId: AppliedTrackInfo.id!, url: AppliedTrackInfo.url!)
     } else {
-      let effect = effectsProvider.provideMusicExportEffect()
+      let effect = effectsProvider.provideMusicEffect()
       AppliedTrackInfo.id = CMPersistentTrackID(effect.id)
       AppliedTrackInfo.url = effect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
       effectsApplyer.applyEffect(effect)
@@ -292,7 +292,7 @@ extension PlaybackViewController {
     } else {
       let videoSize = player?.playerItem?.presentationSize ?? .zero
       // Place blur in center of video
-      let effect = effectsProvider.provideOverlayExportEffect(
+      let effect = effectsProvider.provideOverlayEffect(
         type: .blur(
           drawableFigure: .circle,
           coordinates: BlurCoordinateParams(
