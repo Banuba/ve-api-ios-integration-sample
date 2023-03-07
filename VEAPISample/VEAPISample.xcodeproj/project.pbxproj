@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
 		63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63454196295C627100A6EC0A /* PlaybackViewController.swift */; };
-		637D252829B0C76100B446E0 /* EffectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637D252729B0C76100B446E0 /* EffectButton.swift */; };
 		637D252A29B0F41A00B446E0 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637D252929B0F41A00B446E0 /* sample.wav */; };
 		639DFABC2948AE840021458F /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DFABB2948AE840021458F /* ExportViewController.swift */; };
 		63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* EffectsProvider.swift */; };
@@ -30,7 +29,6 @@
 /* Begin PBXFileReference section */
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; };
 		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		637D252729B0C76100B446E0 /* EffectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectButton.swift; sourceTree = "<group>"; };
 		637D252929B0F41A00B446E0 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
 		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 				63B8E48F29B092CC000F043F /* PickVideoViewController.swift */,
 				63E308B229B1EE3400172732 /* PreviewImageViewController.swift */,
 				633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */,
-				637D252729B0C76100B446E0 /* EffectButton.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -284,7 +281,6 @@
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */,
 				8ABDB0A927DA27C80002B9BC /* Configs.swift in Sources */,
-				637D252829B0C76100B446E0 /* EffectButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

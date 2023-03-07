@@ -275,14 +275,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8j-oz-zLB">
-                                <rect key="frame" x="50" y="425.5" width="314" height="45"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8j-oz-zLB">
+                                <rect key="frame" x="98.5" y="425.5" width="217" height="45"/>
                                 <color key="backgroundColor" systemColor="tintColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Tiu-hd-Azk"/>
                                 </constraints>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="PICK VIDEO TO START PLAYBACK">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
                                     <color key="baseForegroundColor" white="0.97407988459999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
@@ -319,11 +321,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="32x-sn-7d9" firstAttribute="top" secondItem="G2H-sw-wsE" secondAttribute="top" constant="20" id="6Me-2G-J5O"/>
-                            <constraint firstItem="G2H-sw-wsE" firstAttribute="trailing" secondItem="j8j-oz-zLB" secondAttribute="trailing" constant="50" id="9X6-ng-Kqw"/>
+                            <constraint firstItem="G2H-sw-wsE" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="j8j-oz-zLB" secondAttribute="trailing" constant="5" id="9X6-ng-Kqw"/>
+                            <constraint firstItem="j8j-oz-zLB" firstAttribute="centerX" secondItem="Pst-9I-0Uk" secondAttribute="centerX" id="APD-6t-rEh"/>
                             <constraint firstItem="j8j-oz-zLB" firstAttribute="top" secondItem="XO6-P1-8pq" secondAttribute="bottom" constant="40" id="OQS-K4-K4v"/>
                             <constraint firstItem="32x-sn-7d9" firstAttribute="leading" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="20" id="RS4-lg-RrD"/>
                             <constraint firstItem="j8j-oz-zLB" firstAttribute="centerY" secondItem="Pst-9I-0Uk" secondAttribute="centerY" id="XeC-Bd-aoL"/>
-                            <constraint firstItem="j8j-oz-zLB" firstAttribute="leading" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="50" id="dZQ-VY-Qb6"/>
+                            <constraint firstItem="j8j-oz-zLB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="5" id="dZQ-VY-Qb6"/>
                             <constraint firstItem="XO6-P1-8pq" firstAttribute="centerX" secondItem="G2H-sw-wsE" secondAttribute="centerX" id="qhu-g8-Zpu"/>
                         </constraints>
                     </view>
@@ -359,7 +362,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hWE-km-OQI">
-                                <rect key="frame" x="5" y="118" width="404" height="613.5"/>
+                                <rect key="frame" x="5" y="118" width="404" height="578.5"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U59-T7-iS4">
                                         <rect key="frame" x="0.0" y="0.0" width="404" height="298.5"/>
@@ -482,194 +485,262 @@
                                             <constraint firstAttribute="bottom" secondItem="nOs-Ac-mH9" secondAttribute="bottom" id="zrs-KX-wve"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xji-bY-smt">
-                                        <rect key="frame" x="0.0" y="403.5" width="404" height="45"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="J5E-dg-CLx">
+                                        <rect key="frame" x="0.0" y="403.5" width="404" height="175"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="fgL-Ku-kca">
-                                                <rect key="frame" x="0.0" y="0.0" width="231" height="45"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4PM-qB-SaM">
+                                                <rect key="frame" x="0.0" y="0.0" width="199.5" height="175"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05L-ys-svy" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add AR Effect(mask)">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addAREffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="N8Y-Mi-O6w"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IUH-8m-PVe" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="143" y="0.0" width="88" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add FX effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addFXEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="LaP-6V-Lyp"/>
-                                                        </connections>
-                                                    </button>
+                                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="1FK-lN-vxQ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="AR Effect(mask)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="4NJ-Wy-b2B">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="B0V-Y0-eFk">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addAREffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="GAI-ds-52Y"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="4NJ-Wy-b2B" firstAttribute="top" secondItem="1FK-lN-vxQ" secondAttribute="top" id="5Is-mA-VhZ"/>
+                                                            <constraint firstAttribute="bottom" secondItem="B0V-Y0-eFk" secondAttribute="bottom" id="KD4-NR-SHU"/>
+                                                            <constraint firstAttribute="bottom" secondItem="4NJ-Wy-b2B" secondAttribute="bottom" id="e3g-GU-3I1"/>
+                                                            <constraint firstAttribute="trailing" secondItem="B0V-Y0-eFk" secondAttribute="trailing" id="jgs-Fi-CGW"/>
+                                                            <constraint firstItem="4NJ-Wy-b2B" firstAttribute="leading" secondItem="1FK-lN-vxQ" secondAttribute="leading" id="smQ-y4-hIe"/>
+                                                            <constraint firstItem="B0V-Y0-eFk" firstAttribute="leading" secondItem="4NJ-Wy-b2B" secondAttribute="trailing" constant="5" id="svC-pQ-YON"/>
+                                                            <constraint firstItem="B0V-Y0-eFk" firstAttribute="top" secondItem="1FK-lN-vxQ" secondAttribute="top" id="y3e-cJ-8N1"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="73o-4o-BQK">
+                                                        <rect key="frame" x="0.0" y="36" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="FX effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cY-0D-7KX">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3L5-n5-klv">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addFXEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="sDe-bG-Uag"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="3L5-n5-klv" secondAttribute="bottom" id="188-EO-vcI"/>
+                                                            <constraint firstItem="3cY-0D-7KX" firstAttribute="top" secondItem="73o-4o-BQK" secondAttribute="top" id="Bjk-aq-1I8"/>
+                                                            <constraint firstItem="3cY-0D-7KX" firstAttribute="leading" secondItem="73o-4o-BQK" secondAttribute="leading" id="Vn7-RB-iQR"/>
+                                                            <constraint firstItem="3L5-n5-klv" firstAttribute="top" secondItem="73o-4o-BQK" secondAttribute="top" id="Y7n-eS-Xqs"/>
+                                                            <constraint firstAttribute="trailing" secondItem="3L5-n5-klv" secondAttribute="trailing" id="gc8-ce-abo"/>
+                                                            <constraint firstAttribute="bottom" secondItem="3cY-0D-7KX" secondAttribute="bottom" id="pdp-Fb-CKL"/>
+                                                            <constraint firstItem="3L5-n5-klv" firstAttribute="leading" secondItem="3cY-0D-7KX" secondAttribute="trailing" constant="5" id="u9x-fg-YJZ"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NpF-Ym-Dab">
+                                                        <rect key="frame" x="0.0" y="72" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Rapid Speed effect" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="giV-b3-Ed3">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gM5-pZ-ExX">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addRapidSpeedEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="jPj-oO-Ko7"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="gM5-pZ-ExX" firstAttribute="leading" secondItem="giV-b3-Ed3" secondAttribute="trailing" constant="5" id="6FU-sP-Ohy"/>
+                                                            <constraint firstItem="giV-b3-Ed3" firstAttribute="top" secondItem="NpF-Ym-Dab" secondAttribute="top" id="FLH-jh-xcf"/>
+                                                            <constraint firstAttribute="trailing" secondItem="gM5-pZ-ExX" secondAttribute="trailing" id="HCa-Hd-4Nc"/>
+                                                            <constraint firstItem="giV-b3-Ed3" firstAttribute="leading" secondItem="NpF-Ym-Dab" secondAttribute="leading" id="fAG-fR-BnL"/>
+                                                            <constraint firstItem="gM5-pZ-ExX" firstAttribute="top" secondItem="NpF-Ym-Dab" secondAttribute="top" id="jdP-HU-rVh"/>
+                                                            <constraint firstAttribute="bottom" secondItem="giV-b3-Ed3" secondAttribute="bottom" id="kZw-rG-jtN"/>
+                                                            <constraint firstAttribute="bottom" secondItem="gM5-pZ-ExX" secondAttribute="bottom" id="rnc-4b-eR6"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FRH-bP-0ZE">
+                                                        <rect key="frame" x="0.0" y="108" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Slow Motion Speed effect" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yAr-0W-WRC">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qkt-Bf-eLn">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addSlowMoSpeedEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="Rd3-D9-5lA"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="yAr-0W-WRC" firstAttribute="top" secondItem="FRH-bP-0ZE" secondAttribute="top" id="3cs-aj-BcO"/>
+                                                            <constraint firstItem="yAr-0W-WRC" firstAttribute="leading" secondItem="FRH-bP-0ZE" secondAttribute="leading" id="Igd-kC-Eu9"/>
+                                                            <constraint firstItem="qkt-Bf-eLn" firstAttribute="top" secondItem="FRH-bP-0ZE" secondAttribute="top" id="P9r-OI-ypQ"/>
+                                                            <constraint firstItem="qkt-Bf-eLn" firstAttribute="leading" secondItem="yAr-0W-WRC" secondAttribute="trailing" constant="5" id="X4g-YE-daZ"/>
+                                                            <constraint firstAttribute="bottom" secondItem="qkt-Bf-eLn" secondAttribute="bottom" id="pls-it-K2j"/>
+                                                            <constraint firstAttribute="bottom" secondItem="yAr-0W-WRC" secondAttribute="bottom" id="t9a-X1-0ow"/>
+                                                            <constraint firstAttribute="trailing" secondItem="qkt-Bf-eLn" secondAttribute="trailing" id="tch-4i-06U"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WeY-cd-gaB">
+                                                        <rect key="frame" x="0.0" y="144" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v9C-ri-w32">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="B9g-oT-qy8">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addMusicEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="tNv-Wi-UMM"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="v9C-ri-w32" firstAttribute="leading" secondItem="WeY-cd-gaB" secondAttribute="leading" id="3qR-62-Yc3"/>
+                                                            <constraint firstAttribute="trailing" secondItem="B9g-oT-qy8" secondAttribute="trailing" id="Jhv-vA-DIz"/>
+                                                            <constraint firstItem="B9g-oT-qy8" firstAttribute="leading" secondItem="v9C-ri-w32" secondAttribute="trailing" constant="5" id="ME5-N4-PQr"/>
+                                                            <constraint firstAttribute="bottom" secondItem="v9C-ri-w32" secondAttribute="bottom" id="fzD-bt-dsc"/>
+                                                            <constraint firstItem="B9g-oT-qy8" firstAttribute="top" secondItem="WeY-cd-gaB" secondAttribute="top" id="itq-3N-aim"/>
+                                                            <constraint firstItem="v9C-ri-w32" firstAttribute="top" secondItem="WeY-cd-gaB" secondAttribute="top" id="lnH-Dt-h9a"/>
+                                                            <constraint firstAttribute="bottom" secondItem="B9g-oT-qy8" secondAttribute="bottom" id="y9R-C5-Ex1"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="Tky-bB-hUX"/>
-                                            <constraint firstItem="fgL-Ku-kca" firstAttribute="leading" secondItem="Xji-bY-smt" secondAttribute="leading" id="U0h-IA-SnL"/>
-                                            <constraint firstItem="fgL-Ku-kca" firstAttribute="top" secondItem="Xji-bY-smt" secondAttribute="top" id="UHo-g9-uLX"/>
-                                            <constraint firstAttribute="bottom" secondItem="fgL-Ku-kca" secondAttribute="bottom" id="sTb-YN-QkA"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fgL-Ku-kca" secondAttribute="trailing" id="v8U-Mt-EvS"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bba-RA-iso">
-                                        <rect key="frame" x="0.0" y="458.5" width="404" height="45"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="mOa-1K-f3D">
-                                                <rect key="frame" x="0.0" y="0.0" width="342" height="45"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dm3-Ij-T7M">
+                                                <rect key="frame" x="204.5" y="0.0" width="199.5" height="175"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S61-Jp-EBV" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="145" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Rapid Speed effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addRapidSpeedEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="L7N-0d-HOh"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpB-IG-ea7" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="160" y="0.0" width="182" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Slow Motion Speed effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addSlowMoSpeedEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="VIC-cV-JWq"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="mOa-1K-f3D" secondAttribute="bottom" id="4Pz-hr-Jl3"/>
-                                            <constraint firstItem="mOa-1K-f3D" firstAttribute="leading" secondItem="Bba-RA-iso" secondAttribute="leading" id="Tc9-P3-RZ4"/>
-                                            <constraint firstAttribute="height" constant="45" id="bM4-wA-pdG"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mOa-1K-f3D" secondAttribute="trailing" id="kcF-pw-EOh"/>
-                                            <constraint firstItem="mOa-1K-f3D" firstAttribute="top" secondItem="Bba-RA-iso" secondAttribute="top" id="rf8-QE-APj"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyo-V9-dxn">
-                                        <rect key="frame" x="0.0" y="513.5" width="404" height="45"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="qj7-gy-qgh">
-                                                <rect key="frame" x="0.0" y="0.0" width="342" height="45"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYc-8h-KhX" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="97" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Text effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addTextEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="nZa-Ds-EYL"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJr-is-nBW" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="112" y="0.0" width="103" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Color effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addColorEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="IQn-Kg-lJO"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRp-u1-Ccu" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="230" y="0.0" width="112" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Sticker effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addStickerEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="8BO-kU-idF"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qj7-gy-qgh" secondAttribute="trailing" id="0Cp-ji-bj7"/>
-                                            <constraint firstItem="qj7-gy-qgh" firstAttribute="top" secondItem="hyo-V9-dxn" secondAttribute="top" id="cuj-1H-eqw"/>
-                                            <constraint firstItem="qj7-gy-qgh" firstAttribute="leading" secondItem="hyo-V9-dxn" secondAttribute="leading" id="g6S-fA-l5l"/>
-                                            <constraint firstAttribute="bottom" secondItem="qj7-gy-qgh" secondAttribute="bottom" id="glX-tH-UC3"/>
-                                            <constraint firstAttribute="height" constant="45" id="xHt-ra-gWV"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gQJ-S2-U01">
-                                        <rect key="frame" x="0.0" y="568.5" width="404" height="45"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="oIy-Fb-Ede">
-                                                <rect key="frame" x="0.0" y="0.0" width="341" height="45"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dC1-cm-HfR" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Music">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addMusicEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="ApV-CC-tPS"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-hs-RRH" customClass="EffectButton" customModule="VEAPISample" customModuleProvider="target">
-                                                        <rect key="frame" x="85" y="0.0" width="117" height="45"/>
-                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Add Custom effect">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="addCustomEffectAction:" destination="NxM-Wz-Skk" eventType="touchUpInside" id="F0s-Mr-oib"/>
-                                                        </connections>
-                                                    </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KdN-l5-VeC">
+                                                        <rect key="frame" x="0.0" y="0.0" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Text effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="pUt-dI-7CV">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="knr-D8-eZd">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addTextEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="wTA-NL-aGW"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="knr-D8-eZd" secondAttribute="bottom" id="9eb-U2-rtB"/>
+                                                            <constraint firstItem="knr-D8-eZd" firstAttribute="leading" secondItem="pUt-dI-7CV" secondAttribute="trailing" constant="5" id="GHc-2i-5tE"/>
+                                                            <constraint firstAttribute="trailing" secondItem="knr-D8-eZd" secondAttribute="trailing" id="HHh-Rw-BAr"/>
+                                                            <constraint firstItem="knr-D8-eZd" firstAttribute="top" secondItem="KdN-l5-VeC" secondAttribute="top" id="JdB-BQ-Hax"/>
+                                                            <constraint firstAttribute="bottom" secondItem="pUt-dI-7CV" secondAttribute="bottom" id="Sxr-Kk-imT"/>
+                                                            <constraint firstItem="pUt-dI-7CV" firstAttribute="top" secondItem="KdN-l5-VeC" secondAttribute="top" id="W58-AK-MTM"/>
+                                                            <constraint firstItem="pUt-dI-7CV" firstAttribute="leading" secondItem="KdN-l5-VeC" secondAttribute="leading" id="htd-MA-YtK"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OC2-CS-W8y">
+                                                        <rect key="frame" x="0.0" y="36" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sticker effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="fZo-SZ-s1j">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gno-v2-dF3">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addStickerEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="Z7X-HH-VxX"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="fZo-SZ-s1j" firstAttribute="leading" secondItem="OC2-CS-W8y" secondAttribute="leading" id="7YF-iY-AxS"/>
+                                                            <constraint firstItem="fZo-SZ-s1j" firstAttribute="top" secondItem="OC2-CS-W8y" secondAttribute="top" id="BIp-UR-J42"/>
+                                                            <constraint firstAttribute="bottom" secondItem="fZo-SZ-s1j" secondAttribute="bottom" id="FpT-Cj-4pk"/>
+                                                            <constraint firstItem="gno-v2-dF3" firstAttribute="top" secondItem="OC2-CS-W8y" secondAttribute="top" id="Ym5-29-QRt"/>
+                                                            <constraint firstAttribute="trailing" secondItem="gno-v2-dF3" secondAttribute="trailing" id="cbc-5e-Yww"/>
+                                                            <constraint firstAttribute="bottom" secondItem="gno-v2-dF3" secondAttribute="bottom" id="hGj-sm-yeS"/>
+                                                            <constraint firstItem="gno-v2-dF3" firstAttribute="leading" secondItem="fZo-SZ-s1j" secondAttribute="trailing" constant="5" id="xR1-FU-se7"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3D9-wU-OdC">
+                                                        <rect key="frame" x="0.0" y="72" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Color effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-4G-SRB">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N33-RK-6HX">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addColorEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="hh8-Lv-SQ5"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="ZcC-4G-SRB" firstAttribute="leading" secondItem="3D9-wU-OdC" secondAttribute="leading" id="7Nu-fc-gBg"/>
+                                                            <constraint firstAttribute="bottom" secondItem="ZcC-4G-SRB" secondAttribute="bottom" id="Pqq-eD-EZX"/>
+                                                            <constraint firstItem="N33-RK-6HX" firstAttribute="leading" secondItem="ZcC-4G-SRB" secondAttribute="trailing" constant="5" id="Su4-Yj-GTp"/>
+                                                            <constraint firstAttribute="trailing" secondItem="N33-RK-6HX" secondAttribute="trailing" id="h35-qg-rPn"/>
+                                                            <constraint firstAttribute="bottom" secondItem="N33-RK-6HX" secondAttribute="bottom" id="ixe-4J-QZd"/>
+                                                            <constraint firstItem="ZcC-4G-SRB" firstAttribute="top" secondItem="3D9-wU-OdC" secondAttribute="top" id="vwk-Qh-sQn"/>
+                                                            <constraint firstItem="N33-RK-6HX" firstAttribute="top" secondItem="3D9-wU-OdC" secondAttribute="top" id="zwQ-nr-Ek6"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2c-AJ-12w">
+                                                        <rect key="frame" x="0.0" y="108" width="199.5" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Custom effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-QY-FTf">
+                                                                <rect key="frame" x="0.0" y="0.0" width="145.5" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pFt-uY-DSC">
+                                                                <rect key="frame" x="150.5" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="addCustomEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="jR1-fN-FSy"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="pFt-uY-DSC" secondAttribute="trailing" id="1Bl-JF-4Fr"/>
+                                                            <constraint firstItem="QYB-QY-FTf" firstAttribute="top" secondItem="g2c-AJ-12w" secondAttribute="top" id="HVt-ns-ab6"/>
+                                                            <constraint firstAttribute="bottom" secondItem="QYB-QY-FTf" secondAttribute="bottom" id="Wa8-oG-ggD"/>
+                                                            <constraint firstItem="pFt-uY-DSC" firstAttribute="leading" secondItem="QYB-QY-FTf" secondAttribute="trailing" constant="5" id="hb2-Dz-rGn"/>
+                                                            <constraint firstAttribute="bottom" secondItem="pFt-uY-DSC" secondAttribute="bottom" id="tIS-a7-SRE"/>
+                                                            <constraint firstItem="pFt-uY-DSC" firstAttribute="top" secondItem="g2c-AJ-12w" secondAttribute="top" id="wFn-VD-6eH"/>
+                                                            <constraint firstItem="QYB-QY-FTf" firstAttribute="leading" secondItem="g2c-AJ-12w" secondAttribute="leading" id="x6d-cn-MDJ"/>
+                                                        </constraints>
+                                                    </view>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5TJ-Sz-OsS">
-                                                        <rect key="frame" x="217" y="0.0" width="124" height="45"/>
+                                                        <rect key="frame" x="0.0" y="144" width="199.5" height="31"/>
                                                         <color key="backgroundColor" name="AccentColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
@@ -691,15 +762,13 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oIy-Fb-Ede" secondAttribute="trailing" id="6pO-6o-aLk"/>
-                                            <constraint firstItem="oIy-Fb-Ede" firstAttribute="top" secondItem="gQJ-S2-U01" secondAttribute="top" id="dSm-TE-DTX"/>
-                                            <constraint firstAttribute="bottom" secondItem="oIy-Fb-Ede" secondAttribute="bottom" id="kVt-gu-Z0H"/>
-                                            <constraint firstItem="oIy-Fb-Ede" firstAttribute="leading" secondItem="gQJ-S2-U01" secondAttribute="leading" id="vTG-Vk-aPI"/>
-                                            <constraint firstAttribute="height" constant="45" id="xZX-5b-OPQ"/>
+                                            <constraint firstItem="4PM-qB-SaM" firstAttribute="width" secondItem="dm3-Ij-T7M" secondAttribute="width" id="E4J-hX-gos"/>
                                         </constraints>
-                                    </view>
+                                    </stackView>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="J5E-dg-CLx" firstAttribute="width" secondItem="hWE-km-OQI" secondAttribute="width" id="EE7-MN-HHM"/>
                                     <constraint firstItem="U59-T7-iS4" firstAttribute="width" secondItem="hWE-km-OQI" secondAttribute="width" id="GIt-zN-wof"/>
                                 </constraints>
                             </stackView>

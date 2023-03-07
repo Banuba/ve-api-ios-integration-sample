@@ -180,116 +180,98 @@ extension PlaybackViewController {
     player?.seek(to: seekTime)
   }
   
-  @IBAction func addAREffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .mask)
-    } else {
+  @IBAction func addAREffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let effect = effectsProvider.provideMaskEffect(withName: "AsaiLines")
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .mask)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
   
-  @IBAction func addFXEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .visual)
-    } else {
+  @IBAction func addFXEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let effect = effectsProvider.provideVisualEffect(type: .vhs)
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .visual)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
-  
-  @IBAction func addRapidSpeedEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .time)
-    } else {
+
+  @IBAction func addRapidSpeedEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let effect = effectsProvider.provideSpeedEffect(type: .rapid)
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .time)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
   
-  @IBAction func addSlowMoSpeedEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .time)
-    } else {
+  @IBAction func addSlowMoSpeedEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let effect = effectsProvider.provideSpeedEffect(type: .slowmo)
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .time)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
   
-  @IBAction func addTextEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .text)
-    } else {
+  @IBAction func addTextEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let effect = effectsProvider.provideOverlayEffect(type: .text)
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .text)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
   
-  @IBAction func addColorEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .color)
-    } else {
-      let effect = effectsProvider.provideColorEffect()
-      effectsApplyer.applyEffect(effect)
-    }
-    player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
-  }
-  
-  @IBAction func addStickerEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .gif)
-    } else {
+  @IBAction func addStickerEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let effect = effectsProvider.provideOverlayEffect(type: .gif)
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .gif)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
   
-  @IBAction func addMusicEffectAction(_ sender: EffectButton) {
+  @IBAction func addColorEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
+      let effect = effectsProvider.provideColorEffect()
+      effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .color)
+
+    }
+    player?.reloadComposition(shouldAutoStart: isPlaying)
+  }
+  
+  @IBAction func addMusicEffectAction(_ sender: UISwitch) {
     struct AppliedTrackInfo {
       static var url: URL?
       static var id: CMPersistentTrackID?
     }
     
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.videoAsset?.removeMusic(trackId: AppliedTrackInfo.id!, url: AppliedTrackInfo.url!)
-    } else {
+    if sender.isOn {
       let effect = effectsProvider.provideMusicEffect()
       AppliedTrackInfo.id = CMPersistentTrackID(effect.id)
       AppliedTrackInfo.url = effect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.videoAsset?.removeMusic(trackId: AppliedTrackInfo.id!, url: AppliedTrackInfo.url!)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
     // Get new instance of player to playback music track
     reloadPlayer()
   }
   
-  @IBAction func addCustomEffectAction(_ sender: EffectButton) {
-    let isEffectApplied = sender.isSelected
-    if isEffectApplied {
-      editor.undoAll(type: .blur)
-    } else {
+  @IBAction func addCustomEffectAction(_ sender: UISwitch) {
+    if sender.isOn {
       let videoSize = player?.playerItem?.presentationSize ?? .zero
       // Place blur in center of video
       let effect = effectsProvider.provideOverlayEffect(
@@ -304,9 +286,10 @@ extension PlaybackViewController {
         )
       )
       effectsApplyer.applyEffect(effect)
+    } else {
+      editor.undoAll(type: .blur)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
-    sender.isSelected.toggle()
   }
   
   @IBAction func takeScreenshotAction(_ sender: Any) {
