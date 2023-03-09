@@ -67,6 +67,12 @@ class PlaybackViewController: UIViewController {
     setupAppStateHandler()
   }
   
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    playableView?.frame = playerContainerView.bounds
+  }
+  
   /// Setup current video editor service for playback
   private func setupVideoEditor(with videoUrls: [URL]) {
     // Setup sequence name and location
@@ -293,17 +299,23 @@ extension PlaybackViewController {
   }
   
   @IBAction func takeScreenshotAction(_ sender: Any) {
-    guard let asset = editor.asset else { return }
+    guard let asset = editor.asset, let firstTrack = editor.videoAsset?.tracksInfo.first else { return }
     let previewExtractor = PreviewExtractor(
       asset: asset,
       thumbnailHeight: UIScreen.main.bounds.height
     )
-    guard let image = previewExtractor.extractPreview(at: currentTime) else {
+    
+    guard let cgImage = previewExtractor.extractPreview(at: currentTime)?.cgImage else {
       print("Extracting preview failed")
       return
     }
+    
+    let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(firstTrack)
+    let imageRotation = UIImage.orientation(byRotation: rotation)
+    let resultImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: imageRotation)
+    
     let previewImageViewController = PreviewImageViewController()
-    previewImageViewController.image = image
+    previewImageViewController.image = resultImage
     present(previewImageViewController, animated: true)
   }
 }
@@ -318,8 +330,6 @@ extension PlaybackViewController {
     // Get playable view
     let view = playbackSDK.getPlayableView(delegate: self)
     playableView = view
-    // Setup view frame
-    view.frame = playerContainerView.bounds
     playerContainerView.addSubview(view)
     
     self.view.layoutIfNeeded()
