@@ -14,11 +14,9 @@ import VEPlaybackSDK
 import VEEffectsSDK
 import BanubaUtilities
 
-private struct Defaults {
-  static let oneSecond = CMTime(seconds: 1.0, preferredTimescale: 1_000)
-}
-
 class PlaybackViewController: UIViewController {
+  
+  private let oneSecond = CMTime(seconds: 1.0, preferredTimescale: 1_000)
   
   // Video urls for playback
   var videoUrls: [URL]!
@@ -34,6 +32,7 @@ class PlaybackViewController: UIViewController {
   // MARK: - VideoPlayableView
   private(set) var playableView: VideoPlayableView?
   
+  // REFACTOR: PlaybackManager. Move Player to PlaybackManager
   // MARK: - Playback helpers
   private var player: VideoEditorPlayable? { playableView?.videoEditorPlayer }
   private var currentTime: CMTime { playableView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
@@ -50,8 +49,11 @@ class PlaybackViewController: UIViewController {
   var playbackSDK: VEPlayback!
   
   // MARK: - Effect managing helpers
+  // REFACTOR: ViewController should use only PlaybackManager for the simplicity
   private var effectsProvider: EffectsProvider!
   private var effectsManager: EffectsManager!
+  
+  private let videoEditorModule = AppDelegate.videoEditorModule
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -78,6 +80,7 @@ class PlaybackViewController: UIViewController {
     playableView?.frame = playerContainerView.bounds
   }
   
+  // REFACTOR: Move it to PlaybackManager
   /// Setup current video editor service for playback
   private func setupVideoEditor(with videoUrls: [URL]) {
     // Setup sequence name and location
@@ -101,7 +104,7 @@ class PlaybackViewController: UIViewController {
       sequence: videoSequence,
       isGalleryAssets: true,
       isSlideShow: false,
-      videoResolutionConfiguration: AppDelegate.videoResolutionConfiguration
+      videoResolutionConfiguration: videoEditorModule.videoResolutionConfiguration
     )
 
     // Set current video asset to video editor service
@@ -170,12 +173,12 @@ class PlaybackViewController: UIViewController {
   }
   
   @IBAction func seekForwardAction(_ sender: Any) {
-    let time = currentTime + Defaults.oneSecond
+    let time = currentTime + oneSecond
     seek(to: time)
   }
   
   @IBAction func seekBackwardAction(_ sender: Any) {
-    let time = currentTime - Defaults.oneSecond
+    let time = currentTime - oneSecond
     seek(to: time)
   }
   

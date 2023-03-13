@@ -165,7 +165,7 @@ extension ExportViewController {
       sequence: videoSequence,
       isGalleryAssets: true,
       isSlideShow: false,
-      videoResolutionConfiguration: AppDelegate.videoResolutionConfiguration
+      videoResolutionConfiguration: AppDelegate.videoEditorModule.videoResolutionConfiguration
     )
 
     // Set current video asset to video editor service

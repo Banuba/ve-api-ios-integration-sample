@@ -13,40 +13,31 @@ import VEEffectsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
-  var window: UIWindow?
-  
-  // License token is required to start Video Editor SDK
-  static let licenseToken: String = <#Enter your license token#>
-  
-  /// Setups resolution used for playback and export
-  static let videoResolutionConfiguration = VideoResolutionConfiguration(
-    default: .hd1280x720,
-    resolutions: [:],
-    thumbnailHeights: [:],
-    defaultThumbnailHeight: 400.0
-  )
-  
-  func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
     
-    // Initialize BanubaSdkManager
-    let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
-    let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
-    BanubaSdkManager.initialize(
-      resourcePath: dirs,
-      clientTokenString: AppDelegate.licenseToken,
-      logLevel: .info
-    )
+    var window: UIWindow?
     
-    // Setup mask renderer
-    BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(
-      renderSize: AppDelegate.videoResolutionConfiguration.current.size
-    )
+    // License token is required to start Video Editor SDK
+    static let licenseToken: String = <#Enter your license token#>
+
+    static let videoEditorModule = VideoEditorModule()
     
-    return true
-  }
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        
+        // Used ???
+        // Initialize BanubaSdkManager
+        let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
+        let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
+        BanubaSdkManager.initialize(
+            resourcePath: dirs,
+            clientTokenString: AppDelegate.licenseToken,
+            logLevel: .info
+        )
+        
+        AppDelegate.videoEditorModule.setupMaskRenderer()
+        return true
+    }
 }
 
