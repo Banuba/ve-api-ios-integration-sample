@@ -8,6 +8,7 @@
 import UIKit
 import BanubaSdk
 import BanubaEffectPlayer
+import BanubaUtilities
 import VEEffectsSDK
 
 @main
@@ -17,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   // License token is required to start Video Editor SDK
   static let licenseToken: String = <#Enter your license token#>
+  
+  /// Setups resolution used for playback and export
+  static let videoResolutionConfiguration = VideoResolutionConfiguration(
+    default: .hd1280x720,
+    resolutions: [:],
+    thumbnailHeights: [:],
+    defaultThumbnailHeight: 400.0
+  )
   
   func application(
     _ application: UIApplication,
@@ -33,7 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
     
     // Setup mask renderer
-    BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(renderSize: Configs.resolutionConfig.current.size)
+    BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(
+      renderSize: AppDelegate.videoResolutionConfiguration.current.size
+    )
     
     return true
   }

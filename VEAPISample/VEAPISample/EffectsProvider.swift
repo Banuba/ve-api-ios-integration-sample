@@ -55,19 +55,6 @@ class EffectsProvider {
     self.totalVideoDuration = totalVideoDuration
   }
   
-  // provides all available effect
-  func provideAllEffects() -> [Effect] {
-    return [
-      provideMaskEffect(),
-      provideColorEffect(),
-      provideVisualEffect(type: .vhs),
-      provideSpeedEffect(type: .slowmo),
-      provideOverlayEffect(type: .gif),
-      provideOverlayEffect(type: .text),
-      provideMusicEffect()
-    ]
-  }
-  
   // Returns mask effect with specific name. Mask should be located in effects folder.
   func provideMaskEffect(withName maskName: String = "AsaiLines") -> Effect {
     let url = Bundle.main.bundlePath + "/effects/" + maskName
@@ -88,7 +75,7 @@ class EffectsProvider {
   }
   
   // Returns color effect
-  func provideColorEffect() -> Effect {
+  func provideJapanColorEffect() -> Effect {
     guard let url = Bundle.main.url(forResource: "luts/japan", withExtension: "png") else {
       fatalError("Unable to find color filter at specified url")
     }

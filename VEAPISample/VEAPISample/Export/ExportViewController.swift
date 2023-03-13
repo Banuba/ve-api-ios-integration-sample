@@ -165,18 +165,18 @@ extension ExportViewController {
       sequence: videoSequence,
       isGalleryAssets: true,
       isSlideShow: false,
-      videoResolutionConfiguration: Configs.resolutionConfig
+      videoResolutionConfiguration: AppDelegate.videoResolutionConfiguration
     )
 
     // Set current video asset to video editor service
     editor.setCurrentAsset(videoEditorAsset)
     
-    let effectsApplyer = EffectsApplyer(editor: editor)
+    let effectsManager = EffectsManager(editor: editor)
 
     // Apply original track rotation for each asset track
     videoEditorAsset.tracksInfo.forEach { assetTrack in
       let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-      effectsApplyer.applyTransformEffect(
+      effectsManager.applyTransformEffect(
         start: assetTrack.timeRangeInGlobal.start,
         end: assetTrack.timeRangeInGlobal.end,
         rotation: rotation
@@ -184,9 +184,27 @@ extension ExportViewController {
     }
     
     let effectsProvider = EffectsProvider(totalVideoDuration: videoEditorAsset.composition.duration)
-    effectsProvider.provideAllEffects().forEach { effect in
-      effectsApplyer.applyEffect(effect)
-    }
+    
+    let colorEffect = effectsProvider.provideJapanColorEffect()
+    effectsManager.applyColorEffect(colorEffect)
+    
+    let visualEffect = effectsProvider.provideVisualEffect(type: .vhs)
+    effectsManager.applyVisualEffect(visualEffect)
+    
+    let slowmo = effectsProvider.provideSpeedEffect(type: .slowmo)
+    effectsManager.applySpeedEffect(slowmo)
+    
+    let sticker = effectsProvider.provideOverlayEffect(type: .gif)
+    effectsManager.applyOverlayEffect(sticker)
+    
+    let text = effectsProvider.provideOverlayEffect(type: .text)
+    effectsManager.applyOverlayEffect(text)
+    
+    let music = effectsProvider.provideMusicEffect()
+    effectsManager.applyMusicEffect(music)
+    
+    let maskEffect = effectsProvider.provideMaskEffect()
+    effectsManager.applyMaskEffect(maskEffect)
     
     // Get result file url
     let exportedVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("tmp.mov")

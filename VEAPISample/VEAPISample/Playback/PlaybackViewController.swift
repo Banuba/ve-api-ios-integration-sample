@@ -51,20 +51,25 @@ class PlaybackViewController: UIViewController {
   
   // MARK: - Effect managing helpers
   private var effectsProvider: EffectsProvider!
-  private var effectsApplyer: EffectsApplyer!
+  private var effectsManager: EffectsManager!
   
   override func viewDidLoad() {
     super.viewDidLoad()
    
-    effectsApplyer = EffectsApplyer(editor: editor)
-    // configure video editor service with video urls. Video must be downloaded
+    effectsManager = EffectsManager(editor: editor)
+    // Configure video editor service with video urls. Video must be downloaded
     setupVideoEditor(with: videoUrls)
     
     playbackSDK = VEPlayback(videoEditorService: editor)
     effectsProvider = EffectsProvider(totalVideoDuration: videoDuration)
     
-    setupPlaybackView()
-    setupAppStateHandler()
+    // Get playable view which will preview video editor asset
+    let view = playbackSDK.getPlayableView(delegate: self)
+    playableView = view
+    playerContainerView.addSubview(view)
+    
+    // Listen app states to control playback
+    appStateObserver = AppStateObserver(delegate: self)
   }
   
   override func viewDidLayoutSubviews() {
@@ -96,7 +101,7 @@ class PlaybackViewController: UIViewController {
       sequence: videoSequence,
       isGalleryAssets: true,
       isSlideShow: false,
-      videoResolutionConfiguration: Configs.resolutionConfig
+      videoResolutionConfiguration: AppDelegate.videoResolutionConfiguration
     )
 
     // Set current video asset to video editor service
@@ -105,7 +110,7 @@ class PlaybackViewController: UIViewController {
     // Apply original track rotation for each asset track
     videoEditorAsset.tracksInfo.forEach { assetTrack in
       let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-      effectsApplyer.applyTransformEffect(
+      effectsManager.applyTransformEffect(
         start: assetTrack.timeRangeInGlobal.start,
         end: assetTrack.timeRangeInGlobal.end,
         rotation: rotation
@@ -124,10 +129,14 @@ class PlaybackViewController: UIViewController {
       )
     }.first!
   }
-}
 
-// MARK: - Actions
-extension PlaybackViewController {
+  // MARK: - Actions
+  
+  @IBAction func backAction(_ sender: Any) {
+    player?.pausePlay()
+    navigationController?.popViewController(animated: true)
+  }
+  
   @IBAction func playPauseAction(_ sender: UIButton) {
     let isPlaying = sender.isSelected
     if isPlaying {
@@ -188,48 +197,56 @@ extension PlaybackViewController {
   
   @IBAction func addAREffectAction(_ sender: UISwitch) {
     if sender.isOn {
-      let effect = effectsProvider.provideMaskEffect(withName: "AsaiLines")
-      effectsApplyer.applyEffect(effect)
+      let maskEffect = effectsProvider.provideMaskEffect(withName: "AsaiLines")
+      effectsManager.applyMaskEffect(maskEffect)
     } else {
-      editor.undoAll(type: .mask)
+      effectsManager.undoMaskEffect()
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
   }
   
   @IBAction func addFXEffectAction(_ sender: UISwitch) {
     if sender.isOn {
-      let effect = effectsProvider.provideVisualEffect(type: .vhs)
-      effectsApplyer.applyEffect(effect)
+      let vhs = effectsProvider.provideVisualEffect(type: .vhs)
+      effectsManager.applyVisualEffect(vhs)
     } else {
-      editor.undoAll(type: .visual)
+      effectsManager.undoVisualEffect()
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
   }
 
   @IBAction func addRapidSpeedEffectAction(_ sender: UISwitch) {
+    struct Storage {
+      static var rapid: Effect?
+    }
     if sender.isOn {
-      let effect = effectsProvider.provideSpeedEffect(type: .rapid)
-      effectsApplyer.applyEffect(effect)
+      Storage.rapid = effectsProvider.provideSpeedEffect(type: .rapid)
+      effectsManager.applySpeedEffect(Storage.rapid!)
     } else {
-      editor.undoAll(type: .time)
+      effectsManager.undoEffect(withId: Storage.rapid!.id)
+      Storage.rapid = nil
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
   }
   
   @IBAction func addSlowMoSpeedEffectAction(_ sender: UISwitch) {
+    struct Storage {
+      static var slowmo: Effect?
+    }
     if sender.isOn {
-      let effect = effectsProvider.provideSpeedEffect(type: .slowmo)
-      effectsApplyer.applyEffect(effect)
+      Storage.slowmo = effectsProvider.provideSpeedEffect(type: .slowmo)
+      effectsManager.applySpeedEffect(Storage.slowmo!)
     } else {
-      editor.undoAll(type: .time)
+      editor.undo(withId: Storage.slowmo!.id)
+      Storage.slowmo = nil
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
   }
   
   @IBAction func addTextEffectAction(_ sender: UISwitch) {
     if sender.isOn {
-      let effect = effectsProvider.provideOverlayEffect(type: .text)
-      effectsApplyer.applyEffect(effect)
+      let text = effectsProvider.provideOverlayEffect(type: .text)
+      effectsManager.applyOverlayEffect(text)
     } else {
       editor.undoAll(type: .text)
     }
@@ -238,8 +255,8 @@ extension PlaybackViewController {
   
   @IBAction func addStickerEffectAction(_ sender: UISwitch) {
     if sender.isOn {
-      let effect = effectsProvider.provideOverlayEffect(type: .gif)
-      effectsApplyer.applyEffect(effect)
+      let sticker = effectsProvider.provideOverlayEffect(type: .gif)
+      effectsManager.applyOverlayEffect(sticker)
     } else {
       editor.undoAll(type: .gif)
     }
@@ -248,28 +265,28 @@ extension PlaybackViewController {
   
   @IBAction func addColorEffectAction(_ sender: UISwitch) {
     if sender.isOn {
-      let effect = effectsProvider.provideColorEffect()
-      effectsApplyer.applyEffect(effect)
+      let color = effectsProvider.provideJapanColorEffect()
+      effectsManager.applyColorEffect(color)
     } else {
-      editor.undoAll(type: .color)
+      effectsManager.undoColorEffect()
 
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
   }
   
   @IBAction func addMusicEffectAction(_ sender: UISwitch) {
-    struct AppliedTrackInfo {
-      static var url: URL?
-      static var id: CMPersistentTrackID?
+    struct Storage {
+      static var trackUrl: URL?
+      static var trackId: CMPersistentTrackID?
     }
     
     if sender.isOn {
-      let effect = effectsProvider.provideMusicEffect()
-      AppliedTrackInfo.id = CMPersistentTrackID(effect.id)
-      AppliedTrackInfo.url = effect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
-      effectsApplyer.applyEffect(effect)
+      let musicEffect = effectsProvider.provideMusicEffect()
+      Storage.trackId = CMPersistentTrackID(musicEffect.id)
+      Storage.trackUrl = musicEffect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
+      effectsManager.applyMusicEffect(musicEffect)
     } else {
-      editor.videoAsset?.removeMusic(trackId: AppliedTrackInfo.id!, url: AppliedTrackInfo.url!)
+      effectsManager.undoMusicEffect(id: Storage.trackId!, url: Storage.trackUrl!)
     }
     player?.reloadComposition(shouldAutoStart: isPlaying)
     // Get new instance of player to playback music track
@@ -280,7 +297,7 @@ extension PlaybackViewController {
     if sender.isOn {
       let videoSize = player?.playerItem?.presentationSize ?? .zero
       // Place blur in center of video
-      let effect = effectsProvider.provideOverlayEffect(
+      let customEffect = effectsProvider.provideOverlayEffect(
         type: .blur(
           drawableFigure: .circle,
           coordinates: BlurCoordinateParams(
@@ -291,7 +308,7 @@ extension PlaybackViewController {
           )
         )
       )
-      effectsApplyer.applyEffect(effect)
+      effectsManager.applyOverlayEffect(customEffect)
     } else {
       editor.undoAll(type: .blur)
     }
@@ -318,23 +335,7 @@ extension PlaybackViewController {
     previewImageViewController.image = resultImage
     present(previewImageViewController, animated: true)
   }
-}
 
-// MARK: - Playback Helpers
-extension PlaybackViewController {
-  func setupPlaybackView() {
-    // Check if Playable View already exist
-    if let currentView = playableView {
-      currentView.removeFromSuperview()
-    }
-    // Get playable view
-    let view = playbackSDK.getPlayableView(delegate: self)
-    playableView = view
-    playerContainerView.addSubview(view)
-    
-    self.view.layoutIfNeeded()
-  }
-  
   private func reloadPlayer() {
     // Get new instance of player to playback music track
     let player = playbackSDK.getPlayer(forExternalAsset: nil, delegate: self)
@@ -342,34 +343,10 @@ extension PlaybackViewController {
     // Setup new player
     playableView?.setPlayer(player, isThumbnailNeeded: false)
   }
-  
-  func setupAppStateHandler() {
-    appStateObserver = AppStateObserver(delegate: self)
-  }
-}
-
-// MARK: - App state observer
-extension PlaybackViewController: AppStateObserverDelegate {
-  func applicationWillResignActive(_ appStateObserver: AppStateObserver) {
-    player?.stopPlay()
-  }
-  func applicationDidBecomeActive(_ appStateObserver: AppStateObserver) {
-    if isPlaying {
-      player?.startPlay(loop: true, fixedSpeed: false)
-    }
-  }
-}
-
-// MARK: - Action
-extension PlaybackViewController {
-  
-  @IBAction func backAction(_ sender: Any) {
-    player?.pausePlay()
-    navigationController?.popViewController(animated: true)
-  }
 }
 
 // MARK: - VideoEditorPlayerDelegate
+// Handling video editor player delegate methods
 extension PlaybackViewController: VideoEditorPlayerDelegate {
   func playerPlaysFrame(_ player: VideoEditorPlayable, atTime time: CMTime) {
     let progress = time.seconds / videoDuration.seconds
@@ -378,5 +355,19 @@ extension PlaybackViewController: VideoEditorPlayerDelegate {
   
   func playerDidEndPlaying(_ player: VideoEditorPlayable) {
     print("Did end playing")
+  }
+}
+
+// MARK: - App state observer
+// Helps to control playback when app resigns active and backs to active states
+extension PlaybackViewController: AppStateObserverDelegate {
+  func applicationWillResignActive(_ appStateObserver: AppStateObserver) {
+    player?.stopPlay()
+  }
+  
+  func applicationDidBecomeActive(_ appStateObserver: AppStateObserver) {
+    if isPlaying {
+      player?.startPlay(loop: true, fixedSpeed: false)
+    }
   }
 }
