@@ -19,11 +19,9 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     private let oneSecond = CMTime(seconds: 1.0, preferredTimescale: 1_000)
     
     // Video urls for playback
-    var videoUrls: [URL]!
+    var selectedVideoContent: [URL]!
     
-    // MARK: - Player container
     @IBOutlet weak var playerContainerView: UIView!
-    
     @IBOutlet weak var volumeSlider: UISlider!
     @IBOutlet weak var playbackProgressSlider: UISlider!
     @IBOutlet weak var playPauseButton: UIButton!
@@ -32,26 +30,24 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     // Pauses video when app collapsed and resumes when app unfolds. See AppStateObserverDelegate extension
     private var appStateObserver: AppStateObserver?
     
-    private let videoEditorModule = AppDelegate.videoEditorModule
     private var playbackManager: PlaybackManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        playbackManager = PlaybackManager(videoEditorModule: videoEditorModule)
-        playbackManager.setupVideoContent(with: videoUrls)
+        playbackManager = PlaybackManager(videoEditorModule: AppDelegate.videoEditorModule)
+        playbackManager.addVideoContent(with: selectedVideoContent)
+        playbackManager.setSurfaceView(playerContainerView: playerContainerView)
         
         playbackManager.progressCallback = { [weak self] progress in
             self?.playbackProgressSlider.value = progress
         }
         
-        // Get playable view which will preview video editor asset
-        let view = playbackManager.providePlaybackView()
-        playerContainerView.addSubview(view)
-        
         // Listen app states to control playback
         appStateObserver = AppStateObserver(delegate: self)
     }
+    
+    // REFACTOR: callbacks for release or destroy?
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -60,8 +56,18 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         playableView?.frame = playerContainerView.bounds
     }
     
-    // MARK: - Actions
+    func applicationWillResignActive(_ appStateObserver: AppStateObserver) {
+        playbackManager.pause()
+    }
     
+    func applicationDidBecomeActive(_ appStateObserver: AppStateObserver) {
+        let isPlayingBeforeResigningActive = playPauseButton.isSelected
+        if isPlayingBeforeResigningActive {
+            playbackManager.play()
+        }
+    }
+    
+    // MARK: - Actions
     @IBAction func backAction(_ sender: Any) {
         playbackManager.pause()
         navigationController?.popViewController(animated: true)
@@ -101,12 +107,12 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     }
     
     @IBAction func seekForwardAction(_ sender: Any) {
-        let time = playbackManager.currentTime + oneSecond
+        let time = playbackManager.currentPostionTime + oneSecond
         playbackManager.seek(to: time)
     }
     
     @IBAction func seekBackwardAction(_ sender: Any) {
-        let time = playbackManager.currentTime - oneSecond
+        let time = playbackManager.currentPostionTime - oneSecond
         playbackManager.seek(to: time)
     }
     
@@ -194,18 +200,5 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         let previewImageViewController = PreviewImageViewController()
         previewImageViewController.image = screenshot
         present(previewImageViewController, animated: true)
-    }
-
-    // MARK: - App state observer
-    
-    func applicationWillResignActive(_ appStateObserver: AppStateObserver) {
-        playbackManager.pause()
-    }
-    
-    func applicationDidBecomeActive(_ appStateObserver: AppStateObserver) {
-        let isPlayingBeforeResigningActive = playPauseButton.isSelected
-        if isPlayingBeforeResigningActive {
-            playbackManager.play()
-        }
     }
 }

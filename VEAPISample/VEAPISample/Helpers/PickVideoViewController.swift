@@ -85,7 +85,7 @@ class PickVideoViewController: UIViewController {
             return
         }
         // Pass parameters to playback view controller
-        playbackVC.videoUrls = videoUrls
+        playbackVC.selectedVideoContent = videoUrls
     }
 }
 

@@ -19,7 +19,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     // MARK: - Playback helpers
     var player: VideoEditorPlayable? { playableView?.videoEditorPlayer }
-    var currentTime: CMTime { playableView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
+    var currentPostionTime: CMTime { playableView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
     var videoDuration: CMTime { editor.videoAsset?.composition.duration ?? .zero }
     var isPlaying: Bool { player?.isPlaying ?? false}
     
@@ -45,8 +45,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         playbackSDK = VEPlayback(videoEditorService: editor)
     }
     
-    /// Setup current video editor service for playback
-    func setupVideoContent(with videoUrls: [URL]) {
+    /// Adds video content for playback
+    func addVideoContent(with videoUrls: [URL]) {
         // Setup sequence name and location
         let sequenceName = UUID().uuidString
         let folderURL = FileManager.default.temporaryDirectory.appendingPathComponent(sequenceName)
@@ -108,10 +108,11 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     /// Provides video player preview
-    func providePlaybackView() -> VideoPlayableView {
+    func setSurfaceView(playerContainerView: UIView!) {
         let playableView = playbackSDK.getPlayableView(delegate: self)
         self.playableView = playableView
-        return playableView
+        
+        playerContainerView.addSubview(playableView)
     }
     
     /// Sets video volume
@@ -130,7 +131,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             thumbnailHeight: UIScreen.main.bounds.height
         )
         
-        guard let cgImage = previewExtractor.extractPreview(at: currentTime)?.cgImage else {
+        guard let cgImage = previewExtractor.extractPreview(at: currentPostionTime)?.cgImage else {
             print("Extracting preview failed")
             return nil
         }
@@ -314,7 +315,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     private func reloadPlayerAtCurrentTime() {
-        let currentTime = self.currentTime
+        let currentTime = self.currentPostionTime
         let isPlaying = self.isPlaying
         // Get new instance of player to playback music track
         reloadPlayer()
