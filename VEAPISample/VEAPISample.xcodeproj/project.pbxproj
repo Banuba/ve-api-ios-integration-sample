@@ -28,14 +28,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; };
-		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
+		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; tabWidth = 4; };
+		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		637D252929B0F41A00B446E0 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
-		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; };
-		63B8E48F29B092CC000F043F /* PickVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickVideoViewController.swift; sourceTree = "<group>"; };
-		63D833E129B5E904009DCF99 /* EffectsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsManager.swift; sourceTree = "<group>"; };
-		63E308B229B1EE3400172732 /* PreviewImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageViewController.swift; sourceTree = "<group>"; };
+		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
+		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; tabWidth = 4; };
+		63B8E48F29B092CC000F043F /* PickVideoViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PickVideoViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
+		63D833E129B5E904009DCF99 /* EffectsManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = EffectsManager.swift; sourceTree = "<group>"; tabWidth = 4; };
+		63E308B229B1EE3400172732 /* PreviewImageViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A01658727D8B783003E36FB /* VEAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01658A27D8B783003E36FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,8 +48,8 @@
 		8A02DAD927DB560D0019AB99 /* luts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luts; sourceTree = "<group>"; };
 		9F07C00E3B449E6D2B3F4F88 /* Pods-VEAPISample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.release.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.release.xcconfig"; sourceTree = "<group>"; };
 		AD2DE16A243B969DD1A7859A /* Pods_VEAPISample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VEAPISample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEditorModule.swift; sourceTree = "<group>"; };
-		C2AB8B2029BFBC1F00E5F4B4 /* PlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackManager.swift; sourceTree = "<group>"; };
+		C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorModule.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorModule.swift; sourceTree = "<group>"; tabWidth = 4; };
+		C2AB8B2029BFBC1F00E5F4B4 /* PlaybackManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackManager.swift; sourceTree = "<group>"; tabWidth = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -426,7 +426,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z5FY5KAJL3;
+				DEVELOPMENT_TEAM = 8W9QCBMQCU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VEAPISample/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera recording usage.";
@@ -460,7 +460,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z5FY5KAJL3;
+				DEVELOPMENT_TEAM = 8W9QCBMQCU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VEAPISample/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera recording usage.";

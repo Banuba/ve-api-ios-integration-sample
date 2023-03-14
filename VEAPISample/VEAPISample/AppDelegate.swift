@@ -13,31 +13,29 @@ import VEEffectsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+  
+  var window: UIWindow?
+  
+  
+  static let videoEditorModule = VideoEditorModule()
+  
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
     
-    var window: UIWindow?
+    // Used ???
+    // Initialize BanubaSdkManager
+    let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
+    let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
+    BanubaSdkManager.initialize(
+      resourcePath: dirs,
+      clientTokenString: AppDelegate.licenseToken,
+      logLevel: .info
+    )
     
-    // License token is required to start Video Editor SDK
-    static let licenseToken: String = <#Enter your license token#>
-
-    static let videoEditorModule = VideoEditorModule()
-    
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
-        
-        // Used ???
-        // Initialize BanubaSdkManager
-        let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
-        let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
-        BanubaSdkManager.initialize(
-            resourcePath: dirs,
-            clientTokenString: AppDelegate.licenseToken,
-            logLevel: .info
-        )
-        
-        AppDelegate.videoEditorModule.setupMaskRenderer()
-        return true
-    }
+    AppDelegate.videoEditorModule.setupMaskRenderer()
+    return true
+  }
 }
 
