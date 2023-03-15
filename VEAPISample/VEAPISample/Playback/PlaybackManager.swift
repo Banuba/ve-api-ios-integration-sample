@@ -4,7 +4,7 @@ import VEPlaybackSDK
 import VideoEditor
 
 class PlaybackManager: VideoEditorPlayerDelegate {
-    private struct AppliedEffectStorage {
+    private struct Effects {
         static var rapid: Effect?
         static var slowmo: Effect?
         static var trackUrl: URL?
@@ -34,6 +34,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     private let effectsManager: EffectsManager!
     
     private let videoResolutionConfiguration: VideoResolutionConfiguration
+    private var videoSequence: VideoSequence?
     
     init(videoEditorModule: VideoEditorModule) {
         editor = videoEditorModule.editor
@@ -45,25 +46,21 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         playbackSDK = VEPlayback(videoEditorService: editor)
     }
     
+    deinit {
+        guard let videoSequence else { return }
+        // Clean up video sequence resources
+        try? FileManager.default.removeItem(at: videoSequence.folderURL)
+    }
+    
     /// Adds video content for playback
     func addVideoContent(with videoUrls: [URL]) {
-        // Setup sequence name and location
-        let sequenceName = UUID().uuidString
-        let folderURL = FileManager.default.temporaryDirectory.appendingPathComponent(sequenceName)
-        
-        // Create sequence at location
-        let videoSequence = VideoSequence(folderURL: folderURL)
-        
-        // Fill up sequence with videos
-        videoUrls.forEach { videoURL in
-            videoSequence.addVideo(
-                at: videoURL,
-                isSlideShow: false,
-                transition: .normal
-            )
-        }
+        // Create videoSequence of video by provided video urls
+        // VideoSequence entity helps to manage video in sequence and stores additional info
+        let videoSequence = createVideoSequence(with: videoUrls)
+        self.videoSequence = videoSequence
         
         // Create VideoEditorAsset from relevant sequence
+        // VideoEditorAsset is entity of VideoEditor used for plaback
         let videoEditorAsset = VideoEditorAsset(
             sequence: videoSequence,
             isGalleryAssets: true,
@@ -74,34 +71,11 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         // Set current video asset to video editor service
         editor.setCurrentAsset(videoEditorAsset)
         
-        // Apply original track rotation for each asset track
-        videoEditorAsset.tracksInfo.forEach { assetTrack in
-            let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-            effectsManager.applyTransformEffect(
-                start: assetTrack.timeRangeInGlobal.start,
-                end: assetTrack.timeRangeInGlobal.end,
-                rotation: rotation
-            )
-        }
+        // Apply original video rotation as effect
+        adjustVideoEditorAssetTracksRotation(videoEditorAsset)
         
-        // Configure render video size according to video aspect and videoResolutionConfiguration
-        let videoSize = videoSequence.videos.map { video in
-            let resolution = video.videoInfo.resolution
-            let urlAsset = AVURLAsset(url: video.url)
-            let preferredTransform = urlAsset.tracks(withMediaType: .video).first?.preferredTransform ?? .identity
-            let rotatedResolution = resolution.applying(preferredTransform)
-            return CGSize(
-                width: abs(rotatedResolution.width),
-                height: abs(rotatedResolution.height)
-            )
-        }.first!
-        
-        let videoAspect = VideoAspectRatioCalculator.calculateVideoAspectRatio(withVideoSize: videoSize)
-        
-        editor.videoSize = VideoAspectRatioCalculator.adjustVideoSize(
-            videoResolutionConfiguration.current.size,
-            withAspectRatio: videoAspect
-        )
+        // Setup preview render size
+        setupRenderSize(videoSequence: videoSequence)
         
         // Setup effects provider video duration
         effectsProvider.totalVideoDuration = videoEditorAsset.composition.duration
@@ -143,8 +117,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     // MARK: - Playback managment
     
-    func play() {
-        player?.startPlay(loop: true, fixedSpeed: false)
+    func play(loop: Bool) {
+        player?.startPlay(loop: loop, fixedSpeed: false)
     }
     
     func pause() {
@@ -198,27 +172,27 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     func applyRapidSpeedEffect() {
-        AppliedEffectStorage.rapid = effectsProvider.provideSpeedEffect(type: .rapid)
-        effectsManager.applySpeedEffect(AppliedEffectStorage.rapid!)
+        Effects.rapid = effectsProvider.provideSpeedEffect(type: .rapid)
+        effectsManager.applySpeedEffect(Effects.rapid!)
         reloadPreview()
     }
     
     func undoRapidSpeedEffect() {
-        effectsManager.undoEffect(withId: AppliedEffectStorage.rapid!.id)
+        effectsManager.undoEffect(withId: Effects.rapid!.id)
         reloadPreview()
-        AppliedEffectStorage.rapid = nil
+        Effects.rapid = nil
     }
     
     func applySlowoSpeedEffect() {
-        AppliedEffectStorage.slowmo = effectsProvider.provideSpeedEffect(type: .slowmo)
-        effectsManager.applySpeedEffect(AppliedEffectStorage.slowmo!)
+        Effects.slowmo = effectsProvider.provideSpeedEffect(type: .slowmo)
+        effectsManager.applySpeedEffect(Effects.slowmo!)
         reloadPreview()
     }
     
     func undoSlowmoSpeedEffect() {
-        effectsManager.undoEffect(withId: AppliedEffectStorage.slowmo!.id)
+        effectsManager.undoEffect(withId: Effects.slowmo!.id)
         reloadPreview()
-        AppliedEffectStorage.slowmo = nil
+        Effects.slowmo = nil
     }
     
     func applyTextEffect() {
@@ -257,8 +231,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     func applyMusicEffect() {
         let musicEffect = effectsProvider.provideMusicEffect()
         
-        AppliedEffectStorage.trackId = CMPersistentTrackID(musicEffect.id)
-        AppliedEffectStorage.trackUrl = musicEffect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
+        Effects.trackId = CMPersistentTrackID(musicEffect.id)
+        Effects.trackUrl = musicEffect.additionalInfo[Effect.AdditionalInfoKey.url] as? URL
         
         effectsManager.applyMusicEffect(musicEffect)
         // Get new instance of player to playback music track
@@ -267,8 +241,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     func undoMusicEffect() {
         effectsManager.undoMusicEffect(
-            id: AppliedEffectStorage.trackId!,
-            url: AppliedEffectStorage.trackUrl!
+            id: Effects.trackId!,
+            url: Effects.trackUrl!
         )
         // Get new instance of player to playback music track
         reloadPlayerAtCurrentTime()
@@ -309,6 +283,59 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     // MARK: - Private helpers
+    // Create video sequence with specific name and location
+    private func createVideoSequence(with videoUrls: [URL]) -> VideoSequence {
+        let sequenceName = UUID().uuidString
+        let folderURL = FileManager.default.temporaryDirectory.appendingPathComponent(sequenceName)
+        
+        // Create sequence at location
+        let videoSequence = VideoSequence(folderURL: folderURL)
+        
+        // Fill up sequence with videos
+        videoUrls.forEach { videoURL in
+            videoSequence.addVideo(
+                at: videoURL,
+                isSlideShow: false,
+                transition: .normal
+            )
+        }
+        
+        return videoSequence
+    }
+    
+    // Apply original track rotation for each asset track
+    private func adjustVideoEditorAssetTracksRotation(_ videoEditorAsset: VideoEditorAsset) {
+        videoEditorAsset.tracksInfo.forEach { assetTrack in
+            let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
+            effectsManager.applyTransformEffect(
+                start: assetTrack.timeRangeInGlobal.start,
+                end: assetTrack.timeRangeInGlobal.end,
+                rotation: rotation
+            )
+        }
+    }
+    
+    // Configure render video size according to video aspect and videoResolutionConfiguration
+    private func setupRenderSize(videoSequence: VideoSequence) {
+        let videoSize = videoSequence.videos.map { video in
+            let resolution = video.videoInfo.resolution
+            let urlAsset = AVURLAsset(url: video.url)
+            let preferredTransform = urlAsset.tracks(withMediaType: .video).first?.preferredTransform ?? .identity
+            let rotatedResolution = resolution.applying(preferredTransform)
+            return CGSize(
+                width: abs(rotatedResolution.width),
+                height: abs(rotatedResolution.height)
+            )
+        }.first!
+        
+        let videoAspect = VideoAspectRatioCalculator.calculateVideoAspectRatio(withVideoSize: videoSize)
+        
+        editor.videoSize = VideoAspectRatioCalculator.adjustVideoSize(
+            videoResolutionConfiguration.current.size,
+            withAspectRatio: videoAspect
+        )
+    }
+    
     private func reloadPreview() {
         let shouldAutoStart = isPlaying
         player?.reloadComposition(shouldAutoStart: shouldAutoStart)
@@ -322,7 +349,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         // Seek new player to current time
         seek(to: currentTime)
         if isPlaying {
-            play()
+            play(loop: true)
         }
     }
     

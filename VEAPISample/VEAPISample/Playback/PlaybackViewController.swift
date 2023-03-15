@@ -47,11 +47,9 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         appStateObserver = AppStateObserver(delegate: self)
     }
     
-    // REFACTOR: callbacks for release or destroy?
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // Layout playable view
+        // layout player surface here for demo purposes using frame-based layout
         let playableView = playerContainerView.subviews.first
         playableView?.frame = playerContainerView.bounds
     }
@@ -63,7 +61,7 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     func applicationDidBecomeActive(_ appStateObserver: AppStateObserver) {
         let isPlayingBeforeResigningActive = playPauseButton.isSelected
         if isPlayingBeforeResigningActive {
-            playbackManager.play()
+            playbackManager.play(loop: true)
         }
     }
     
@@ -78,7 +76,7 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         if isPlaying {
             playbackManager.pause()
         } else {
-            playbackManager.play()
+            playbackManager.play(loop: true)
         }
         sender.isSelected.toggle()
     }
@@ -90,7 +88,7 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         } else {
             let isPlaying = playPauseButton.isSelected
             if isPlaying {
-                playbackManager.play()
+                playbackManager.play(loop: true)
             }
             playbackManager.startTrackingPlayerProgress()
         }
