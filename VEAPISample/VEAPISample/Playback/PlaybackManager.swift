@@ -14,10 +14,10 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     // MARK: - VideoPlayableView
     private(set) weak var playableView: VideoPlayableView?
     
-    // Player progress callback
+    // Player progress callback. You can use it to track player position
     var progressCallback: ((_ progress: Float) -> Void)?
     
-    // MARK: - Playback helpers
+    
     var player: VideoEditorPlayable? { playableView?.videoEditorPlayer }
     var currentPostionTime: CMTime { playableView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
     var videoDuration: CMTime { editor.videoAsset?.composition.duration ?? .zero }
@@ -272,14 +272,14 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     // MARK: - VideoEditorPlayerDelegate
-    
     func playerPlaysFrame(_ player: VideoEditorPlayable, atTime time: CMTime) {
         let progress = time.seconds / videoDuration.seconds
         progressCallback?(Float(progress))
     }
     
+    /// Called when player reaches end of video content
     func playerDidEndPlaying(_ player: VideoEditorPlayable) {
-        print("Did end playing")
+        print("End of video content")
     }
     
     // MARK: - Private helpers

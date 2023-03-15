@@ -1,9 +1,4 @@
-//
-//  PlaybackViewController.swift
-//  VEAPISample
-//
-//  Created by Banuba on 28.12.22.
-//
+
 
 import UIKit
 import AVFoundation
@@ -18,7 +13,7 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     
     private let oneSecond = CMTime(seconds: 1.0, preferredTimescale: 1_000)
     
-    // Video urls for playback
+    // Selected video urls for playback
     var selectedVideoContent: [URL]!
     
     @IBOutlet weak var playerContainerView: UIView!
@@ -26,8 +21,6 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     @IBOutlet weak var playbackProgressSlider: UISlider!
     @IBOutlet weak var playPauseButton: UIButton!
     
-    // MARK: - AppStateObserver
-    // Pauses video when app collapsed and resumes when app unfolds. See AppStateObserverDelegate extension
     private var appStateObserver: AppStateObserver?
     
     private var playbackManager: PlaybackManager!
@@ -43,13 +36,13 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
             self?.playbackProgressSlider.value = progress
         }
         
-        // Listen app states to control playback
+        // Observe app state changes to control playback
         appStateObserver = AppStateObserver(delegate: self)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // layout player surface here for demo purposes using frame-based layout
+        // In this sample playerContainerView contains just single view for demostration purposes.
         let playableView = playerContainerView.subviews.first
         playableView?.frame = playerContainerView.bounds
     }
@@ -65,7 +58,6 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         }
     }
     
-    // MARK: - Actions
     @IBAction func backAction(_ sender: Any) {
         playbackManager.pause()
         navigationController?.popViewController(animated: true)

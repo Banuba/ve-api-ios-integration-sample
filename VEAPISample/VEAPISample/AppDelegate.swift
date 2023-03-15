@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
   static let videoEditorModule = VideoEditorModule()
-  
+  static let licenseToken = <#Enter your license token#>
+    
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
