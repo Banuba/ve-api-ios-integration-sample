@@ -8,6 +8,7 @@
 import UIKit
 import BanubaSdk
 import BanubaEffectPlayer
+import BanubaUtilities
 import VEEffectsSDK
 
 @main
@@ -15,14 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   
-  // License token is required to start Video Editor SDK
-  static let licenseToken: String = <#Enter your license token#>
   
+  static let videoEditorModule = VideoEditorModule()
+  static let licenseToken = <#Enter your license token#>
+    
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     
+    // Used ???
     // Initialize BanubaSdkManager
     let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
     let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
@@ -32,9 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       logLevel: .info
     )
     
-    // Setup mask renderer
-    BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(renderSize: Configs.resolutionConfig.current.size)
-    
+    AppDelegate.videoEditorModule.setupMaskRenderer()
     return true
   }
 }
