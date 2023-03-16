@@ -239,7 +239,6 @@
                         <outlet property="activityIndicator" destination="vWI-zf-v5i" id="jd1-BZ-OCj"/>
                         <outlet property="invalidTokenLabel" destination="xcd-c1-yp0" id="Vg7-nB-e7M"/>
                         <outlet property="playVideoButton" destination="oiJ-tg-Qy4" id="HZM-82-5EO"/>
-                        <outlet property="previewContainer" destination="YDi-io-455" id="0ZK-pB-zch"/>
                         <outlet property="previewImageView" destination="8LH-YC-KDh" id="Qxd-YH-lrb"/>
                         <outlet property="progressView" destination="Wli-xJ-NdY" id="3Ao-4o-jDA"/>
                         <outlet property="startExportButton" destination="lQj-Vd-Umv" id="WnO-vm-rJv"/>

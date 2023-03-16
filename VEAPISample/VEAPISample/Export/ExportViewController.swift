@@ -11,55 +11,41 @@ import Photos
 import AVKit
 
 // Banuba Modules
-import VideoEditor
-import VEEffectsSDK
 import VEExportSDK
-import BanubaUtilities
 
 class ExportViewController: UIViewController {
     
-    @IBOutlet weak var startExportButton: UIButton!
-    @IBOutlet weak var previewContainer: UIView!
     @IBOutlet weak var previewImageView: UIImageView!
     @IBOutlet weak var playVideoButton: UIButton!
-    
-    // Export progress controls
+    @IBOutlet weak var startExportButton: UIButton!
     @IBOutlet weak var stopExportButton: UIButton!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var invalidTokenLabel: UILabel!
     
+    // Stores cancel export handler
     private var cancelExportHandler: CancelExportHandler?
     
-    private var exportedVideoUrl: URL?
+    // URL to result video
+    private var resultVideoUrl: URL?
     
-    // MARK: - Banuba Services
-    private var editor: VideoEditorService!
-    private var exportSDK: VEExport!
+    // Manager that handles export video flow
+    private var exportManager: ExportManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupBanubaServices()
-        activityIndicator.isHidden = true
-    }
-    
-    private func setupBanubaServices() {
-        guard let editor = VideoEditorService(token: AppDelegate.licenseToken) else {
-            fatalError("The token is invalid. Please check if token contains all characters.")
-        }
+        exportManager = ExportManager(videoEditorModule: AppDelegate.videoEditorModule)
         
-        self.editor = editor
-        self.exportSDK = VEExport(videoEditorService: editor)
+        setupUI(isExporting: false)
     }
-}
 
-// MARK: - Actions
-extension ExportViewController {
+    // MARK: - Actions
+    
     @IBAction func startExportAction(_ sender: Any) {
         previewImageView.image = nil
-        exportedVideoUrl = nil
+        resultVideoUrl = nil
         playVideoButton.isHidden = true
         
         checkLicense {
@@ -77,11 +63,12 @@ extension ExportViewController {
     }
     
     @IBAction func playVideoAction(_ sender: Any) {
-        guard let exportedVideoUrl else {
+        guard let resultVideoUrl else {
+            // Nothing to play
             return
         }
         
-        let player = AVPlayer(url: exportedVideoUrl)
+        let player = AVPlayer(url: resultVideoUrl)
         let playerController = AVPlayerViewController()
         playerController.player = player
         present(playerController, animated: true) {
@@ -125,167 +112,68 @@ extension ExportViewController {
             }
             
             galleryPicker.dismiss(animated: true) {
-                self?.exportVideo(videoUrls: videoUrls)
+                self?.exportVideo(with: videoUrls)
             }
         }
         
         present(galleryPicker, animated: true)
     }
-}
-
-extension ExportViewController {
-    private func checkLicense(completion: @escaping () -> Void) {
-        editor.getLicenseState(completion: { [weak self] isValid in
-            self?.invalidTokenLabel.isHidden = isValid
-            if isValid {
-                completion()
-            }
-        })
-    }
     
-    private func exportVideo(videoUrls: [URL]) {
-        // Setup sequence name and location
-        let sequenceName = UUID().uuidString
-        let folderURL = FileManager.default.temporaryDirectory.appendingPathComponent(sequenceName)
-        
-        // Create sequence at location
-        let videoSequence = VideoSequence(folderURL: folderURL)
-        
-        // Fill up sequence with videos
-        videoUrls.forEach { videoURL in
-            videoSequence.addVideo(
-                at: videoURL,
-                isSlideShow: false,
-                transition: .normal
-            )
-        }
-        
-        // Create VideoEditorAsset from relevant sequence
-        let videoEditorAsset = VideoEditorAsset(
-            sequence: videoSequence,
-            isGalleryAssets: true,
-            isSlideShow: false,
-            videoResolutionConfiguration: AppDelegate.videoEditorModule.videoResolutionConfiguration
-        )
-        
-        // Set current video asset to video editor service
-        editor.setCurrentAsset(videoEditorAsset)
-        
-        let effectsManager = EffectsManager(editor: editor)
-        
-        // Apply original track rotation for each asset track
-        videoEditorAsset.tracksInfo.forEach { assetTrack in
-            let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-            effectsManager.applyTransformEffect(
-                start: assetTrack.timeRangeInGlobal.start,
-                end: assetTrack.timeRangeInGlobal.end,
-                rotation: rotation
-            )
-        }
-        
-        let effectsProvider = EffectsProvider()
-        effectsProvider.totalVideoDuration = videoEditorAsset.composition.duration
-        
-        let colorEffect = effectsProvider.provideJapanColorEffect()
-        effectsManager.applyColorEffect(colorEffect)
-        
-        let visualEffect = effectsProvider.provideVisualEffect(type: .vhs)
-        effectsManager.applyVisualEffect(visualEffect)
-        
-        let slowmo = effectsProvider.provideSpeedEffect(type: .slowmo)
-        effectsManager.applySpeedEffect(slowmo)
-        
-        let sticker = effectsProvider.provideOverlayEffect(type: .gif)
-        effectsManager.applyOverlayEffect(sticker)
-        
-        let text = effectsProvider.provideOverlayEffect(type: .text)
-        effectsManager.applyOverlayEffect(text)
-        
-        let music = effectsProvider.provideMusicEffect()
-        effectsManager.applyMusicEffect(music)
-        
-        let maskEffect = effectsProvider.provideMaskEffect()
-        effectsManager.applyMaskEffect(maskEffect)
-        
-        // Get result file url
-        let exportedVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("tmp.mov")
-        if FileManager.default.fileExists(atPath: exportedVideoUrl.path) {
-            try? FileManager.default.removeItem(at: exportedVideoUrl)
-        }
-        
-        // Export settings
-        let exportVideoInfo = ExportVideoInfo(
-            resolution: .fullHd1080,
-            useHEVCCodecIfPossible: true
-        )
-        
-        // Set initial video size
-        editor.videoSize = videoSequence.videos.map { video in
-            let resolution = video.videoInfo.resolution
-            let urlAsset = AVURLAsset(url: video.url)
-            let preferredTransform = urlAsset.tracks(withMediaType: .video).first?.preferredTransform ?? .identity
-            let rotatedResolution = resolution.applying(preferredTransform)
-            return CGSize(
-                width: abs(rotatedResolution.width),
-                height: abs(rotatedResolution.height)
-            )
-        }.first!
-        
+    private func exportVideo(with selectedVideoUrls: [URL]) {
         startExportAnimation()
-        cancelExportHandler = exportSDK.exportVideo(
-            to: exportedVideoUrl,
-            using: exportVideoInfo,
-            watermarkFilterModel: nil,
-            exportProgress: { [weak self] progress in
-                DispatchQueue.main.async { self?.progressView.progress = Float(progress) }
-            }
-        ) { [weak self] success, error in
-            self?.cancelExportHandler = nil
-            
-            DispatchQueue.main.async {
-                self?.stopExportAnimation()
-                self?.playVideoButton.isHidden = success == false
-            }
-            
-            if error?.isCancelled == true {
-                return
-            }
-            
-            if let error {
-                print(error.localizedDescription as Any)
-                return
-            }
-            
-            self?.exportedVideoUrl = exportedVideoUrl
-            self?.setupVideoPreview(videoUrl: exportedVideoUrl)
+        
+        exportManager.setupVideoContent(with: selectedVideoUrls)
+        
+        // Prepare result video url
+        let resultVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("tmp.mov")
+        if FileManager.default.fileExists(atPath: resultVideoUrl.path) {
+            try? FileManager.default.removeItem(at: resultVideoUrl)
         }
-    }
-    
-    private func setupVideoPreview(videoUrl: URL) {
-        let asset = AVURLAsset(url: videoUrl)
-        let assetImageGenerator = AVAssetImageGenerator(asset: asset)
-        assetImageGenerator.generateCGImagesAsynchronously(forTimes: [NSValue(time: .zero)]) { [weak self] _, preview, _, _, _ in
-            DispatchQueue.main.async {
-                guard let preview else {
+        
+        cancelExportHandler = exportManager.exportVideo(
+            to: resultVideoUrl,
+            progressCallback: { [weak self] progress in
+                DispatchQueue.main.async { self?.progressView.progress = progress }
+            },
+            completion: { [weak self] success, error in
+                DispatchQueue.main.async {
+                    self?.stopExportAnimation()
+                    self?.playVideoButton.isHidden = success == false
+                }
+                
+                if error?.isCancelled == true {
                     return
                 }
-                let previewImage = UIImage(cgImage: preview)
-                self?.previewImageView.image = previewImage
+                
+                if let error {
+                    print(error.localizedDescription as Any)
+                    return
+                }
+                
+                self?.resultVideoUrl = resultVideoUrl
+                self?.setupVideoPreview(resultVideoUrl: resultVideoUrl)
             }
+        )
+    }
+    
+    private func setupVideoPreview(resultVideoUrl: URL) {
+        guard let preview = exportManager.takeScreenshot(of: AVURLAsset(url: resultVideoUrl), at: .zero) else {
+            return
+        }
+        DispatchQueue.main.async {
+            self.previewImageView.image = preview
         }
     }
-}
-
-// MARK: - Export progress helpers
-extension ExportViewController {
+    
+    // MARK: - Export progress helpers
     private func startExportAnimation() {
         setupUI(isExporting: true)
     }
-    
+
     private func stopExportAnimation() {
         setupUI(isExporting: false)
     }
-    
+
     private func setupUI(isExporting: Bool) {
         activityIndicator.isHidden = !isExporting
         if isExporting {
@@ -299,5 +187,15 @@ extension ExportViewController {
         stopExportButton.isHidden = !isExporting
         
         startExportButton.isEnabled = !isExporting
+    }
+
+    // MARK: - Check license helpers
+    private func checkLicense(completion: @escaping () -> Void) {
+        exportManager.editor.getLicenseState(completion: { [weak self] isValid in
+            self?.invalidTokenLabel.isHidden = isValid
+            if isValid {
+                completion()
+            }
+        })
     }
 }

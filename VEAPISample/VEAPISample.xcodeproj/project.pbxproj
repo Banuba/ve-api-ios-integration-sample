@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6318345B29C30B23002EB08B /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318345A29C30B22002EB08B /* ExportManager.swift */; };
 		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
 		63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63454196295C627100A6EC0A /* PlaybackViewController.swift */; };
 		637D252A29B0F41A00B446E0 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637D252929B0F41A00B446E0 /* sample.wav */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6318345A29C30B22002EB08B /* ExportManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; tabWidth = 4; };
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		637D252929B0F41A00B446E0 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				639DFABB2948AE840021458F /* ExportViewController.swift */,
+				6318345A29C30B22002EB08B /* ExportManager.swift */,
 			);
 			path = Export;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				C2AB8B2129BFBC1F00E5F4B4 /* PlaybackManager.swift in Sources */,
 				63B8E49029B092CC000F043F /* PickVideoViewController.swift in Sources */,
 				633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */,
+				6318345B29C30B23002EB08B /* ExportManager.swift in Sources */,
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */,
 				C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorModule.swift in Sources */,
