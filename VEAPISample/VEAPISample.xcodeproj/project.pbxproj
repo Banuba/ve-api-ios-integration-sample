@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6318345B29C30B23002EB08B /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318345A29C30B22002EB08B /* ExportManager.swift */; };
+		6318349829C35BCE002EB08B /* UIViewController+PickVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318349729C35BCE002EB08B /* UIViewController+PickVideo.swift */; };
+		6318349A29C35DFA002EB08B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318349929C35DFA002EB08B /* MainViewController.swift */; };
 		633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */; };
 		63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63454196295C627100A6EC0A /* PlaybackViewController.swift */; };
 		637D252A29B0F41A00B446E0 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637D252929B0F41A00B446E0 /* sample.wav */; };
@@ -30,6 +32,8 @@
 
 /* Begin PBXFileReference section */
 		6318345A29C30B22002EB08B /* ExportManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; tabWidth = 4; };
+		6318349729C35BCE002EB08B /* UIViewController+PickVideo.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+PickVideo.swift"; sourceTree = "<group>"; tabWidth = 4; };
+		6318349929C35DFA002EB08B /* MainViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		637D252929B0F41A00B446E0 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 				63B8E48F29B092CC000F043F /* PickVideoViewController.swift */,
 				63E308B229B1EE3400172732 /* PreviewImageViewController.swift */,
 				633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */,
+				6318349729C35BCE002EB08B /* UIViewController+PickVideo.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				8A01659527D8B785003E36FB /* LaunchScreen.storyboard */,
 				8A01659827D8B785003E36FB /* Info.plist */,
 				C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorModule.swift */,
+				6318349929C35DFA002EB08B /* MainViewController.swift */,
 			);
 			path = VEAPISample;
 			sourceTree = "<group>";
@@ -271,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				639DFABC2948AE840021458F /* ExportViewController.swift in Sources */,
+				6318349A29C35DFA002EB08B /* MainViewController.swift in Sources */,
 				63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */,
 				63E308B329B1EE3400172732 /* PreviewImageViewController.swift in Sources */,
 				63D833E229B5E904009DCF99 /* EffectsManager.swift in Sources */,
@@ -281,6 +288,7 @@
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */,
 				C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorModule.swift in Sources */,
+				6318349829C35BCE002EB08B /* UIViewController+PickVideo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

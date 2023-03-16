@@ -10,6 +10,7 @@ import AVFoundation
 import BanubaUtilities
 import VideoEditor
 import VEExportSDK
+import VEEffectsSDK
 
 class ExportManager {
     // MARK: - Banuba Services used for export
@@ -28,11 +29,7 @@ class ExportManager {
         self.editor = videoEditorModule.editor
         self.videoResolutionConfiguration = videoEditorModule.videoResolutionConfiguration
         
-        guard let exportSDK = VEExport(videoEditorService: editor) else {
-            fatalError("Something went wrong with initializaion VEExport entity. Please check the licence token maybe this feature is not enabled in your token")
-        }
-        
-        self.exportSDK = exportSDK
+        self.exportSDK = VEExport(videoEditorService: editor)!
         self.effectsManager = EffectsManager(editor: editor)
     }
     
@@ -65,29 +62,37 @@ class ExportManager {
         
         // Setup preview render size
         setupRenderSize(videoSequence: videoSequence)
-        
-        // Apply video effects
-        applyAllEffects()
     }
     
     /// Export video to provided url with progress callback and completion
     func exportVideo(
-        to resultUrl: URL,
         progressCallback: ((_ progress: Float) -> Void)?,
-        completion: ((_ success: Bool, _ error: Error?) -> Void)?
+        completion: ((_ fileURL: URL?, _ success: Bool, _ error: Error?) -> Void)?
     ) -> CancelExportHandler? {
+        // Prepare video effects
+        prepareEffects()
+        
+        // Prepare result video url
+        let resultVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("tmp.mov")
+        if FileManager.default.fileExists(atPath: resultVideoUrl.path) {
+            try? FileManager.default.removeItem(at: resultVideoUrl)
+        }
+        
         // Export settings
         let exportVideoInfo = ExportVideoInfo(
             resolution: .fullHd1080,
             useHEVCCodecIfPossible: true
         )
         
+        // Prepare watermark
+        let watermark = prepareWatermark(image: UIImage(named: "banuba_watermark")!)
+        
         return exportSDK.exportVideo(
-            to: resultUrl,
+            to: resultVideoUrl,
             using: exportVideoInfo,
-            watermarkFilterModel: nil,
+            watermarkFilterModel: watermark,
             exportProgress: { progress in progressCallback?(Float(progress)) },
-            completion: completion
+            completion: { success, error in completion?(resultVideoUrl, success, error) }
         )
     }
     
@@ -160,7 +165,7 @@ class ExportManager {
         )
     }
     
-    private func applyAllEffects() {
+    private func prepareEffects() {
         guard let videoEditorAsset = editor.videoAsset else {
             debugPrint("VideoEditorAsset is not configured!")
             return
@@ -188,5 +193,28 @@ class ExportManager {
         
         let maskEffect = effectsProvider.provideMaskEffect()
         effectsManager.applyMaskEffect(maskEffect)
+    }
+    
+    // Returns watermark for specific image
+    func prepareWatermark(image: UIImage) -> VideoEditorFilterModel {
+        let watermarkApplicator = WatermarkApplicator()
+        
+        // Make watermark size equals videoSize / 3
+        let watermarkAspect = image.size.height / image.size.width
+        let watermarkWidth = videoResolutionConfiguration.current.size.width / 3.0
+        let watermarkSize = CGSize(
+            width: watermarkWidth,
+            height: watermarkWidth * watermarkAspect
+        )
+        
+        return watermarkApplicator.adjustWatermarkEffect(
+            configuration: WatermarkConfiguration(
+                watermark: ImageConfiguration(image: image),
+                size: watermarkSize,
+                sharedOffset: 30.0,
+                position: .rightBottom
+            ),
+            videoSize: videoResolutionConfiguration.current.size
+        )
     }
 }
