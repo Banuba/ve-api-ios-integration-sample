@@ -35,7 +35,7 @@ class ExportViewController: UIViewController {
         
         exportManager = ExportManager(videoEditorModule: AppDelegate.videoEditorModule)
         
-        setupUI(isExporting: false)
+        invalidateUIState(isExporting: false)
     }
 
     // MARK: - Actions
@@ -66,16 +66,11 @@ class ExportViewController: UIViewController {
             return
         }
         
-        let player = AVPlayer(url: resultVideoUrl)
-        let playerController = AVPlayerViewController()
-        playerController.player = player
-        present(playerController, animated: true) {
-            player.play()
-        }
+        demoPlayExportedVideo(exportedVideoUrl: resultVideoUrl)
     }
     
     private func exportVideo(with selectedVideoUrls: [URL]) {
-        setupUI(isExporting: true)
+        invalidateUIState(isExporting: true)
         
         exportManager.setupVideoContent(with: selectedVideoUrls)
         
@@ -85,7 +80,7 @@ class ExportViewController: UIViewController {
             },
             completion: { [weak self] resultVideoUrl, success, error in
                 DispatchQueue.main.async {
-                    self?.setupUI(isExporting: false)
+                    self?.invalidateUIState(isExporting: false)
                     self?.playVideoButton.isHidden = success == false
                 }
                 
@@ -115,8 +110,7 @@ class ExportViewController: UIViewController {
         }
     }
     
-    // MARK: - Export progress helper
-    private func setupUI(isExporting: Bool) {
+    private func invalidateUIState(isExporting: Bool) {
         activityIndicator.isHidden = !isExporting
         if isExporting {
             activityIndicator.startAnimating()
@@ -130,4 +124,14 @@ class ExportViewController: UIViewController {
         
         startExportButton.isEnabled = !isExporting
     }
+    
+    private func demoPlayExportedVideo(exportedVideoUrl: URL) {
+        let player = AVPlayer(url: exportedVideoUrl)
+        let playerController = AVPlayerViewController()
+        playerController.player = player
+        present(playerController, animated: true) {
+            player.play()
+        }
+    }
+    
 }
