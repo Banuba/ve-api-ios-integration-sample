@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="73K-S2-ADO">
             <objects>
-                <viewController id="qyd-Pi-6VS" sceneMemberID="viewController">
+                <viewController id="qyd-Pi-6VS" customClass="MainViewController" customModule="VEAPISample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="89c-Xu-aQX">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,15 +66,30 @@
                                     <constraint firstAttribute="width" constant="200" id="Whn-VH-RAU"/>
                                 </constraints>
                             </stackView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your token is either revoked or expired" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhj-JQ-blJ">
+                                <rect key="frame" x="50.666666666666657" y="290.66666666666669" width="291.66666666666674" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tzI-e0-HWg"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Yhj-JQ-blJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tzI-e0-HWg" secondAttribute="leading" constant="15" id="CPP-1h-FOu"/>
+                            <constraint firstItem="Yhj-JQ-blJ" firstAttribute="centerX" secondItem="tzI-e0-HWg" secondAttribute="centerX" id="Hhu-qp-UoQ"/>
+                            <constraint firstItem="S5b-ZU-Sko" firstAttribute="top" secondItem="Yhj-JQ-blJ" secondAttribute="bottom" constant="50" id="Ogn-dc-8TB"/>
                             <constraint firstItem="S5b-ZU-Sko" firstAttribute="centerY" secondItem="89c-Xu-aQX" secondAttribute="centerY" id="cKg-q9-vhi"/>
                             <constraint firstItem="S5b-ZU-Sko" firstAttribute="centerX" secondItem="tzI-e0-HWg" secondAttribute="centerX" id="hrk-c2-H5l"/>
+                            <constraint firstItem="tzI-e0-HWg" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Yhj-JQ-blJ" secondAttribute="trailing" constant="15" id="sRp-3h-euu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xSp-le-RPM"/>
+                    <connections>
+                        <outlet property="exportFlowButton" destination="zle-iP-gPM" id="Zqd-hF-eF9"/>
+                        <outlet property="invalidTokenLabel" destination="Yhj-JQ-blJ" id="jOC-3i-82E"/>
+                        <outlet property="playbackFlowButton" destination="As3-zb-xLn" id="hWF-4M-La1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dwP-WE-XHN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -212,17 +227,10 @@
                                     <action selector="backAction:" destination="otI-aV-wrs" eventType="touchUpInside" id="i6s-mf-fqr"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your token is either revoked or expired" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcd-c1-yp0">
-                                <rect key="frame" x="50.666666666666657" y="428.33333333333331" width="291.66666666666674" height="20.333333333333314"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nEq-Ze-Cfx"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xcd-c1-yp0" firstAttribute="centerY" secondItem="nEq-Ze-Cfx" secondAttribute="centerY" id="2o2-yb-7WR"/>
                             <constraint firstItem="udz-lW-OSB" firstAttribute="centerX" secondItem="6Qo-R0-yc8" secondAttribute="centerX" id="5rO-QH-Ea1"/>
                             <constraint firstItem="YDi-io-455" firstAttribute="height" secondItem="6Qo-R0-yc8" secondAttribute="height" multiplier="0.5" id="Jos-0U-Fgx"/>
                             <constraint firstItem="udz-lW-OSB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YDi-io-455" secondAttribute="bottom" constant="40" id="M2a-vV-3cd"/>
@@ -231,15 +239,12 @@
                             <constraint firstItem="YDi-io-455" firstAttribute="top" secondItem="nEq-Ze-Cfx" secondAttribute="top" constant="60" id="dHL-5g-det"/>
                             <constraint firstItem="YDi-io-455" firstAttribute="centerX" secondItem="6Qo-R0-yc8" secondAttribute="centerX" id="qXW-gB-7qW"/>
                             <constraint firstItem="nEq-Ze-Cfx" firstAttribute="bottom" secondItem="udz-lW-OSB" secondAttribute="bottom" constant="20" id="xz7-6W-YM9"/>
-                            <constraint firstItem="xcd-c1-yp0" firstAttribute="centerX" secondItem="nEq-Ze-Cfx" secondAttribute="centerX" id="zNC-Bi-4sL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6s4-22-ucP"/>
                     <connections>
                         <outlet property="activityIndicator" destination="vWI-zf-v5i" id="jd1-BZ-OCj"/>
-                        <outlet property="invalidTokenLabel" destination="xcd-c1-yp0" id="Vg7-nB-e7M"/>
                         <outlet property="playVideoButton" destination="oiJ-tg-Qy4" id="HZM-82-5EO"/>
-                        <outlet property="previewContainer" destination="YDi-io-455" id="0ZK-pB-zch"/>
                         <outlet property="previewImageView" destination="8LH-YC-KDh" id="Qxd-YH-lrb"/>
                         <outlet property="progressView" destination="Wli-xJ-NdY" id="3Ao-4o-jDA"/>
                         <outlet property="startExportButton" destination="lQj-Vd-Umv" id="WnO-vm-rJv"/>
@@ -296,12 +301,6 @@
                                     <action selector="pickVideoAction:" destination="67R-Am-jb7" eventType="touchUpInside" id="t4d-hO-Emz"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your token is either revoked or expired" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XO6-P1-8pq">
-                                <rect key="frame" x="50.666666666666657" y="343.33333333333331" width="291.66666666666674" height="20.333333333333314"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32x-sn-7d9">
                                 <rect key="frame" x="20" y="79" width="45" height="45"/>
                                 <constraints>
@@ -323,16 +322,13 @@
                             <constraint firstItem="32x-sn-7d9" firstAttribute="top" secondItem="G2H-sw-wsE" secondAttribute="top" constant="20" id="6Me-2G-J5O"/>
                             <constraint firstItem="G2H-sw-wsE" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="j8j-oz-zLB" secondAttribute="trailing" constant="5" id="9X6-ng-Kqw"/>
                             <constraint firstItem="j8j-oz-zLB" firstAttribute="centerX" secondItem="Pst-9I-0Uk" secondAttribute="centerX" id="APD-6t-rEh"/>
-                            <constraint firstItem="j8j-oz-zLB" firstAttribute="top" secondItem="XO6-P1-8pq" secondAttribute="bottom" constant="40" id="OQS-K4-K4v"/>
                             <constraint firstItem="32x-sn-7d9" firstAttribute="leading" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="20" id="RS4-lg-RrD"/>
                             <constraint firstItem="j8j-oz-zLB" firstAttribute="centerY" secondItem="Pst-9I-0Uk" secondAttribute="centerY" id="XeC-Bd-aoL"/>
                             <constraint firstItem="j8j-oz-zLB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="G2H-sw-wsE" secondAttribute="leading" constant="5" id="dZQ-VY-Qb6"/>
-                            <constraint firstItem="XO6-P1-8pq" firstAttribute="centerX" secondItem="G2H-sw-wsE" secondAttribute="centerX" id="qhu-g8-Zpu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vTl-tb-he3"/>
                     <connections>
-                        <outlet property="invalidTokenLabel" destination="XO6-P1-8pq" id="oML-a2-7TW"/>
                         <segue destination="NxM-Wz-Skk" kind="show" identifier="showVideoEditorPlayback" id="Jyr-5e-A0o"/>
                     </connections>
                 </viewController>

@@ -12,60 +12,16 @@ import AVFoundation
 import VideoEditor
 
 class PickVideoViewController: UIViewController {
-    
-    @IBOutlet weak var invalidTokenLabel: UILabel!
 
     @IBAction func pickVideoAction(_ sender: UIButton) {
-        checkLicense {
-            self.presentMediaPicker()
+        pickVideo { [weak self] videoUrls in
+            guard let videoUrls else { return }
+            self?.presentPlaybackViewController(with: videoUrls)
         }
     }
     
     @IBAction func backAction(_ sender: Any) {
         navigationController?.dismiss(animated: true)
-    }
-    
-    private func presentMediaPicker() {
-        // Usage of YPImagePicker is for demonstration purposes.
-        // You could use your own implementation of gallery or another third-party library.
-        var config = YPImagePickerConfiguration()
-        
-        config.video.libraryTimeLimit = 600.0
-        config.video.minimumTimeLimit = 0.3
-        config.video.compression = AVAssetExportPresetPassthrough
-        
-        config.screens = [.library]
-        config.showsVideoTrimmer = false
-        
-        config.library.mediaType = .video
-        config.library.defaultMultipleSelection = true
-        config.library.maxNumberOfItems = 10
-        
-        let galleryPicker = YPImagePicker(configuration: config)
-        
-        // Handler of YPImagePicker
-        galleryPicker.didFinishPicking { [weak self] items, cancelled in
-            guard !cancelled else {
-                galleryPicker.dismiss(animated: true)
-                return
-            }
-            
-            // Compact YP items into PHAsset set
-            let videoUrls: [URL] = items.compactMap { item in
-                switch item {
-                case .video(v: let videoItem):
-                    return videoItem.url
-                default:
-                    return nil
-                }
-            }
-            
-            galleryPicker.dismiss(animated: true) {
-                self?.presentPlaybackViewController(with: videoUrls)
-            }
-        }
-        
-        present(galleryPicker, animated: true)
     }
     
     func presentPlaybackViewController(with videoUrls: [URL]) {
@@ -86,18 +42,5 @@ class PickVideoViewController: UIViewController {
         }
         // Pass parameters to playback view controller
         playbackVC.selectedVideoContent = videoUrls
-    }
-}
-
-// MARK: - Private
-extension PickVideoViewController {
-    private func checkLicense(completion: @escaping () -> Void) {
-        let editor = AppDelegate.videoEditorModule.editor
-        editor.getLicenseState(completion: { [weak self] isValid in
-            self?.invalidTokenLabel.isHidden = isValid
-            if isValid {
-                completion()
-            }
-        })
     }
 }
