@@ -16,7 +16,6 @@
 		639DFABC2948AE840021458F /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639DFABB2948AE840021458F /* ExportViewController.swift */; };
 		63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* EffectsProvider.swift */; };
 		63B8E49029B092CC000F043F /* PickVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B8E48F29B092CC000F043F /* PickVideoViewController.swift */; };
-		63D833E229B5E904009DCF99 /* EffectsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D833E129B5E904009DCF99 /* EffectsManager.swift */; };
 		63E308B329B1EE3400172732 /* PreviewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E308B229B1EE3400172732 /* PreviewImageViewController.swift */; };
 		8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01658A27D8B783003E36FB /* AppDelegate.swift */; };
 		8A01659227D8B783003E36FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A01659027D8B783003E36FB /* Main.storyboard */; };
@@ -26,7 +25,7 @@
 		8A02DADA27DB560D0019AB99 /* GifExample.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8A02DAD827DB560D0019AB99 /* GifExample.gif */; };
 		8A02DADB27DB560D0019AB99 /* luts in Resources */ = {isa = PBXBuildFile; fileRef = 8A02DAD927DB560D0019AB99 /* luts */; };
 		A88C9DFC7B89FCB0920C4341 /* Pods_VEAPISample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2DE16A243B969DD1A7859A /* Pods_VEAPISample.framework */; };
-		C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorModule.swift */; };
+		C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorApiModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorApiModule.swift */; };
 		C2AB8B2129BFBC1F00E5F4B4 /* PlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB8B2029BFBC1F00E5F4B4 /* PlaybackManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +39,6 @@
 		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63B8E48F29B092CC000F043F /* PickVideoViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PickVideoViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
-		63D833E129B5E904009DCF99 /* EffectsManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = EffectsManager.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63E308B229B1EE3400172732 /* PreviewImageViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A01658727D8B783003E36FB /* VEAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +52,7 @@
 		8A02DAD927DB560D0019AB99 /* luts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luts; sourceTree = "<group>"; };
 		9F07C00E3B449E6D2B3F4F88 /* Pods-VEAPISample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.release.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.release.xcconfig"; sourceTree = "<group>"; };
 		AD2DE16A243B969DD1A7859A /* Pods_VEAPISample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VEAPISample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorModule.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorModule.swift; sourceTree = "<group>"; tabWidth = 4; };
+		C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorApiModule.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorApiModule.swift; sourceTree = "<group>"; tabWidth = 4; };
 		C2AB8B2029BFBC1F00E5F4B4 /* PlaybackManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackManager.swift; sourceTree = "<group>"; tabWidth = 4; };
 /* End PBXFileReference section */
 
@@ -141,7 +139,6 @@
 				639DFABA2948AE6E0021458F /* Export */,
 				633B444428CF317800AE5C1C /* Helpers */,
 				63A1C8EA2950B771007BA126 /* EffectsProvider.swift */,
-				63D833E129B5E904009DCF99 /* EffectsManager.swift */,
 				8A0165B427D8CB67003E36FB /* effects */,
 				8A02DAD927DB560D0019AB99 /* luts */,
 				8A02DAD827DB560D0019AB99 /* GifExample.gif */,
@@ -151,7 +148,7 @@
 				8A01659327D8B785003E36FB /* Assets.xcassets */,
 				8A01659527D8B785003E36FB /* LaunchScreen.storyboard */,
 				8A01659827D8B785003E36FB /* Info.plist */,
-				C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorModule.swift */,
+				C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorApiModule.swift */,
 				6318349929C35DFA002EB08B /* MainViewController.swift */,
 			);
 			path = VEAPISample;
@@ -280,14 +277,13 @@
 				6318349A29C35DFA002EB08B /* MainViewController.swift in Sources */,
 				63454197295C627100A6EC0A /* PlaybackViewController.swift in Sources */,
 				63E308B329B1EE3400172732 /* PreviewImageViewController.swift in Sources */,
-				63D833E229B5E904009DCF99 /* EffectsManager.swift in Sources */,
 				C2AB8B2129BFBC1F00E5F4B4 /* PlaybackManager.swift in Sources */,
 				63B8E49029B092CC000F043F /* PickVideoViewController.swift in Sources */,
 				633B444628CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift in Sources */,
 				6318345B29C30B23002EB08B /* ExportManager.swift in Sources */,
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */,
-				C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorModule.swift in Sources */,
+				C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorApiModule.swift in Sources */,
 				6318349829C35BCE002EB08B /* UIViewController+PickVideo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

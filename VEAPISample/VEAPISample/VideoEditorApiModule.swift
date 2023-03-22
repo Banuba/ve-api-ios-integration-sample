@@ -6,7 +6,7 @@ import BanubaUtilities
 import VEEffectsSDK
 import VideoEditor
 
-class VideoEditorModule {
+class VideoEditorApiModule {
     
     /// Setups resolution used for playback and export
     let videoResolutionConfiguration = VideoResolutionConfiguration(
@@ -26,7 +26,15 @@ class VideoEditorModule {
         self.editor = editor
     }
     
-    func setupMaskRenderer() {
+    func initFaceAR() {
+        let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
+             let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
+             BanubaSdkManager.initialize(
+                resourcePath: dirs,
+                clientTokenString: AppDelegate.licenseToken,
+             logLevel: .info
+             )
+        
         BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(
             renderSize: videoResolutionConfiguration.current.size
         )

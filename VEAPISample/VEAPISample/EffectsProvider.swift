@@ -1,218 +1,126 @@
-//
-//  EffectsProvider.swift
-//  VEAPISample
-//
-//  Created by Andrey Sak on 19.12.22.
-//
 
 import VEEffectsSDK
 import UIKit
 import BanubaUtilities
-
-/// Available effect types
-enum EffectType {
-    case color
-    case visual
-    case speed
-    /// gif, text or blur
-    case overlay
-    case mask
-    case music
-}
-
-/// Effect contains info about type, id, timeRange in asset and additional info
-struct Effect {
-    /// Unique id of effect
-    let id: UInt
-    /// Type of effect
-    let type: EffectType
-    /// Time range of video asset which will be applied by effect
-    let timeRange: CMTimeRange
-    /// Additional values required by effect
-    let additionalInfo: [String: Any]
-    
-    /// Additional info keys required by effect
-    struct AdditionalInfoKey {
-        /// Effect url
-        static let url: String = "url"
-        /// Effect name
-        static let name: String = "name"
-        /// Additional effect settings
-        static let effectSettings: String = "effectSettings"
-    }
-}
+import VEEffectsSDK
+import VideoEditor
 
 /// This effects provider applies effect to full video duration
 class EffectsProvider {
     /// Unique effect id
-    var uniqueEffectId: UInt {
+    var generatedEffectId: UInt {
         UInt.random(in: 0...100)
     }
     
-    var totalVideoDuration: CMTime = .zero
-    
-    // Returns mask effect with specific name. Mask should be located in effects folder.
-    func provideMaskEffect(withName maskName: String = "AsaiLines") -> Effect {
-        let url = Bundle.main.bundlePath + "/effects/" + maskName
+    // AR Mask should be located in effects folder
+    func provideMaskEffect(withName maskName: String) -> VideoEditorFilterModel {
+        let maskUrl = Bundle.main.bundlePath + "/effects/" + maskName
+        
         var isDirectory = ObjCBool(true)
-        guard FileManager.default.fileExists(atPath: url, isDirectory: &isDirectory) else {
-            fatalError("Unable to find mask at specified url")
+        
+        guard FileManager.default.fileExists(atPath: maskUrl, isDirectory: &isDirectory) else {
+            fatalError("Cannot find AR mask effect! Please check if AR mask effect exists")
         }
         
-        return Effect(
-            id: EffectIDs.maskEffectStartId + uniqueEffectId,
+        let effectId = EffectIDs.maskEffectStartId + generatedEffectId
+        
+        return VideoEditorFilterModel(
+            name: maskName,
             type: .mask,
-            timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
-            additionalInfo: [
-                Effect.AdditionalInfoKey.url: url,
-                Effect.AdditionalInfoKey.name: maskName
-            ]
-        )
-    }
-    
-    // Returns color effect
-    func provideJapanColorEffect() -> Effect {
-        guard let url = Bundle.main.url(forResource: "luts/japan", withExtension: "png") else {
-            fatalError("Unable to find color filter at specified url")
-        }
-        
-        return Effect(
-            id: EffectIDs.colorEffectStartId + uniqueEffectId,
-            type: .color,
-            timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
-            additionalInfo: [
-                Effect.AdditionalInfoKey.url: url,
-                Effect.AdditionalInfoKey.name: "Japan"
-            ]
-        )
-    }
-    
-    // Returns visual effect for specific type
-    func provideVisualEffect(type: VisualEffectApplicatorType) -> Effect {
-        return Effect(
-            id: EffectIDs.visualEffectStartId + uniqueEffectId,
-            type: .visual,
-            timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
-            additionalInfo: [Effect.AdditionalInfoKey.name: type]
-        )
-    }
-    
-    // Returns speed effect for specific type (rapid or slowmo)
-    func provideSpeedEffect(type: SpeedEffectType) -> Effect {
-        return Effect(
-            id: EffectIDs.speedEffectStartId + uniqueEffectId,
-            type: .speed,
-            timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
-            additionalInfo: [Effect.AdditionalInfoKey.name: type]
+            renderer: BanubaMaskDrawer.self,
+            path: maskUrl,
+            id: effectId,
+            tokenId: "\(effectId)",
+            rendererInstance: nil,
+            preview: nil,
+            additionalParameters: nil
         )
     }
     
     // Returns music effect
-    func provideMusicEffect() -> Effect {
-        guard let url = Bundle.main.url(forResource: "sample", withExtension: "wav") else {
+    func provideMusicEffect() -> MediaTrack {
+        guard let audioUrl = Bundle.main.url(forResource: "sample", withExtension: "wav") else {
             fatalError("Can't find music track")
         }
         
-        return Effect(
-            id: uniqueEffectId,
-            type: .music,
-            timeRange: CMTimeRange(start: .zero, duration: totalVideoDuration),
-            additionalInfo: [
-                Effect.AdditionalInfoKey.name: "sample",
-                Effect.AdditionalInfoKey.url: url
-            ]
-        )
-    }
-    
-    // Returns overlay effect for specific type
-    func provideOverlayEffect(type: OverlayEffectApplicatorType) -> Effect {
-        // Ouput image should be created from cgImage reference
-        var image: UIImage?
-        
-        switch type {
-        case .gif:
-            image = createGifImage()
-        case .text:
-            image = createTextImage()
-        default: break
-        }
-        
-        let timeRange = CMTimeRange(start: .zero, duration: totalVideoDuration)
-        
-        // Create required effect settings
-        let effectSettings = createEffectSettings(
-            withImage: image,
-            for: type,
-            start: timeRange.start,
-            end: timeRange.end
+        let trackTimeRange = CMTimeRange(
+            start: .zero,
+            duration: .zero
         )
         
-        return Effect(
-            id: uniqueEffectId,
-            type: .overlay,
+        // Track time range
+        let timeRange = MediaTrackTimeRange(
+            startTime: .zero,
+            playingTimeRange: trackTimeRange
+        )
+        
+        // Track instance
+        return MediaTrack(
+            uuid: UUID(),
+            id: CMPersistentTrackID(generatedEffectId),
+            url: audioUrl,
             timeRange: timeRange,
-            additionalInfo: [
-                Effect.AdditionalInfoKey.name: type,
-                Effect.AdditionalInfoKey.effectSettings: effectSettings
-            ]
+            isEditable: true,
+            title: "sample"
         )
     }
     
-    // MARK: - EffectsProvider helper
-    private func createEffectSettings(
-        withImage image: UIImage?,
-        for type: OverlayEffectApplicatorType,
-        start: CMTime,
-        end: CMTime
-    ) -> VideoEditorEffectInfo {
-        
-        // Relevant normilized positions of overlay
-        var points: ImagePoints?
-        
-        switch type {
-        case .gif:
-            points = gifImagePoints
-        case .text:
-            points = textImagePoints
-        default: break
-        }
-        
-        // Result effect info
-        let effectInfo = VideoEditorEffectInfo(
-            id: uniqueEffectId,
-            image: image,
-            relativeScreenPoints: points,
-            start: start,
-            end: end
-        )
-        
-        return effectInfo
-    }
-    
-    // MARK: - ImagePoints helpers
-    /// Gif image points
-    var gifImagePoints: ImagePoints {
-        ImagePoints(
-            leftTop: CGPoint(x: 0.15, y: 0.45),
-            rightTop: CGPoint(x: 0.8, y: 0.45),
-            leftBottom: CGPoint(x: 0.15, y: 0.55),
-            rightBottom: CGPoint(x: 0.8, y: 0.55)
-        )
-    }
-    
-    /// Text image points
-    var textImagePoints: ImagePoints {
-        ImagePoints(
+    func provideTextEffect(duration: CMTime) -> VideoEditorEffectInfo {
+        let points = ImagePoints(
             leftTop: CGPoint(x: 0.15, y: 0.25),
             rightTop: CGPoint(x: 0.8, y: 0.25),
             leftBottom: CGPoint(x: 0.15, y: 0.35),
             rightBottom: CGPoint(x: 0.8, y: 0.35)
         )
+        
+        return VideoEditorEffectInfo(
+            id: generatedEffectId,
+            image: createTextImage(text: "Hello world!", font: UIFont(name: "Helvetica-Bold", size: 14)!),
+            relativeScreenPoints: points,
+            start: .zero,
+            end: duration
+        )
+    }
+    
+    func provideStickerEffect(duration: CMTime) -> VideoEditorEffectInfo {
+        let points = ImagePoints(
+            leftTop: CGPoint(x: 0.15, y: 0.45),
+            rightTop: CGPoint(x: 0.8, y: 0.45),
+            leftBottom: CGPoint(x: 0.15, y: 0.55),
+            rightBottom: CGPoint(x: 0.8, y: 0.55)
+        )
+        
+        guard let path = Bundle.main.path(forResource: "GifExample", ofType: "gif") else {
+            fatalError("Cannot find GIF file")
+        }
+        
+        guard let gifData = try? Data(contentsOf: URL(fileURLWithPath: path)),
+              let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else {
+            fatalError("Cannot create GIF data")
+        }
+        
+        var images = [UIImage]()
+        let imageCount = CGImageSourceGetCount(source)
+        for i in 0 ..< imageCount {
+            if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                images.append(UIImage(cgImage: image))
+            }
+        }
+        
+        let gifImage = UIImage.animatedImage(with: images, duration: 0.4)
+        
+        return VideoEditorEffectInfo(
+            id: generatedEffectId,
+            image: gifImage,
+            relativeScreenPoints: points,
+            start: .zero,
+            end: duration
+        )
     }
     
     // MARK: - Text Image
     /// Create text image
-    func createTextImage() -> UIImage?{
+    private func createTextImage(text: String, font: UIFont) -> UIImage?{
         // Background creation
         let height = 40
         let width = 120
@@ -245,11 +153,9 @@ class EffectsProvider {
         // Text creation
         UIGraphicsBeginImageContext(image.size)
         
-        let text = "Hello world!"
         let rect = CGRect(origin: .zero, size: image.size)
         image.draw(in: rect)
         
-        let font = UIFont(name: "Helvetica-Bold", size: 14)!
         let textColor = UIColor.white
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
@@ -275,32 +181,5 @@ class EffectsProvider {
         UIGraphicsEndImageContext()
         
         return result
-    }
-    
-    // MARK: - Gif image
-    /// Create gif from sample resource
-    func createGifImage() -> UIImage? {
-        guard let path = Bundle.main.path(forResource: "GifExample", ofType: "gif") else {
-            print("Gif does not exist at that path")
-            return nil
-        }
-        
-        let url = URL(fileURLWithPath: path)
-        guard let gifData = try? Data(contentsOf: url),
-              let source =  CGImageSourceCreateWithData(gifData as CFData, nil) else {
-            return nil
-        }
-        
-        var images = [UIImage]()
-        let imageCount = CGImageSourceGetCount(source)
-        for i in 0 ..< imageCount {
-            if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
-                images.append(UIImage(cgImage: image))
-            }
-        }
-        
-        let gifImage = UIImage.animatedImage(with: images, duration: 0.4)
-        
-        return gifImage
     }
 }

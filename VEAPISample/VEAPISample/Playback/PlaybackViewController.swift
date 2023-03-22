@@ -85,9 +85,11 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
             playbackManager.startTrackingPlayerProgress()
         }
         
+        let diration = playbackManager.totalVideoDuration
+        
         let time = CMTime(
-            seconds: Double(slider.value) * playbackManager.videoDuration.seconds,
-            preferredTimescale: playbackManager.videoDuration.timescale
+            seconds: Double(slider.value) * diration.seconds,
+            preferredTimescale: diration.timescale
         )
         playbackManager.seek(to: time)
     }
@@ -97,12 +99,12 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     }
     
     @IBAction func seekForwardAction(_ sender: Any) {
-        let time = playbackManager.currentPostionTime + oneSecond
+        let time = playbackManager.currentPlayerPostion + oneSecond
         playbackManager.seek(to: time)
     }
     
     @IBAction func seekBackwardAction(_ sender: Any) {
-        let time = playbackManager.currentPostionTime - oneSecond
+        let time = playbackManager.currentPlayerPostion - oneSecond
         playbackManager.seek(to: time)
     }
     
@@ -176,9 +178,9 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     
     @IBAction func addCustomEffectAction(_ sender: UISwitch) {
         if sender.isOn {
-            playbackManager.applyCustomEffect()
+            playbackManager.applyBlurEffect()
         } else {
-            playbackManager.undoCustomEffect()
+            playbackManager.undoBlurEffect()
         }
     }
     

@@ -15,22 +15,28 @@ import VEEffectsSDK
 class ExportManager {
     // MARK: - Banuba Services used for export
     // Video editor service stores video asset and applied effects
-    let editor: VideoEditorService
+    let videoEditorService: VideoEditorService
     // Export sdk provides export video methods
     let exportSDK: VEExport
     // Setups render size
     let videoResolutionConfiguration: VideoResolutionConfiguration
-    // Applies and cancels effects
-    private let effectsManager: EffectsManager
     
     private var videoSequence: VideoSequence?
     
-    init(videoEditorModule: VideoEditorModule) {
-        self.editor = videoEditorModule.editor
+    private let effectApplicator: EffectApplicator
+    
+    private var totalVideoDuration: CMTime = .zero
+    
+    init(videoEditorModule: VideoEditorApiModule) {
+        self.videoEditorService = videoEditorModule.editor
         self.videoResolutionConfiguration = videoEditorModule.videoResolutionConfiguration
         
-        self.exportSDK = VEExport(videoEditorService: editor)!
-        self.effectsManager = EffectsManager(editor: editor)
+        self.exportSDK = VEExport(videoEditorService: videoEditorService)!
+        
+        self.effectApplicator = EffectApplicator(
+            editor: videoEditorService,
+            effectConfigHolder: EditorEffectsConfigHolder(token: AppDelegate.licenseToken)
+        )
     }
     
     deinit {
@@ -55,7 +61,7 @@ class ExportManager {
         )
         
         // Set current video asset to video editor service
-        editor.setCurrentAsset(videoEditorAsset)
+        videoEditorService.setCurrentAsset(videoEditorAsset)
         
         // Apply original video rotation as effect
         adjustVideoEditorAssetTracksRotation(videoEditorAsset)
@@ -72,8 +78,9 @@ class ExportManager {
         // Prepare video effects
         prepareEffects()
         
+        let filename = "tmp.mov"
         // Prepare result video url
-        let resultVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("tmp.mov")
+        let resultVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("filename")
         if FileManager.default.fileExists(atPath: resultVideoUrl.path) {
             try? FileManager.default.removeItem(at: resultVideoUrl)
         }
@@ -136,11 +143,13 @@ class ExportManager {
     private func adjustVideoEditorAssetTracksRotation(_ videoEditorAsset: VideoEditorAsset) {
         videoEditorAsset.tracksInfo.forEach { assetTrack in
             let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-            effectsManager.applyTransformEffect(
-                start: assetTrack.timeRangeInGlobal.start,
+            effectApplicator.addTransformEffect(
+                atStartTime: assetTrack.timeRangeInGlobal.start,
                 end: assetTrack.timeRangeInGlobal.end,
-                rotation: rotation
+                rotation: rotation,
+                isVideoFitsAspect: false
             )
+            
         }
     }
     
@@ -159,40 +168,58 @@ class ExportManager {
         
         let videoAspect = VideoAspectRatioCalculator.calculateVideoAspectRatio(withVideoSize: videoSize)
         
-        editor.videoSize = VideoAspectRatioCalculator.adjustVideoSize(
+        videoEditorService.videoSize = VideoAspectRatioCalculator.adjustVideoSize(
             videoResolutionConfiguration.current.size,
             withAspectRatio: videoAspect
         )
     }
     
     private func prepareEffects() {
-        guard let videoEditorAsset = editor.videoAsset else {
+        guard let videoEditorAsset = videoEditorService.videoAsset else {
             debugPrint("VideoEditorAsset is not configured!")
             return
         }
         let effectsProvider = EffectsProvider()
-        effectsProvider.totalVideoDuration = videoEditorAsset.composition.duration
         
-        let colorEffect = effectsProvider.provideJapanColorEffect()
-        effectsManager.applyColorEffect(colorEffect)
+        // Add Color effect
+        guard let colorEffectUrl = Bundle.main.url(forResource: "luts/japan", withExtension: "png") else {
+            fatalError("Cannot find color effect! Please check if color effect exists")
+        }
+        effectApplicator.applyColorEffect(
+            name: "Japan",
+            lutUrl: colorEffectUrl,
+            startTime: .zero,
+            endTime: .zero,
+            removeSameType: false,
+            effectId: EffectIDs.colorEffectStartId + effectsProvider.generatedEffectId
+        )
         
-        let visualEffect = effectsProvider.provideVisualEffect(type: .vhs)
-        effectsManager.applyVisualEffect(visualEffect)
+        // Add Visual VHS effect
+        effectApplicator.applyVisualEffectApplicatorType(
+            .vhs,
+            startTime: .zero,
+            endTime: .zero,
+            removeSameType: false,
+            effectId: EffectIDs.visualEffectStartId + effectsProvider.generatedEffectId
+        )
         
-        let slowmo = effectsProvider.provideSpeedEffect(type: .slowmo)
-        effectsManager.applySpeedEffect(slowmo)
+        // Add Sticker effect
+        let stickerEffect = effectsProvider.provideStickerEffect(duration: videoEditorAsset.composition.duration)
+        effectApplicator.applyOverlayEffectType(
+            .gif,
+            effectInfo: stickerEffect
+        )
         
-        let sticker = effectsProvider.provideOverlayEffect(type: .gif)
-        effectsManager.applyOverlayEffect(sticker)
+        // Add Text effect
+        let textEffect = effectsProvider.provideTextEffect(duration: videoEditorAsset.composition.duration)
+        effectApplicator.applyOverlayEffectType(
+            .text,
+            effectInfo: textEffect
+        )
         
-        let text = effectsProvider.provideOverlayEffect(type: .text)
-        effectsManager.applyOverlayEffect(text)
-        
-        let music = effectsProvider.provideMusicEffect()
-        effectsManager.applyMusicEffect(music)
-        
-        let maskEffect = effectsProvider.provideMaskEffect()
-        effectsManager.applyMaskEffect(maskEffect)
+        // Audio track
+        let audioTrack = effectsProvider.provideMusicEffect()
+        videoEditorService.videoAsset?.addMusicTrack(audioTrack)
     }
     
     // Returns watermark for specific image
