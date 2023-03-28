@@ -3,6 +3,7 @@
 - [Overview](#Overview)
 - [Prerequisites](#Prerequisites)
 - [Prepare video player](#Prepare-video-player)
+- [Release video player](#Release-video-player)
 - [Set event callback](#Set-event-callback)
 - [Add video playlist](#Add-video-playlist)
 - [Manage video player actions](#Manage-video-player-actions)
@@ -47,6 +48,20 @@ playerContainerView.addSubview(playbackView)
 ```
 
 And finally use ```playbackView.videoEditorPlayer``` to get instance of player in [PlaybackManager](../VEAPISample/VEAPISample/Playback/PlaybackManager.swift#L14).
+
+## Release video player
+It is highly recommended to stop and release video player if the user leaves the screen.  
+
+You should release usage of video content using ```videoEditorService.setCurrentAsset(nil)``` 
+in [PlaybackManager.deinit](../VEAPISample/VEAPISample/Playback/PlaybackManager.swift#L51).
+
+```Swift
+deinit { 
+// Clear video editor service asset
+videoEditorService.setCurrentAsset(nil)
+...
+}
+```
 
 ## Set event callback
 Implement ```VideoEditorPlayerDelegate``` in [PlaybackManager](../VEAPISample/VEAPISample/Playback/PlaybackManager.swift#L7) to handle received events from the player.
