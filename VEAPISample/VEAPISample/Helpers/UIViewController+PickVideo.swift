@@ -30,9 +30,9 @@ extension UIViewController {
         let galleryPicker = YPImagePicker(configuration: config)
         
         // Handler of YPImagePicker
-        galleryPicker.didFinishPicking { items, cancelled in
+        galleryPicker.didFinishPicking { [weak galleryPicker] items, cancelled in
             guard !cancelled else {
-                galleryPicker.dismiss(animated: true) {
+                galleryPicker?.dismiss(animated: true) {
                     completion?(nil)
                 }
                 return
@@ -48,7 +48,7 @@ extension UIViewController {
                 }
             }
             
-            galleryPicker.dismiss(animated: true) {
+            galleryPicker?.dismiss(animated: true) {
                 completion?(videoUrls)
             }
         }
