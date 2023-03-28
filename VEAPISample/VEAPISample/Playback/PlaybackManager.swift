@@ -47,6 +47,9 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     deinit {
+        // Clear video editor service asset
+        videoEditorService.setCurrentAsset(nil)
+        
         guard let videoSequence else { return }
         // Clean up video sequence resources
         try? FileManager.default.removeItem(at: videoSequence.folderURL)
