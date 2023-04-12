@@ -83,7 +83,7 @@ class ExportManager {
         
         let filename = "tmp.mov"
         // Prepare result video url
-        let resultVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent("filename")
+        let resultVideoUrl = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
         if FileManager.default.fileExists(atPath: resultVideoUrl.path) {
             try? FileManager.default.removeItem(at: resultVideoUrl)
         }

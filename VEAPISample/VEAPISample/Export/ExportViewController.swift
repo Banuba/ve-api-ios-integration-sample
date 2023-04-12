@@ -16,6 +16,7 @@ class ExportViewController: UIViewController {
     
     @IBOutlet weak var previewImageView: UIImageView!
     @IBOutlet weak var playVideoButton: UIButton!
+    @IBOutlet weak var shareVideoButton: UIButton!
     @IBOutlet weak var startExportButton: UIButton!
     @IBOutlet weak var stopExportButton: UIButton!
     @IBOutlet weak var progressView: UIProgressView!
@@ -44,6 +45,7 @@ class ExportViewController: UIViewController {
         previewImageView.image = nil
         resultVideoUrl = nil
         playVideoButton.isHidden = true
+        shareVideoButton.isHidden = true
         
         pickVideo { [weak self] videoUrls in
             guard let videoUrls else { return }
@@ -69,6 +71,11 @@ class ExportViewController: UIViewController {
         demoPlayExportedVideo(exportedVideoUrl: resultVideoUrl)
     }
     
+    @IBAction func shareVideoAction(_ sender: Any) {
+        guard let resultVideoUrl else { return }
+        share(exportedVideoUrl: resultVideoUrl)
+    }
+    
     private func exportVideo(with selectedVideoUrls: [URL]) {
         invalidateUIState(isExporting: true)
         
@@ -82,6 +89,7 @@ class ExportViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.invalidateUIState(isExporting: false)
                     self?.playVideoButton.isHidden = success == false
+                    self?.shareVideoButton.isHidden = success == false
                 }
                 
                 guard let resultVideoUrl else { return }
@@ -134,4 +142,8 @@ class ExportViewController: UIViewController {
         }
     }
     
+    private func share(exportedVideoUrl: URL) {
+        let vc = UIActivityViewController(activityItems: [exportedVideoUrl], applicationActivities: nil)
+        present(vc, animated: true)
+    }
 }
