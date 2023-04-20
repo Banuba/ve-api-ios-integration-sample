@@ -85,11 +85,11 @@ class ExportViewController: UIViewController {
             progressCallback: { [weak self] progress in
                 DispatchQueue.main.async { self?.progressView.progress = progress }
             },
-            completion: { [weak self] resultVideoUrl, success, error in
+            completion: { [weak self] resultVideoUrl, error in
                 DispatchQueue.main.async {
                     self?.invalidateUIState(isExporting: false)
-                    self?.playVideoButton.isHidden = success == false
-                    self?.shareVideoButton.isHidden = success == false
+                    self?.playVideoButton.isHidden = error != nil
+                    self?.shareVideoButton.isHidden = error != nil
                 }
                 
                 guard let resultVideoUrl else { return }

@@ -76,7 +76,7 @@ class ExportManager {
     /// Export video to provided url with progress callback and completion
     func exportVideo(
         progressCallback: ((_ progress: Float) -> Void)?,
-        completion: ((_ fileURL: URL?, _ success: Bool, _ error: Error?) -> Void)?
+        completion: ((_ fileURL: URL?, _ error: Error?) -> Void)?
     ) -> CancelExportHandler? {
         // Prepare video effects
         prepareEffects()
@@ -102,7 +102,7 @@ class ExportManager {
             using: exportVideoInfo,
             watermarkFilterModel: watermark,
             exportProgress: { progress in progressCallback?(Float(progress)) },
-            completion: { success, error in completion?(resultVideoUrl, success, error) }
+            completion: { error in completion?(resultVideoUrl, error) }
         )
     }
     
