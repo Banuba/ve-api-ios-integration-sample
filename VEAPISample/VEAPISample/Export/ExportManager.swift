@@ -192,7 +192,7 @@ class ExportManager {
             name: "Japan",
             lutUrl: colorEffectUrl,
             startTime: .zero,
-            endTime: .zero,
+            endTime: videoEditorAsset.composition.duration,
             removeSameType: false,
             effectId: EffectIDs.colorEffectStartId + effectsProvider.generatedEffectId
         )
@@ -201,7 +201,7 @@ class ExportManager {
         effectApplicator.applyVisualEffectApplicatorType(
             .vhs,
             startTime: .zero,
-            endTime: .zero,
+            endTime: videoEditorAsset.composition.duration,
             removeSameType: false,
             effectId: EffectIDs.visualEffectStartId + effectsProvider.generatedEffectId
         )
