@@ -13,7 +13,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     var player: VideoEditorPlayable? { playbackView?.videoEditorPlayer }
     
-    var currentPlayerPostion: CMTime { playbackView?.videoEditorPlayer?.currentTimeInCMTime ?? .zero }
+    var currentPlayerPostion: CMTime { playbackView?.videoEditorPlayer?.currentTime ?? .zero }
     
     var totalVideoDuration: CMTime { videoEditorService.videoAsset?.composition.duration ?? .zero }
     
@@ -33,6 +33,10 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     private var currentSpeedEffectRapidId: UInt = 0
     private var currentSpeedEffectSlowMoId: UInt = 0
+    
+    private var currentSpeedEffectRapidUuid: UUID?
+    private var currentSpeedEffectSlowMoUuid: UUID?
+    
     private var currentAudioTrack : MediaTrack? = nil
     
     init(videoEditorModule: VideoEditorApiModule) {
@@ -90,7 +94,9 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     /// Sets video volume
     func setVideoVolume(_ volume: Float) {
-        videoEditorService.setAudioTrackVolume(volume, to: player)
+        if let player {
+            videoEditorService.setVideoVolume(volume, to: player)
+        }
     }
     
     /// Returns screenshot if possible
@@ -117,11 +123,11 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     // MARK: - Playback managment
     
     func play(loop: Bool) {
-        player?.startPlay(loop: loop, fixedSpeed: false)
+        player?.play(loop: loop, fixedSpeed: false)
     }
     
     func pause() {
-        player?.stopPlay()
+        player?.pause()
     }
     
     func seek(to time: CMTime) {
@@ -160,12 +166,12 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             effectId: EffectIDs.colorEffectStartId + effectsProvider.generatedEffectId
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoColorEffect() {
         videoEditorService.undoLast(type: .color)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applyMaskEffect() {
@@ -176,19 +182,20 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         // This operation can be time consuming
         BanubaMaskRenderer.loadEffectPath(maskEffect.path)
         
-        videoEditorService.applyFilter(
+        videoEditorService.applyEffect(
             effectModel: maskEffect,
+            uuid: effectsProvider.generatedEffectUuid,
             start: .zero,
             end: totalVideoDuration,
             removeSameType: true
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoMaskEffect() {
         videoEditorService.undoAll(type: .mask)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applyFXEffect() {
@@ -200,16 +207,17 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             effectId: EffectIDs.visualEffectStartId + effectsProvider.generatedEffectId
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoFXEffect() {
         videoEditorService.undoLast(type: .visual)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applyRapidSpeedEffect() {
         currentSpeedEffectRapidId = EffectIDs.speedEffectStartId + effectsProvider.generatedEffectId
+        currentSpeedEffectRapidUuid = UUID(uuidString: effectsProvider.generatedEffectUuid)
         
         effectApplicator.applySpeedEffectType(
             .rapid,
@@ -220,16 +228,17 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         )
         
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoRapidSpeedEffect() {
-        undoEffect(withId: currentSpeedEffectRapidId)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        undoEffect(withId: currentSpeedEffectRapidUuid)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applySlowoSpeedEffect() {
         currentSpeedEffectSlowMoId = EffectIDs.speedEffectStartId + effectsProvider.generatedEffectId
+        currentSpeedEffectSlowMoUuid = UUID(uuidString: effectsProvider.generatedEffectUuid)
         
         effectApplicator.applySpeedEffectType(
             .slowmo,
@@ -239,12 +248,12 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             effectId: currentSpeedEffectSlowMoId
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoSlowmoSpeedEffect() {
-        undoEffect(withId: currentSpeedEffectSlowMoId)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        undoEffect(withId: currentSpeedEffectSlowMoUuid)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applyTextEffect() {
@@ -255,12 +264,12 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             effectInfo: textEffect
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoTextEffect() {
         undoAll(type: .text)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applyStickerEffect() {
@@ -271,12 +280,12 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             effectInfo: stickerEffect
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoStickerEffect() {
         undoAll(type: .gif)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func applyMusicEffect() {
@@ -290,7 +299,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     
     func undoMusicEffect() {
         if let audioUrl = currentAudioTrack?.url, let audioId = currentAudioTrack?.id {
-            videoEditorService.videoAsset?.removeMusic(trackId: audioId, url: audioUrl)
+            videoEditorService.videoAsset?.removeMusic(trackId: audioId)
             // Get new instance of player to playback music track
             reloadPlayerAtCurrentTime()
         }
@@ -311,7 +320,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
                 )
             ),
             effectInfo: VideoEditorEffectInfo(
-                id: effectsProvider.generatedEffectId,
+                uuid: effectsProvider.generatedEffectUuid,
                 image: nil,
                 relativeScreenPoints: nil,
                 start: .zero,
@@ -319,12 +328,12 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             )
         )
         
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     func undoBlurEffect() {
         undoAll(type: .blur)
-        player?.reloadComposition(shouldAutoStart: isPlaying)
+        player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
     // MARK: - VideoEditorPlayerDelegate
@@ -423,8 +432,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     /// Undo effect with specific id
-    private func undoEffect(withId id: UInt?) {
-        guard let id else { return }
-        videoEditorService.undo(withId: id)
+    private func undoEffect(withId uuid: UUID?) {
+        guard let uuid else { return }
+        videoEditorService.undoEffect(uuid: uuid.uuidString)
     }
 }

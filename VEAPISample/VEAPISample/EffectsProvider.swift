@@ -1,6 +1,7 @@
 
 import VEEffectsSDK
 import UIKit
+import AVFoundation
 import BanubaUtilities
 import VEEffectsSDK
 import VideoEditor
@@ -8,6 +9,10 @@ import VideoEditor
 /// This effects provider applies effect to full video duration
 class EffectsProvider {
     /// Unique effect id
+    var generatedEffectUuid: String {
+        UUID().uuidString
+    }
+    
     var generatedEffectId: UInt {
         UInt.random(in: 0...100)
     }
@@ -45,7 +50,7 @@ class EffectsProvider {
         
         let trackTimeRange = CMTimeRange(
             start: .zero,
-            duration: .zero
+            duration: AVAsset(url: audioUrl).duration
         )
         
         // Track time range
@@ -74,7 +79,7 @@ class EffectsProvider {
         )
         
         return VideoEditorEffectInfo(
-            id: generatedEffectId,
+            uuid: generatedEffectUuid,
             image: createTextImage(text: "Hello world!", font: UIFont(name: "Helvetica-Bold", size: 14)!),
             relativeScreenPoints: points,
             start: .zero,
@@ -110,7 +115,7 @@ class EffectsProvider {
         let gifImage = UIImage.animatedImage(with: images, duration: 0.4)
         
         return VideoEditorEffectInfo(
-            id: generatedEffectId,
+            uuid: generatedEffectUuid,
             image: gifImage,
             relativeScreenPoints: points,
             start: .zero,
