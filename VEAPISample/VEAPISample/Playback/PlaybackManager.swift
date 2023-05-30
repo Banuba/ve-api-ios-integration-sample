@@ -187,7 +187,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             uuid: effectsProvider.generatedEffectUuid,
             start: .zero,
             end: totalVideoDuration,
-            removeSameType: true
+            removeSameType: true,
+            isAutoCutEffect: false
         )
         
         player?.reloadPreview(shouldAutoStart: isPlaying)
@@ -298,7 +299,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     func undoMusicEffect() {
-        if let audioUrl = currentAudioTrack?.url, let audioId = currentAudioTrack?.id {
+        if let audioId = currentAudioTrack?.id {
             videoEditorService.videoAsset?.removeMusic(trackId: audioId)
             // Get new instance of player to playback music track
             reloadPlayerAtCurrentTime()
