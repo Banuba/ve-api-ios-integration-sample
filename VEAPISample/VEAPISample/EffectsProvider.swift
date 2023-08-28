@@ -64,6 +64,7 @@ class EffectsProvider {
             uuid: UUID(),
             id: CMPersistentTrackID(generatedEffectId),
             url: audioUrl,
+            coverURL: nil,
             timeRange: timeRange,
             isEditable: true,
             title: "sample"
