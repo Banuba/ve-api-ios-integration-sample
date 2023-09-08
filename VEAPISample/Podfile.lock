@@ -1,31 +1,31 @@
 PODS:
-  - BanubaEffectPlayer (1.30.0)
-  - BanubaLicenseServicingSDK (1.30.0)
-  - BanubaSDK (1.30.0)
-  - BanubaSDKServicing (1.30.0)
-  - BanubaUtilities (1.30.0)
-  - BNBLicenseUtils (1.30.0)
+  - BanubaEffectPlayer (1.30.1)
+  - BanubaLicenseServicingSDK (1.30.1)
+  - BanubaSDK (1.30.1)
+  - BanubaSDKServicing (1.30.1)
+  - BanubaUtilities (1.30.1)
+  - BNBLicenseUtils (1.30.1)
   - PryntTrimmerView (4.0.2)
   - SteviaLayout (4.7.3)
-  - VEEffectsSDK (1.30.0)
-  - VEExportSDK (1.30.0)
-  - VEPlaybackSDK (1.30.0)
-  - VideoEditor (1.30.0)
+  - VEEffectsSDK (1.30.1)
+  - VEExportSDK (1.30.1)
+  - VEPlaybackSDK (1.30.1)
+  - VideoEditor (1.30.1)
   - YPImagePicker (5.2.1):
     - PryntTrimmerView (= 4.0.2)
     - SteviaLayout (= 4.7.3)
 
 DEPENDENCIES:
-  - BanubaEffectPlayer (= 1.30.0)
-  - BanubaLicenseServicingSDK (= 1.30.0)
-  - BanubaSDK (= 1.30.0)
-  - BanubaSDKServicing (= 1.30.0)
-  - BanubaUtilities (= 1.30.0)
-  - BNBLicenseUtils (= 1.30.0)
-  - VEEffectsSDK (= 1.30.0)
-  - VEExportSDK (= 1.30.0)
-  - VEPlaybackSDK (= 1.30.0)
-  - VideoEditor (= 1.30.0)
+  - BanubaEffectPlayer (= 1.30.1)
+  - BanubaLicenseServicingSDK (= 1.30.1)
+  - BanubaSDK (= 1.30.1)
+  - BanubaSDKServicing (= 1.30.1)
+  - BanubaUtilities (= 1.30.1)
+  - BNBLicenseUtils (= 1.30.1)
+  - VEEffectsSDK (= 1.30.1)
+  - VEExportSDK (= 1.30.1)
+  - VEPlaybackSDK (= 1.30.1)
+  - VideoEditor (= 1.30.1)
   - YPImagePicker
 
 SPEC REPOS:
@@ -46,20 +46,20 @@ SPEC REPOS:
     - YPImagePicker
 
 SPEC CHECKSUMS:
-  BanubaEffectPlayer: dfe39b7ae3a902ee917d31c1dcc92b8e6b4229c0
-  BanubaLicenseServicingSDK: b7564cca8b7339b427dbb8467409b7acea56b208
-  BanubaSDK: 040d6dadb5b8aff0ed1e7e48d76f4ada56ca14a1
-  BanubaSDKServicing: 3a5a8acadfa08399d58b134b8fb97b25fd54fe36
-  BanubaUtilities: df44516130c93ab9e7e14f3d5f04d7f722d2cf0b
-  BNBLicenseUtils: 45faff89772d23ba7e7baa27fcd226f6055a2564
+  BanubaEffectPlayer: 0504bbb36a0bcff2880b9c0cfcf4bcab43ab7d94
+  BanubaLicenseServicingSDK: 6a7712df1815a4e663ccecc16a2c8e026ce15cf6
+  BanubaSDK: 0968b112c7af8bcb238058b12ee88462ff1ea80b
+  BanubaSDKServicing: d45e562d5b521c56a726dcdf593a07187969591d
+  BanubaUtilities: 3d0456fb770408403d7d24af69f897642ba4c7f1
+  BNBLicenseUtils: 987369680f842c21833a007f74aa17bd636d1cc2
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
-  VEEffectsSDK: 0c394b42a079315df56306cb832978f0a8648468
-  VEExportSDK: fafcd919fc7ed117e245cc6da8b97d1b03a187a2
-  VEPlaybackSDK: c380995cbba16af5df28ea6ec2ddcee5ee957c9d
-  VideoEditor: 23125e70d1ea07e66e48f186a504edb6d06e1f32
+  VEEffectsSDK: 5750c13228f8105825f35e9f03348574c216c5b5
+  VEExportSDK: 3996b64e13007097bff0b84e69b15ab629b0093b
+  VEPlaybackSDK: 185a034f9f7b9fa325cb746a217964bcaa9bf8cb
+  VideoEditor: 183f00b0b40f2850af9943475fb427d22df89e44
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: ffee94c1f4f979a00e9aeb5c871d78764ea3e84a
+PODFILE CHECKSUM: 98613e8e3e838b1e5445f37d2acb729fed5a2fee
 
 COCOAPODS: 1.12.1
