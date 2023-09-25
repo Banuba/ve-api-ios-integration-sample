@@ -6,14 +6,14 @@ PODS:
   - BanubaUtilities (1.30.1)
   - BNBLicenseUtils (1.30.1)
   - PryntTrimmerView (4.0.2)
-  - SteviaLayout (4.7.3)
+  - SteviaLayout (5.1.2)
   - VEEffectsSDK (1.30.1)
   - VEExportSDK (1.30.1)
   - VEPlaybackSDK (1.30.1)
   - VideoEditor (1.30.1)
   - YPImagePicker (5.2.1):
     - PryntTrimmerView (= 4.0.2)
-    - SteviaLayout (= 4.7.3)
+    - SteviaLayout (= 5.1.2)
 
 DEPENDENCIES:
   - BanubaEffectPlayer (= 1.30.1)
@@ -26,7 +26,7 @@ DEPENDENCIES:
   - VEExportSDK (= 1.30.1)
   - VEPlaybackSDK (= 1.30.1)
   - VideoEditor (= 1.30.1)
-  - YPImagePicker
+  - YPImagePicker (from `https://github.com/Yummypets/YPImagePicker.git`, branch `master`)
 
 SPEC REPOS:
   https://github.com/Banuba/specs.git:
@@ -43,7 +43,16 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - PryntTrimmerView
     - SteviaLayout
-    - YPImagePicker
+
+EXTERNAL SOURCES:
+  YPImagePicker:
+    :branch: master
+    :git: https://github.com/Yummypets/YPImagePicker.git
+
+CHECKOUT OPTIONS:
+  YPImagePicker:
+    :commit: 4ad09560321182b73ed415c543a77bc83b80a3f2
+    :git: https://github.com/Yummypets/YPImagePicker.git
 
 SPEC CHECKSUMS:
   BanubaEffectPlayer: 0504bbb36a0bcff2880b9c0cfcf4bcab43ab7d94
@@ -53,13 +62,13 @@ SPEC CHECKSUMS:
   BanubaUtilities: 3d0456fb770408403d7d24af69f897642ba4c7f1
   BNBLicenseUtils: 987369680f842c21833a007f74aa17bd636d1cc2
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
-  SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  SteviaLayout: 05424e528d643657d39ce72c786e4adf13cfc5f2
   VEEffectsSDK: 5750c13228f8105825f35e9f03348574c216c5b5
   VEExportSDK: 3996b64e13007097bff0b84e69b15ab629b0093b
   VEPlaybackSDK: 185a034f9f7b9fa325cb746a217964bcaa9bf8cb
   VideoEditor: 183f00b0b40f2850af9943475fb427d22df89e44
-  YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
+  YPImagePicker: e7f9a34273fdf56283ac03ec2efa0601f946489f
 
-PODFILE CHECKSUM: 98613e8e3e838b1e5445f37d2acb729fed5a2fee
+PODFILE CHECKSUM: 9dac67f761d85198e4507c7cfd1418150ea9ab02
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0
