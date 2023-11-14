@@ -17,6 +17,7 @@
 		63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A1C8EA2950B771007BA126 /* EffectsProvider.swift */; };
 		63B8E49029B092CC000F043F /* PickVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B8E48F29B092CC000F043F /* PickVideoViewController.swift */; };
 		63E308B329B1EE3400172732 /* PreviewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E308B229B1EE3400172732 /* PreviewImageViewController.swift */; };
+		7D6503F72B0396DE0021B4BF /* MaskPostprocessingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6503F62B0396DE0021B4BF /* MaskPostprocessingService.swift */; };
 		8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01658A27D8B783003E36FB /* AppDelegate.swift */; };
 		8A01659227D8B783003E36FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A01659027D8B783003E36FB /* Main.storyboard */; };
 		8A01659427D8B785003E36FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A01659327D8B785003E36FB /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63B8E48F29B092CC000F043F /* PickVideoViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PickVideoViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63E308B229B1EE3400172732 /* PreviewImageViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
+		7D6503F62B0396DE0021B4BF /* MaskPostprocessingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskPostprocessingService.swift; sourceTree = "<group>"; };
 		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A01658727D8B783003E36FB /* VEAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01658A27D8B783003E36FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				8A01659827D8B785003E36FB /* Info.plist */,
 				C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorApiModule.swift */,
 				6318349929C35DFA002EB08B /* MainViewController.swift */,
+				7D6503F62B0396DE0021B4BF /* MaskPostprocessingService.swift */,
 			);
 			path = VEAPISample;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				8A01658427D8B783003E36FB /* Frameworks */,
 				8A01658527D8B783003E36FB /* Resources */,
 				871EF34C42A7A8B1FB433D5D /* [CP] Embed Pods Frameworks */,
+				FD68CF63169E46314E90FFFF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -266,6 +270,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FD68CF63169E46314E90FFFF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VEAPISample/Pods-VEAPISample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VEAPISample/Pods-VEAPISample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VEAPISample/Pods-VEAPISample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -283,6 +304,7 @@
 				6318345B29C30B23002EB08B /* ExportManager.swift in Sources */,
 				8A01658B27D8B783003E36FB /* AppDelegate.swift in Sources */,
 				63A1C8EB2950B771007BA126 /* EffectsProvider.swift in Sources */,
+				7D6503F72B0396DE0021B4BF /* MaskPostprocessingService.swift in Sources */,
 				C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorApiModule.swift in Sources */,
 				6318349829C35BCE002EB08B /* UIViewController+PickVideo.swift in Sources */,
 			);
@@ -361,7 +383,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -416,7 +438,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

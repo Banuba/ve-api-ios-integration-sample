@@ -1,7 +1,6 @@
-
 import Foundation
-import BanubaSdk
-import BanubaEffectPlayer
+import BNBSdkApi
+import BNBSdkCore
 import BanubaUtilities
 import VEEffectsSDK
 import VideoEditor
@@ -28,16 +27,22 @@ class VideoEditorApiModule {
     
     func initFaceAR() {
         let bundleRoot = Bundle.init(for: BNBEffectPlayer.self).bundlePath
-             let dirs = [bundleRoot + "/bnb-resources", Bundle.main.bundlePath + "/effects"]
-             BanubaSdkManager.initialize(
-                resourcePath: dirs,
-                clientTokenString: AppDelegate.licenseToken,
-             logLevel: .info
-             )
+        
+        let dirs = [
+          bundleRoot + "/bnb-resources",
+          bundleRoot + "/bnb-res-ios",
+          Bundle.main.bundlePath + "/effects",
+          Bundle.main.bundlePath + "/bnb-resources"
+        ]
+        
+        BanubaSdkManager.initialize(
+          resourcePath: dirs,
+          clientTokenString: AppDelegate.licenseToken,
+          logLevel: .info
+        )
         
         BanubaMaskRenderer.postprocessServicing = MaskPostprocessingService(
             renderSize: videoResolutionConfiguration.current.size
         )
     }
-    
 }
