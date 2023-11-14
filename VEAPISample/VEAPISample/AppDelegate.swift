@@ -6,10 +6,6 @@
 //
 
 import UIKit
-import BanubaSdk
-import BanubaEffectPlayer
-import BanubaUtilities
-import VEEffectsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
