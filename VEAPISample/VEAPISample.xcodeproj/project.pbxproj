@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190972EB39B56FA90855F7AC /* Pods_VEAPISample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DAC37C26D65C8748126AC18 /* Pods_VEAPISample.framework */; };
 		6318345B29C30B23002EB08B /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318345A29C30B22002EB08B /* ExportManager.swift */; };
 		6318349829C35BCE002EB08B /* UIViewController+PickVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318349729C35BCE002EB08B /* UIViewController+PickVideo.swift */; };
 		6318349A29C35DFA002EB08B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6318349929C35DFA002EB08B /* MainViewController.swift */; };
@@ -25,24 +26,24 @@
 		8A0165B527D8CB67003E36FB /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 8A0165B427D8CB67003E36FB /* effects */; };
 		8A02DADA27DB560D0019AB99 /* GifExample.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8A02DAD827DB560D0019AB99 /* GifExample.gif */; };
 		8A02DADB27DB560D0019AB99 /* luts in Resources */ = {isa = PBXBuildFile; fileRef = 8A02DAD927DB560D0019AB99 /* luts */; };
-		A88C9DFC7B89FCB0920C4341 /* Pods_VEAPISample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2DE16A243B969DD1A7859A /* Pods_VEAPISample.framework */; };
 		C2AB8B1F29BFBA0400E5F4B4 /* VideoEditorApiModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorApiModule.swift */; };
 		C2AB8B2129BFBC1F00E5F4B4 /* PlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB8B2029BFBC1F00E5F4B4 /* PlaybackManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5DAC37C26D65C8748126AC18 /* Pods_VEAPISample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VEAPISample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6318345A29C30B22002EB08B /* ExportManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; tabWidth = 4; };
 		6318349729C35BCE002EB08B /* UIViewController+PickVideo.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+PickVideo.swift"; sourceTree = "<group>"; tabWidth = 4; };
 		6318349929C35DFA002EB08B /* MainViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		633B444528CF317800AE5C1C /* VideoEditorTrackRotationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorTrackRotationCalculator.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63454196295C627100A6EC0A /* PlaybackViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
+		6376E3630558B721B0A9D03A /* Pods-VEAPISample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.release.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.release.xcconfig"; sourceTree = "<group>"; };
 		637D252929B0F41A00B446E0 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
 		639DFABB2948AE840021458F /* ExportViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63A1C8EA2950B771007BA126 /* EffectsProvider.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = EffectsProvider.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63B8E48F29B092CC000F043F /* PickVideoViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PickVideoViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		63E308B229B1EE3400172732 /* PreviewImageViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PreviewImageViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		7D6503F62B0396DE0021B4BF /* MaskPostprocessingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskPostprocessingService.swift; sourceTree = "<group>"; };
-		86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 		8A01658727D8B783003E36FB /* VEAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01658A27D8B783003E36FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A01659127D8B783003E36FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -52,10 +53,9 @@
 		8A0165B427D8CB67003E36FB /* effects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = effects; sourceTree = "<group>"; };
 		8A02DAD827DB560D0019AB99 /* GifExample.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = GifExample.gif; sourceTree = "<group>"; };
 		8A02DAD927DB560D0019AB99 /* luts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luts; sourceTree = "<group>"; };
-		9F07C00E3B449E6D2B3F4F88 /* Pods-VEAPISample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.release.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.release.xcconfig"; sourceTree = "<group>"; };
-		AD2DE16A243B969DD1A7859A /* Pods_VEAPISample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VEAPISample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AB8B1E29BFBA0400E5F4B4 /* VideoEditorApiModule.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = VideoEditorApiModule.swift; sourceTree = "<group>"; tabWidth = 4; };
 		C2AB8B2029BFBC1F00E5F4B4 /* PlaybackManager.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PlaybackManager.swift; sourceTree = "<group>"; tabWidth = 4; };
+		FA191E7841228FC236FCEB38 /* Pods-VEAPISample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VEAPISample.debug.xcconfig"; path = "Target Support Files/Pods-VEAPISample/Pods-VEAPISample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,26 +63,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A88C9DFC7B89FCB0920C4341 /* Pods_VEAPISample.framework in Frameworks */,
+				190972EB39B56FA90855F7AC /* Pods_VEAPISample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D516B27EE305D9E092FDD46 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AD2DE16A243B969DD1A7859A /* Pods_VEAPISample.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		59B6F96EBB911477F2910417 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */,
-				9F07C00E3B449E6D2B3F4F88 /* Pods-VEAPISample.release.xcconfig */,
+				FA191E7841228FC236FCEB38 /* Pods-VEAPISample.debug.xcconfig */,
+				6376E3630558B721B0A9D03A /* Pods-VEAPISample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -116,13 +108,21 @@
 			path = Export;
 			sourceTree = "<group>";
 		};
+		76CDEC5CA84E4133DB5403FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5DAC37C26D65C8748126AC18 /* Pods_VEAPISample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8A01657E27D8B782003E36FB = {
 			isa = PBXGroup;
 			children = (
 				8A01658927D8B783003E36FB /* VEAPISample */,
 				8A01658827D8B783003E36FB /* Products */,
 				59B6F96EBB911477F2910417 /* Pods */,
-				0D516B27EE305D9E092FDD46 /* Frameworks */,
+				76CDEC5CA84E4133DB5403FC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,12 +164,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8A01659B27D8B785003E36FB /* Build configuration list for PBXNativeTarget "VEAPISample" */;
 			buildPhases = (
-				C327D1307448FCE0BE270B82 /* [CP] Check Pods Manifest.lock */,
+				49B24958954A0A28CCCC24AE /* [CP] Check Pods Manifest.lock */,
 				8A01658327D8B783003E36FB /* Sources */,
 				8A01658427D8B783003E36FB /* Frameworks */,
 				8A01658527D8B783003E36FB /* Resources */,
-				871EF34C42A7A8B1FB433D5D /* [CP] Embed Pods Frameworks */,
-				FD68CF63169E46314E90FFFF /* [CP] Copy Pods Resources */,
+				019F86D8A4E22CC78D034CD0 /* [CP] Embed Pods Frameworks */,
+				84AED20583BBAA3605C9FD13 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -231,7 +231,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		871EF34C42A7A8B1FB433D5D /* [CP] Embed Pods Frameworks */ = {
+		019F86D8A4E22CC78D034CD0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -248,7 +248,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VEAPISample/Pods-VEAPISample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C327D1307448FCE0BE270B82 /* [CP] Check Pods Manifest.lock */ = {
+		49B24958954A0A28CCCC24AE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -270,7 +270,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FD68CF63169E46314E90FFFF /* [CP] Copy Pods Resources */ = {
+		84AED20583BBAA3605C9FD13 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -450,7 +450,7 @@
 		};
 		8A01659C27D8B785003E36FB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 86AA678CE8AE44C13F7049CB /* Pods-VEAPISample.debug.xcconfig */;
+			baseConfigurationReference = FA191E7841228FC236FCEB38 /* Pods-VEAPISample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -484,7 +484,7 @@
 		};
 		8A01659D27D8B785003E36FB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F07C00E3B449E6D2B3F4F88 /* Pods-VEAPISample.release.xcconfig */;
+			baseConfigurationReference = 6376E3630558B721B0A9D03A /* Pods-VEAPISample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
