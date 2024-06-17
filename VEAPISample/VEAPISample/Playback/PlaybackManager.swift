@@ -367,6 +367,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
             videoSequence.addVideo(
                 at: videoURL,
                 isSlideShow: false,
+                crop: nil,
+                cropFrame: nil,
                 transition: .normal
             )
         }
