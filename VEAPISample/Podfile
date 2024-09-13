@@ -4,7 +4,7 @@ source 'https://github.com/sdk-banuba/banuba-sdk-podspecs.git'
 platform :ios, '15.0'
 use_frameworks!
 
-banuba_sdk_version = '1.36.0'
+banuba_sdk_version = '1.37.0'
 
 target 'VEAPISample' do
   pod 'YPImagePicker', :git => 'https://github.com/Yummypets/YPImagePicker.git', :branch => 'master'
