@@ -176,6 +176,14 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
         }
     }
     
+    @IBAction func addTransitionEffectAction(_ sender: UISwitch) {
+        if sender.isOn {
+            playbackManager.applyTransitionEffect()
+        } else {
+            playbackManager.undoTransitionEffect()
+        }
+    }
+    
     @IBAction func addCustomEffectAction(_ sender: UISwitch) {
         if sender.isOn {
             playbackManager.applyBlurEffect()

@@ -225,6 +225,35 @@ class ExportManager {
         // Audio track
         let audioTrack = effectsProvider.provideMusicEffect()
         videoEditorService.videoAsset?.addMusicTrack(audioTrack)
+        
+        // Apply transition effects
+        if let videoTracks = videoEditorService.videoAsset?.tracksInfo, videoTracks.count > 1 {
+            /// This is const value used in transition shaders
+            let transitionDuration = CMTime(seconds: 0.5, preferredTimescale: .default)
+            /// Transition applies for 2 video tracks. The half on the first one the second half on the second video
+            let transitionDurationOnVideoTrack = CMTime(
+                seconds: transitionDuration.seconds / 2.0,
+                preferredTimescale: .default
+            )
+            videoTracks
+                // Video should be more than or equal of half of transition duration
+                .filter { $0.timeRangeInGlobal.duration >= transitionDurationOnVideoTrack }
+                // Transition for first track should not be applied
+                .dropFirst()
+                .forEach { videoTrack in
+                    // All available transition listed in enum TransitionType
+                    let transitionEffectType: TransitionType = TransitionType.allCases.randomElement() ?? .blink
+                    let transitionEffectInfo = TransitionEffectInfo(
+                        type: transitionEffectType,
+                        start: videoTrack.timeRangeInGlobal.start - transitionDurationOnVideoTrack,
+                        end: videoTrack.timeRangeInGlobal.start + transitionDurationOnVideoTrack
+                    )
+                    effectApplicator.applyTransitionEffect(
+                        type: transitionEffectType,
+                        effectInfo: transitionEffectInfo
+                    )
+                }
+        }
     }
     
     // Returns watermark for specific image

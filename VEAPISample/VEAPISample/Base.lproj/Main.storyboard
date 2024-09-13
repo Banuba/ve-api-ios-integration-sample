@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qyd-Pi-6VS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qyd-Pi-6VS">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -650,16 +650,16 @@
                                                 <rect key="frame" x="194" y="0.0" width="179" height="290"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KdN-l5-VeC">
-                                                        <rect key="frame" x="0.0" y="0.0" width="179" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="179" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Text effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="pUt-dI-7CV">
-                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="40"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="knr-D8-eZd">
-                                                                <rect key="frame" x="130" y="0.0" width="51" height="50"/>
+                                                                <rect key="frame" x="130" y="0.0" width="51" height="40"/>
                                                                 <connections>
                                                                     <action selector="addTextEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="wTA-NL-aGW"/>
                                                                 </connections>
@@ -677,16 +677,16 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OC2-CS-W8y">
-                                                        <rect key="frame" x="0.0" y="60" width="179" height="50"/>
+                                                        <rect key="frame" x="0.0" y="50" width="179" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sticker effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="fZo-SZ-s1j">
-                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="40"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gno-v2-dF3">
-                                                                <rect key="frame" x="130" y="0.0" width="51" height="50"/>
+                                                                <rect key="frame" x="130" y="0.0" width="51" height="40"/>
                                                                 <connections>
                                                                     <action selector="addStickerEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="Z7X-HH-VxX"/>
                                                                 </connections>
@@ -704,16 +704,16 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3D9-wU-OdC">
-                                                        <rect key="frame" x="0.0" y="120" width="179" height="50"/>
+                                                        <rect key="frame" x="0.0" y="100" width="179" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Color effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-4G-SRB">
-                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="40"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N33-RK-6HX">
-                                                                <rect key="frame" x="130" y="0.0" width="51" height="50"/>
+                                                                <rect key="frame" x="130" y="0.0" width="51" height="40"/>
                                                                 <connections>
                                                                     <action selector="addColorEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="hh8-Lv-SQ5"/>
                                                                 </connections>
@@ -730,17 +730,44 @@
                                                             <constraint firstItem="N33-RK-6HX" firstAttribute="top" secondItem="3D9-wU-OdC" secondAttribute="top" id="zwQ-nr-Ek6"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xyj-XJ-fWt">
+                                                        <rect key="frame" x="0.0" y="150" width="179" height="40"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Transition effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="Hi4-Id-de5">
+                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="40"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ytM-AN-2AM">
+                                                                <rect key="frame" x="130" y="0.0" width="51" height="40"/>
+                                                                <connections>
+                                                                    <action selector="addTransitionEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="loC-Mv-Grk"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="ytM-AN-2AM" secondAttribute="trailing" id="8uu-ua-H8I"/>
+                                                            <constraint firstItem="ytM-AN-2AM" firstAttribute="leading" secondItem="Hi4-Id-de5" secondAttribute="trailing" constant="5" id="D9Q-xr-Q3F"/>
+                                                            <constraint firstItem="Hi4-Id-de5" firstAttribute="leading" secondItem="Xyj-XJ-fWt" secondAttribute="leading" id="DCB-gL-avU"/>
+                                                            <constraint firstItem="Hi4-Id-de5" firstAttribute="top" secondItem="Xyj-XJ-fWt" secondAttribute="top" id="S8K-F4-zD2"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Hi4-Id-de5" secondAttribute="bottom" id="TDE-me-b7p"/>
+                                                            <constraint firstAttribute="bottom" secondItem="ytM-AN-2AM" secondAttribute="bottom" id="VE7-Fs-fsc"/>
+                                                            <constraint firstItem="ytM-AN-2AM" firstAttribute="top" secondItem="Xyj-XJ-fWt" secondAttribute="top" id="xm9-GR-Zqa"/>
+                                                        </constraints>
+                                                    </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2c-AJ-12w">
-                                                        <rect key="frame" x="0.0" y="180" width="179" height="50"/>
+                                                        <rect key="frame" x="0.0" y="200" width="179" height="40"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Custom effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-QY-FTf">
-                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="40"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pFt-uY-DSC">
-                                                                <rect key="frame" x="130" y="0.0" width="51" height="50"/>
+                                                                <rect key="frame" x="130" y="0.0" width="51" height="40"/>
                                                                 <connections>
                                                                     <action selector="addCustomEffectAction:" destination="NxM-Wz-Skk" eventType="valueChanged" id="jR1-fN-FSy"/>
                                                                 </connections>
@@ -758,7 +785,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jec-vH-7wE">
-                                                        <rect key="frame" x="0.0" y="240" width="179" height="50"/>
+                                                        <rect key="frame" x="0.0" y="250" width="179" height="40"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                 </subviews>
