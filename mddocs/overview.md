@@ -49,7 +49,7 @@ Visit [Export API quickstart](quickstart_export.md) to quickly integrate API int
 Learn [CocoaPods Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html) if you are new in CocoaPods.
 
 >:exclamation: Important  
-It is required to have CocoaPods version ```1.9.0``` or newer.
+It is required to have CocoaPods version ```1.11.0``` or newer.
 Please check your version ```pod --version``` and upgrade.
 
 The List of required Video Editor dependencies is in [Podfile](../VEAPISample/Podfile).
