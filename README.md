@@ -22,9 +22,9 @@ Learn [Integration overview](mddocs/overview.md) how quickly to integrate API in
 This is what you need to run the AI Video Editor SDK
 
 - iPhone devices 6s+
-- Swift 5.8+
-- Xcode 14.3+
-- iOS 13.0+
+- Swift 5.9+
+- Xcode 15.2+
+- iOS 15.0+
   Unfortunately, It isn't optimized for iPads.
 
 ## Supported media formats
