@@ -306,6 +306,45 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         }
     }
     
+    /// Apply transition effect for all videos
+    func applyTransitionEffect() {
+        guard let videoTracks = videoEditorService.videoAsset?.tracksInfo, videoTracks.count > 1 else {
+            Logger.logError("Transition effect can be applied between at least 2 videos")
+            return
+        }
+        /// This is const value used in transition shaders
+        let transitionDuration = CMTime(seconds: 0.5, preferredTimescale: .default)
+        /// Transition applies for 2 video tracks. The half on the first one the second half on the second video
+        let transitionDurationOnVideoTrack = CMTime(
+            seconds: transitionDuration.seconds / 2.0,
+            preferredTimescale: .default
+        )
+        videoTracks
+            // Video should be more than or equal of half of transition duration
+            .filter { $0.timeRangeInGlobal.duration >= transitionDurationOnVideoTrack }
+            // Transition for first track should not be applied
+            .dropFirst()
+            .forEach { videoTrack in
+                // All available transition listed in enum TransitionType
+                let transitionEffectType: TransitionType = .scrollLeft
+                let transitionEffectInfo = TransitionEffectInfo(
+                    type: transitionEffectType,
+                    start: videoTrack.timeRangeInGlobal.start - transitionDurationOnVideoTrack,
+                    end: videoTrack.timeRangeInGlobal.start + transitionDurationOnVideoTrack
+                )
+                effectApplicator.applyTransitionEffect(
+                    type: transitionEffectType,
+                    effectInfo: transitionEffectInfo
+                )
+            }
+        
+        player?.reloadPreview(shouldAutoStart: isPlaying)
+    }
+    
+    func undoTransitionEffect() {
+        undoAll(type: .transition)
+    }
+    
     func applyBlurEffect() {
         let videoSize = player?.playerItem?.presentationSize ?? .zero
         // Place blur in center of video
