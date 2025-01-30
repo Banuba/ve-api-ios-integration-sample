@@ -1,8 +1,6 @@
 import AVFoundation
 import BanubaUtilities
-import VEPlaybackSDK
-import VideoEditor
-import VEEffectsSDK
+import BanubaVideoEditorCore
 
 class PlaybackManager: VideoEditorPlayerDelegate {
     
@@ -306,18 +304,22 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         }
     }
     
-    func applyBlurEffect() {
+    func applyBlurEffect(overlayContainerSize: CGSize) {
         let videoSize = player?.playerItem?.presentationSize ?? .zero
         // Place blur in center of video
-        
+
+        let radius = overlayContainerSize.width * 0.2
+
         effectApplicator.applyOverlayEffectType(
             .blur(
                 drawableFigure: .circle,
                 coordinates: BlurCoordinateParams(
-                    center: CGPoint(x: videoSize.width / 2.0, y: videoSize.height / 2.0),
-                    width: videoSize.width,
-                    height: videoSize.height,
-                    radius: videoSize.width * 0.2
+                    overlayFrame: CGRect(
+                        origin: CGPoint(x: overlayContainerSize.width / 2.0 - radius / 2, y: overlayContainerSize.height / 2.0 -  radius / 2),
+                        size: CGSize(width: radius, height: radius)
+                    ),
+                    overlayContainerSize: overlayContainerSize,
+                    videoSize: videoSize
                 )
             ),
             effectInfo: VideoEditorEffectInfo(
@@ -430,7 +432,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         playbackView?.setPlayer(player, isThumbnailNeeded: false)
     }
     
-    private func undoAll(type: VideoEditor.EditorEffectType) {
+    private func undoAll(type: BanubaVideoEditorCore.EditorEffectType) {
         videoEditorService.undoAll(type: type)
     }
     

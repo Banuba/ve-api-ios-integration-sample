@@ -2,8 +2,7 @@ import Foundation
 import BNBSdkApi
 import BNBSdkCore
 import BanubaUtilities
-import VEEffectsSDK
-import VideoEditor
+import BanubaVideoEditorCore
 
 class VideoEditorApiModule {
     

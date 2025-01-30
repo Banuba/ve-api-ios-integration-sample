@@ -9,7 +9,7 @@ import UIKit
 import YPImagePicker
 import AVFoundation
 
-import VideoEditor
+import BanubaVideoEditorCore
 
 class PickVideoViewController: UIViewController {
 

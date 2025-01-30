@@ -8,9 +8,7 @@
 import AVFoundation
 
 import BanubaUtilities
-import VideoEditor
-import VEExportSDK
-import VEEffectsSDK
+import BanubaVideoEditorCore
 
 class ExportManager {
     // MARK: - Banuba Services used for export
