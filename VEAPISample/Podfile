@@ -7,7 +7,11 @@ use_frameworks!
 banuba_sdk_version = '1.40.0'
 
 target 'VEAPISample' do
-  pod 'YPImagePicker', :git => 'https://github.com/Yummypets/YPImagePicker.git', :branch => 'master'
-  pod 'BanubaSDK', banuba_sdk_version
+
   pod 'BanubaVideoEditorCore', banuba_sdk_version
+
+  pod 'BanubaSDK', banuba_sdk_version #in case of Banuba Face AR using
+
+  pod 'YPImagePicker', :git => 'https://github.com/Yummypets/YPImagePicker.git', :branch => 'master'
+
 end
