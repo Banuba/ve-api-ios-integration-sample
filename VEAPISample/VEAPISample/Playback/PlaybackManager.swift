@@ -308,7 +308,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         let videoSize = player?.playerItem?.presentationSize ?? .zero
         // Place blur in center of video
 
-        let radius = overlayContainerSize.width * 0.2
+        let radius = min(overlayContainerSize.width * 0.5, overlayContainerSize.height * 0.5)
 
         effectApplicator.applyOverlayEffectType(
             .blur(

@@ -175,8 +175,11 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     }
     
     @IBAction func addCustomEffectAction(_ sender: UISwitch) {
+        guard let overlayContainerSize = playbackManager.playbackView?.previewLayer.videoRect.size else {
+            fatalError("Unable to get preview video rect")
+        }
         if sender.isOn {
-            playbackManager.applyBlurEffect(overlayContainerSize: playerContainerView.bounds.size)
+            playbackManager.applyBlurEffect(overlayContainerSize: overlayContainerSize)
         } else {
             playbackManager.undoBlurEffect()
         }
