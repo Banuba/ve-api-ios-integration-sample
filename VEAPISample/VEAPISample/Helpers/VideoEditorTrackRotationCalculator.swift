@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import VideoEditor
+import BanubaVideoEditorCore
 
 /// Allows you to calculate rotation with required VideoEditorAssetTrackInfo
 public class VideoEditorTrackRotationCalculator {

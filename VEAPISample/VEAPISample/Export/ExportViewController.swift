@@ -10,7 +10,7 @@ import Photos
 import AVKit
 
 // Banuba Modules
-import VEExportSDK
+import BanubaVideoEditorCore
 
 class ExportViewController: UIViewController {
     

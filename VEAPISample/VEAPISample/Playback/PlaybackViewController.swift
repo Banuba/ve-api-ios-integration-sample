@@ -4,9 +4,7 @@ import UIKit
 import AVFoundation
 
 // Banuba Modules
-import VideoEditor
-import VEPlaybackSDK
-import VEEffectsSDK
+import BanubaVideoEditorCore
 import BanubaUtilities
 
 class PlaybackViewController: UIViewController, AppStateObserverDelegate {
@@ -177,8 +175,11 @@ class PlaybackViewController: UIViewController, AppStateObserverDelegate {
     }
     
     @IBAction func addCustomEffectAction(_ sender: UISwitch) {
+        guard let overlayContainerSize = playbackManager.playbackView?.previewLayer.videoRect.size else {
+            fatalError("Unable to get preview video rect")
+        }
         if sender.isOn {
-            playbackManager.applyBlurEffect()
+            playbackManager.applyBlurEffect(overlayContainerSize: overlayContainerSize)
         } else {
             playbackManager.undoBlurEffect()
         }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-import VideoEditor
+import BanubaVideoEditorCore
 
 class MainViewController: UIViewController {
     

@@ -1,10 +1,8 @@
 
-import VEEffectsSDK
 import UIKit
 import AVFoundation
 import BanubaUtilities
-import VEEffectsSDK
-import VideoEditor
+import BanubaVideoEditorCore
 
 /// This effects provider applies effect to full video duration
 class EffectsProvider {

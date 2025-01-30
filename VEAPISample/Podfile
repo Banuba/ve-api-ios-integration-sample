@@ -4,17 +4,14 @@ source 'https://github.com/sdk-banuba/banuba-sdk-podspecs.git'
 platform :ios, '15.0'
 use_frameworks!
 
-banuba_sdk_version = '1.39.0'
+banuba_sdk_version = '1.40.0'
 
 target 'VEAPISample' do
+
+  pod 'BanubaVideoEditorCore', banuba_sdk_version
+
+  pod 'BanubaSDK', banuba_sdk_version #in case of Banuba Face AR using
+
   pod 'YPImagePicker', :git => 'https://github.com/Yummypets/YPImagePicker.git', :branch => 'master'
-  pod 'VEPlaybackSDK', banuba_sdk_version
-  pod 'VEEffectsSDK', banuba_sdk_version
-  pod 'VideoEditor', banuba_sdk_version
-  pod 'BanubaLicenseServicingSDK', banuba_sdk_version
-  pod 'BanubaSDK', banuba_sdk_version
-  pod 'BanubaSDKServicing', banuba_sdk_version
-  pod 'BanubaUtilities', banuba_sdk_version
-  pod 'VEExportSDK', banuba_sdk_version
-  pod 'BNBLicenseUtils', banuba_sdk_version
+
 end
