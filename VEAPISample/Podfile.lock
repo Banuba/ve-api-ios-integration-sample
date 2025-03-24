@@ -1,7 +1,7 @@
 PODS:
-  - BanubaLicenseServicingSDK (1.40.0):
-    - BNBLicenseUtils (= 1.40.0)
-  - BanubaSDK (1.40.0):
+  - BanubaLicenseServicingSDK (1.41.0):
+    - BNBLicenseUtils (= 1.41.0)
+  - BanubaSDK (1.41.0):
     - BNBBackground (~> 1.16.0)
     - BNBEffectPlayer (~> 1.16.0)
     - BNBEyes (~> 1.16.0)
@@ -11,10 +11,10 @@ PODS:
     - BNBSdkApi (~> 1.16.0)
     - BNBSdkCore (~> 1.16.0)
     - BNBSkin (~> 1.16.0)
-  - BanubaUtilities (1.40.0)
-  - BanubaVideoEditorCore (1.40.0):
-    - BanubaLicenseServicingSDK (= 1.40.0)
-    - BanubaUtilities (= 1.40.0)
+  - BanubaUtilities (1.41.0)
+  - BanubaVideoEditorCore (1.41.0):
+    - BanubaLicenseServicingSDK (= 1.41.0)
+    - BanubaUtilities (= 1.41.0)
   - BNBBackground (1.16.4):
     - BNBEffectPlayer (= 1.16.4)
     - BNBScripting (= 1.16.4)
@@ -33,7 +33,7 @@ PODS:
     - BNBEffectPlayer (= 1.16.4)
     - BNBScripting (= 1.16.4)
     - BNBSdkCore (= 1.16.4)
-  - BNBLicenseUtils (1.40.0)
+  - BNBLicenseUtils (1.41.0)
   - BNBLips (1.16.4):
     - BNBEffectPlayer (= 1.16.4)
     - BNBFaceTracker (= 1.16.4)
@@ -54,8 +54,8 @@ PODS:
     - SteviaLayout (= 5.1.2)
 
 DEPENDENCIES:
-  - BanubaSDK (= 1.40.0)
-  - BanubaVideoEditorCore (= 1.40.0)
+  - BanubaSDK (= 1.41.0)
+  - BanubaVideoEditorCore (= 1.41.0)
   - YPImagePicker (from `https://github.com/Yummypets/YPImagePicker.git`, branch `master`)
 
 SPEC REPOS:
@@ -91,16 +91,16 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Yummypets/YPImagePicker.git
 
 SPEC CHECKSUMS:
-  BanubaLicenseServicingSDK: 64a57a86b74b327cddc0412b1e348233d19e3475
-  BanubaSDK: 6cfc5bcd41002e4a7c0f91227ab90e771bca645f
-  BanubaUtilities: 6291027414c4c1b0b9e6e304771e483514d498fd
-  BanubaVideoEditorCore: b1a4e7356d5c8bcb86ac8ea4c5379aed0f7f2d64
+  BanubaLicenseServicingSDK: 239e70f12be9249c21bb1963ba5dd7d4798400e7
+  BanubaSDK: 52e331f77579c7ba877b530667c6f1d5d1adf30c
+  BanubaUtilities: 4b7464391e107913446eff631cc673b45f8389d6
+  BanubaVideoEditorCore: 9c2dc8e91a158954a51de193622cd8c7b8bde60e
   BNBBackground: cdbc07dc698d2d094cc676e0e77845e219d9e2ba
   BNBEffectPlayer: d5813b05afce282f0959e31fda877a06dbed1bce
   BNBEyes: be819e28d00a26973cdaa59f5c5be32e183ba272
   BNBFaceTracker: 94cc4c1b1868bf6dfcb093bd40db94c36b119745
   BNBHair: a7b3d3116853bf628db67b00491e95cc22b17f04
-  BNBLicenseUtils: d331955218e5a41ee12974f0c9f396a12fb41c3f
+  BNBLicenseUtils: 119e6bc725552c0ae1c80fd8c037f5245a09ea19
   BNBLips: ecbe48023ef3652dce83e165a50884de7baecd26
   BNBScripting: 3e851d230e201e06bf94b0f75a561c18cc15877c
   BNBSdkApi: a05a2201214e3e7f8920f645fbb98d5b8df4fe19
@@ -110,6 +110,6 @@ SPEC CHECKSUMS:
   SteviaLayout: 05424e528d643657d39ce72c786e4adf13cfc5f2
   YPImagePicker: e7f9a34273fdf56283ac03ec2efa0601f946489f
 
-PODFILE CHECKSUM: 39290e7d6e533c293c6dd1017dc7ad48661e43c7
+PODFILE CHECKSUM: 6e6f9f54db6d0731a6b4fcd22299bb16146fa9a3
 
 COCOAPODS: 1.16.2

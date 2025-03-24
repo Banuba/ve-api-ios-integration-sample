@@ -58,7 +58,7 @@ class ExportManager {
             sequence: videoSequence,
             isGalleryAssets: true,
             isSlideShow: false,
-            videoResolutionConfiguration: videoResolutionConfiguration
+            videoNaturalSize: videoResolutionConfiguration.current.size
         )
         
         // Set current video asset to video editor service
