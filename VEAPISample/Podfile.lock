@@ -1,52 +1,52 @@
 PODS:
-  - BanubaLicenseServicingSDK (1.41.0):
-    - BNBLicenseUtils (= 1.41.0)
-  - BanubaSDK (1.41.0):
-    - BNBBackground (~> 1.16.0)
-    - BNBEffectPlayer (~> 1.16.0)
-    - BNBEyes (~> 1.16.0)
-    - BNBHair (~> 1.16.0)
-    - BNBLips (~> 1.16.0)
-    - BNBScripting (~> 1.16.0)
-    - BNBSdkApi (~> 1.16.0)
-    - BNBSdkCore (~> 1.16.0)
-    - BNBSkin (~> 1.16.0)
-  - BanubaUtilities (1.41.0)
-  - BanubaVideoEditorCore (1.41.0):
-    - BanubaLicenseServicingSDK (= 1.41.0)
-    - BanubaUtilities (= 1.41.0)
-  - BNBBackground (1.16.4):
-    - BNBEffectPlayer (= 1.16.4)
-    - BNBScripting (= 1.16.4)
-    - BNBSdkCore (= 1.16.4)
-  - BNBEffectPlayer (1.16.4)
-  - BNBEyes (1.16.4):
-    - BNBEffectPlayer (= 1.16.4)
-    - BNBFaceTracker (= 1.16.4)
-    - BNBScripting (= 1.16.4)
-    - BNBSdkCore (= 1.16.4)
-  - BNBFaceTracker (1.16.4):
-    - BNBEffectPlayer (= 1.16.4)
-    - BNBScripting (= 1.16.4)
-    - BNBSdkCore (= 1.16.4)
-  - BNBHair (1.16.4):
-    - BNBEffectPlayer (= 1.16.4)
-    - BNBScripting (= 1.16.4)
-    - BNBSdkCore (= 1.16.4)
-  - BNBLicenseUtils (1.41.0)
-  - BNBLips (1.16.4):
-    - BNBEffectPlayer (= 1.16.4)
-    - BNBFaceTracker (= 1.16.4)
-    - BNBScripting (= 1.16.4)
-    - BNBSdkCore (= 1.16.4)
-  - BNBScripting (1.16.4)
-  - BNBSdkApi (1.16.4):
-    - BNBSdkCore (= 1.16.4)
-  - BNBSdkCore (1.16.4)
-  - BNBSkin (1.16.4):
-    - BNBEffectPlayer (= 1.16.4)
-    - BNBScripting (= 1.16.4)
-    - BNBSdkCore (= 1.16.4)
+  - BanubaLicenseServicingSDK (1.42.0):
+    - BNBLicenseUtils (= 1.42.0)
+  - BanubaSDK (1.42.0):
+    - BNBBackground (~> 1.17.0)
+    - BNBEffectPlayer (~> 1.17.0)
+    - BNBEyes (~> 1.17.0)
+    - BNBHair (~> 1.17.0)
+    - BNBLips (~> 1.17.0)
+    - BNBScripting (~> 1.17.0)
+    - BNBSdkApi (~> 1.17.0)
+    - BNBSdkCore (~> 1.17.0)
+    - BNBSkin (~> 1.17.0)
+  - BanubaUtilities (1.42.0)
+  - BanubaVideoEditorCore (1.42.0):
+    - BanubaLicenseServicingSDK (= 1.42.0)
+    - BanubaUtilities (= 1.42.0)
+  - BNBBackground (1.17.0):
+    - BNBEffectPlayer (= 1.17.0)
+    - BNBScripting (= 1.17.0)
+    - BNBSdkCore (= 1.17.0)
+  - BNBEffectPlayer (1.17.0)
+  - BNBEyes (1.17.0):
+    - BNBEffectPlayer (= 1.17.0)
+    - BNBFaceTracker (= 1.17.0)
+    - BNBScripting (= 1.17.0)
+    - BNBSdkCore (= 1.17.0)
+  - BNBFaceTracker (1.17.0):
+    - BNBEffectPlayer (= 1.17.0)
+    - BNBScripting (= 1.17.0)
+    - BNBSdkCore (= 1.17.0)
+  - BNBHair (1.17.0):
+    - BNBEffectPlayer (= 1.17.0)
+    - BNBScripting (= 1.17.0)
+    - BNBSdkCore (= 1.17.0)
+  - BNBLicenseUtils (1.42.0)
+  - BNBLips (1.17.0):
+    - BNBEffectPlayer (= 1.17.0)
+    - BNBFaceTracker (= 1.17.0)
+    - BNBScripting (= 1.17.0)
+    - BNBSdkCore (= 1.17.0)
+  - BNBScripting (1.17.0)
+  - BNBSdkApi (1.17.0):
+    - BNBSdkCore (= 1.17.0)
+  - BNBSdkCore (1.17.0)
+  - BNBSkin (1.17.0):
+    - BNBEffectPlayer (= 1.17.0)
+    - BNBScripting (= 1.17.0)
+    - BNBSdkCore (= 1.17.0)
   - PryntTrimmerView (4.0.2)
   - SteviaLayout (5.1.2)
   - YPImagePicker (5.2.1):
@@ -54,8 +54,8 @@ PODS:
     - SteviaLayout (= 5.1.2)
 
 DEPENDENCIES:
-  - BanubaSDK (= 1.41.0)
-  - BanubaVideoEditorCore (= 1.41.0)
+  - BanubaSDK (= 1.42.0)
+  - BanubaVideoEditorCore (= 1.42.0)
   - YPImagePicker (from `https://github.com/Yummypets/YPImagePicker.git`, branch `master`)
 
 SPEC REPOS:
@@ -91,25 +91,25 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Yummypets/YPImagePicker.git
 
 SPEC CHECKSUMS:
-  BanubaLicenseServicingSDK: 239e70f12be9249c21bb1963ba5dd7d4798400e7
-  BanubaSDK: 52e331f77579c7ba877b530667c6f1d5d1adf30c
-  BanubaUtilities: 4b7464391e107913446eff631cc673b45f8389d6
-  BanubaVideoEditorCore: 9c2dc8e91a158954a51de193622cd8c7b8bde60e
-  BNBBackground: cdbc07dc698d2d094cc676e0e77845e219d9e2ba
-  BNBEffectPlayer: d5813b05afce282f0959e31fda877a06dbed1bce
-  BNBEyes: be819e28d00a26973cdaa59f5c5be32e183ba272
-  BNBFaceTracker: 94cc4c1b1868bf6dfcb093bd40db94c36b119745
-  BNBHair: a7b3d3116853bf628db67b00491e95cc22b17f04
-  BNBLicenseUtils: 119e6bc725552c0ae1c80fd8c037f5245a09ea19
-  BNBLips: ecbe48023ef3652dce83e165a50884de7baecd26
-  BNBScripting: 3e851d230e201e06bf94b0f75a561c18cc15877c
-  BNBSdkApi: a05a2201214e3e7f8920f645fbb98d5b8df4fe19
-  BNBSdkCore: 90da0c0c1fe1f10377d4ab1e00aa701926faea17
-  BNBSkin: 1f6ff9507b1e35af1469e4fc91270154149ab673
+  BanubaLicenseServicingSDK: ed125d5628bfcd36281ba9831694c89223b86cd2
+  BanubaSDK: 36e44def2c4f4902a0f3784113ab077c361b2942
+  BanubaUtilities: 725728bdb9abfd19077e8649e1aa5800974a6f25
+  BanubaVideoEditorCore: d017481973294c266f5099895cc83c18d3ab28ef
+  BNBBackground: 409752fcce468f3776e414045947adb2594fa4a8
+  BNBEffectPlayer: 0e6911332400fbcf82a0b0c9de7bf7f9a9f16dad
+  BNBEyes: 10eedfad2edad3cde34694613c13cc027b416b40
+  BNBFaceTracker: 6be28c85e0a3ea1ac75e87aa1d286fb8509914f9
+  BNBHair: 9509d4cec83176637389f80f63b42582fd0e5c67
+  BNBLicenseUtils: 45b782233021e075c39c52f221ba54430ddf11b9
+  BNBLips: 29ba950f0fc2b976954cfc564b404e4d43ea0976
+  BNBScripting: 025ad9569356f48bc31ca64fc891720f5c989781
+  BNBSdkApi: ed9a0744b1497526630482cde601eb4d35e9d853
+  BNBSdkCore: 3db661648b5f70ced6852a1a6eea3268f2d687b7
+  BNBSkin: dddbdc59a2160caaa75d2260689ebca7f41d807e
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SteviaLayout: 05424e528d643657d39ce72c786e4adf13cfc5f2
   YPImagePicker: e7f9a34273fdf56283ac03ec2efa0601f946489f
 
-PODFILE CHECKSUM: 6e6f9f54db6d0731a6b4fcd22299bb16146fa9a3
+PODFILE CHECKSUM: a85ac912f46663f0c2da723d245f8e009ca373be
 
 COCOAPODS: 1.16.2
