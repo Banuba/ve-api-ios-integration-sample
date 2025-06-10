@@ -107,4 +107,8 @@ extension MaskPostprocessingService: SDKMaskPostprocessServicing {
     ep?.loadEffect(path)
     ep?.callJsMethod("hideInteractive", withParam: "")
   }
+
+  public func unloadEffect() {
+    ep?.unloadEffect()
+  }
 }
