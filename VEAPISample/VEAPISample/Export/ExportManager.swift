@@ -150,7 +150,8 @@ class ExportManager {
                 atStartTime: assetTrack.timeRangeInGlobal.start,
                 end: assetTrack.timeRangeInGlobal.end,
                 rotation: rotation,
-                isVideoFitsAspect: false
+                isVideoFitsAspect: false,
+                isVideoMirrored: false
             )
             
         }

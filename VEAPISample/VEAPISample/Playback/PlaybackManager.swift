@@ -114,7 +114,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         }
         
         let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(firstTrack)
-        let imageRotation = UIImage.orientation(byRotation: rotation)
+        let isPortrait = [.none, .rotate180].contains(rotation)
+        let imageRotation = UIImage.orientation(byRotation: rotation, isPortrait: isPortrait, isMirrored: false)
         return UIImage(cgImage: cgImage, scale: 1.0, orientation: imageRotation)
     }
     
@@ -387,7 +388,8 @@ class PlaybackManager: VideoEditorPlayerDelegate {
                 atStartTime: assetTrack.timeRangeInGlobal.start,
                 end: assetTrack.timeRangeInGlobal.end,
                 rotation: rotation,
-                isVideoFitsAspect: false
+                isVideoFitsAspect: false,
+                isVideoMirrored: false
             )
         }
     }
