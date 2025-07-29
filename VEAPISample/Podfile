@@ -4,7 +4,7 @@ source 'https://github.com/sdk-banuba/banuba-sdk-podspecs.git'
 platform :ios, '15.0'
 use_frameworks!
 
-banuba_sdk_version = '1.45.1'
+banuba_sdk_version = '1.46.0'
 
 target 'VEAPISample' do
 
