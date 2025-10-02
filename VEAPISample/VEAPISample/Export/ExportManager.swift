@@ -64,9 +64,6 @@ class ExportManager {
         // Set current video asset to video editor service
         videoEditorService.setCurrentAsset(videoEditorAsset)
         
-        // Apply original video rotation as effect
-        adjustVideoEditorAssetTracksRotation(videoEditorAsset)
-        
         // Setup preview render size
         setupRenderSize(videoSequence: videoSequence)
     }
@@ -140,21 +137,6 @@ class ExportManager {
         }
         
         return videoSequence
-    }
-    
-    // Apply original track rotation for each asset track
-    private func adjustVideoEditorAssetTracksRotation(_ videoEditorAsset: VideoEditorAsset) {
-        videoEditorAsset.tracksInfo.forEach { assetTrack in
-            let rotation = VideoEditorTrackRotationCalculator.getTrackRotation(assetTrack)
-            effectApplicator.addTransformEffect(
-                atStartTime: assetTrack.timeRangeInGlobal.start,
-                end: assetTrack.timeRangeInGlobal.end,
-                rotation: rotation,
-                isVideoFitsAspect: false,
-                isVideoMirrored: false
-            )
-            
-        }
     }
     
     // Configure render video size according to video aspect and videoResolutionConfiguration

@@ -17,7 +17,7 @@ class VideoEditorApiModule {
     let editor: VideoEditorService
     
     init() {
-        guard let editor = VideoEditorService(token: AppDelegate.licenseToken) else {
+        guard let editor = VideoEditorService(token: AppDelegate.licenseToken, isVideoFitsAspect: false) else {
             fatalError("The token is invalid. Please check if token contains all characters.")
         }
         
