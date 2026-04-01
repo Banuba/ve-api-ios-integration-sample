@@ -273,7 +273,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
         let stickerEffect = effectsProvider.provideStickerEffect(duration: totalVideoDuration)
         
         effectApplicator.applyOverlayEffectType(
-            .gif,
+            .sticker,
             effectInfo: stickerEffect
         )
         
@@ -281,7 +281,7 @@ class PlaybackManager: VideoEditorPlayerDelegate {
     }
     
     func undoStickerEffect() {
-        undoAll(type: .gif)
+        undoAll(type: .sticker)
         player?.reloadPreview(shouldAutoStart: isPlaying)
     }
     
