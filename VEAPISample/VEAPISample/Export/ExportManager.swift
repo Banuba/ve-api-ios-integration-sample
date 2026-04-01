@@ -192,7 +192,7 @@ class ExportManager {
         // Add Sticker effect
         let stickerEffect = effectsProvider.provideStickerEffect(duration: videoEditorAsset.composition.duration)
         effectApplicator.applyOverlayEffectType(
-            .gif,
+            .sticker,
             effectInfo: stickerEffect
         )
         
